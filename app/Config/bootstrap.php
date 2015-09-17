@@ -60,6 +60,10 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+// load Usermgmt plugin and apply plugin routes. Keep all the other plugins you are using here
+        CakePlugin::loadAll(array(
+            'Usermgmt' => array('routes' => true, 'bootstrap' => true),
+        ));
 
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter . By default CakePHP bundles two filters:

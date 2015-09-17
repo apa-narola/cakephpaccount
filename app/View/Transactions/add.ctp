@@ -7,7 +7,8 @@
         </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                <i class="fa fa-home"></i>  
+                 <?php echo $this->Html->link(__("Home", true), "/") ?>                
             </li>
             <li>
                 <i class="fa fa-dashboard"></i>  <a href="<?php echo $this->webroot ?>transactions">Transactions</a>
@@ -32,7 +33,7 @@
             </div>
 
             <div class="form-group">
-                <label>Select party name</label>                
+                <label>Select transaction type</label>                
                 <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
                 <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or <strong>Receipt</strong>.</p>
             </div>
@@ -51,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label>Transaction date</label>
-                <div class="input-group date transaction_datetime col-md-5" data-date-format="dd/mm/yyyy HH:ii" data-link-field="dtp_input1">
+                <div class="input-group date transaction_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
                     <?php
                     echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
                         "value" => "", "label" => false, "div" => false, "readonly",
@@ -61,7 +62,7 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-            <?php echo $this->Form->hidden("dtp_input1", array("id" => "dtp_input1")); ?><br/>
+            <?php echo $this->Form->hidden("dtp_input1", array("id" => "dtp_input1","name"=>"transaction_date")); ?><br/>
                 <p class="help-block">Select transaction date.</p>
             </div>            
             <?php
