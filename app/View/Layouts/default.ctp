@@ -4,7 +4,7 @@
  * @package       app.View.Layouts
  * @since         CakePHP(tm) v 0.10.0.1076
  */
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
+$cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
 ?>
 
 <?php if (!$this->UserAuth->isLogged()) { ?>
@@ -333,31 +333,31 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                             <li <?php echo $cls_dashboard_users; ?>>
                                 <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
-                            <li <?php echo $cls_add_trans; ?>>
+<!--                            <li <?php echo $cls_add_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
-                            </li> 
+                            </li> -->
                             <li <?php echo $cls_list_trans; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions"><i class="fa fa-fw fa-file"></i> Transactions</a>
+                                <a href="<?php echo $this->webroot ?>transactions"><i class="fa fa-fw fa-money"></i> Transactions</a>
                             </li>                                               
-                            <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>/addUser"><i class="fa fa-fw fa-user"></i> Add User</a>
-                            </li>
+<!--                            <li <?php echo $cls_add_user; ?>>
+                                <a href="<?php echo $this->webroot ?>/addUser"><i class="fa fa-user-plus"></i> Add User</a>
+                            </li>-->
                             <li <?php echo $cls_list_users; ?>>
                                 <a href="<?php echo $this->webroot ?>/allUsers"><i class="fa fa-fw fa-users"></i> Users</a>
                             </li>
                             <?php if ($this->UserAuth->isAdmin()) { ?>
-                                <li <?php echo $cls_add_group; ?>>
+<!--                                <li <?php echo $cls_add_group; ?>>
                                     <a href="<?php echo $this->webroot ?>/addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
-                                </li>
+                                </li>-->
                                 <li <?php echo $cls_list_users; ?>>
-                                    <a href="<?php echo $this->webroot ?>/allGroups"><i class="fa fa-fw fa-group"></i> Groups</a>
+                                    <a href="<?php echo $this->webroot ?>/allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
                                 </li>
                                 <li <?php echo $cls_list_permissions; ?>>
-                                    <a href="<?php echo $this->webroot ?>/permissions"><i class="fa fa-fw fa-file"></i> Permissions</a>
+                                    <a href="<?php echo $this->webroot ?>/permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
                                 </li>
                             <?php } ?>
                             <li>
-                                <a href="<?php echo $this->webroot ?>/logout"><i class="fa fa-fw fa-file"></i> Logout</a>
+                                <a href="<?php echo $this->webroot ?>/logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
                             </li>
                             <!--                        <li>
                                                         <a href="<?php echo $this->webroot; ?>sb-admin/index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>

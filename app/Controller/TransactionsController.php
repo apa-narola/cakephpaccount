@@ -100,10 +100,10 @@ class TransactionsController extends AppController {
     }
 
     public function userTransactions($user_id = null) {
-        if(empty($user_id))
-        $user_id = $this->request->params["named"]["user_id"];
-        
-        $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("id"=>$user_id)));
+        if (empty($user_id))
+            $user_id = $this->request->params["named"]["user_id"];
+
+        $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("id" => $user_id)));
         $conditions = array();
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
@@ -120,8 +120,8 @@ class TransactionsController extends AppController {
                     // or even do a urlencode to be sure
                     $filter_url[$name] = urlencode($value);
                 }
-            }            
-            // now that we have generated an url with GET parameters, 
+            }
+            // now that we have generated an url with GET parameters,
             // we'll redirect to that page
             return $this->redirect($filter_url);
         } else {
@@ -175,7 +175,7 @@ class TransactionsController extends AppController {
         $fullname = "NA";
         if (isset($transactionUser["User"]["first_name"]))
             $fullname = $transactionUser["User"]["first_name"] . " " . $transactionUser["User"]["last_name"];
-        $this->set(compact('fullname', 'transactions',"user_id"));
+        $this->set(compact('fullname', 'transactions', "user_id"));
     }
 
     /**
@@ -274,6 +274,42 @@ class TransactionsController extends AppController {
             $this->Flash->error(__('The transaction could not be deleted. Please, try again.'));
         }
         return $this->redirect(array('action' => 'index'));
+    }
+
+    public function getAllTransactionCount() {
+        return $this->Transaction->find('count');
+    }
+
+    public function getPaymentTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment')));
+    }
+
+    public function getReceiptTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt')));
+    }
+
+    public function getAllMainTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.is_interest' => 0)));
+    }
+
+    public function getMainPaymentTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment','Transaction.is_interest' => 0)));
+    }
+
+    public function getMainReceiptTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt','Transaction.is_interest' => 0)));
+    }
+
+    public function getAllInterestTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.is_interest' => 1)));
+    }
+
+    public function getInterestPaymentTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment','Transaction.is_interest' => 1)));
+    }
+
+    public function getInterestReceiptTransactionCount() {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt','Transaction.is_interest' => 1)));
     }
 
 }
