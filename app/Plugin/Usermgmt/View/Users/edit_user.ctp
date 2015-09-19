@@ -40,14 +40,18 @@
         </ol>
         <?php echo $this->Session->flash(); ?>
         <div class="col-lg-6">
-            <?php echo $this->Form->create('User', array('role'=>'form')); ?>
-            <?php echo $this->Form->input("id" ,array('type' => 'hidden', 'label' => false,'div' => false))?>
-            <?php if (count($userGroups) > 2) { ?>
-            <div class="form-group">
-                <label><?php echo __('Group'); ?><font color='red'>*</font></label>                
-                <?php echo $this->Form->input("user_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-            <?php } ?>            
+            <?php echo $this->Form->create('User', array('role' => 'form')); ?>
+            <?php echo $this->Form->input("id", array('type' => 'hidden', 'label' => false, 'div' => false)) ?>
+            <?php if ($this->UserAuth->isAdmin()) { ?>
+                <?php if (count($userGroups) > 2) { ?>
+                    <div class="form-group">
+                        <label><?php echo __('Group'); ?><font color='red'>*</font></label>                
+                        <?php echo $this->Form->input("user_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
+                    </div>
+                <?php } ?>   
+            <?php } else { ?>
+                <?php echo $this->Form->input("user_group_id", array('type' => 'hidden', 'label' => false, 'div' => false, 'value' => 2)) ?>
+            <?php } ?>
             <div class="form-group">
                 <label><?php echo __('Username'); ?><font color='red'>*</font></label>
                 <?php echo $this->Form->input("username", array('label' => false, 'div' => false, 'class' => "form-control")) ?>

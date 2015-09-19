@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label>Transaction date</label>
-                <div class="input-group date transaction_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
+                <div class="input-group date transaction_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii" data-link-field="transaction_date_db">
                     <?php
                     echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
                         "value" => "", "label" => false, "div" => false, "readonly",
@@ -62,7 +62,7 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-            <?php echo $this->Form->hidden("dtp_input1", array("id" => "dtp_input1","name"=>"transaction_date")); ?><br/>
+            <?php echo $this->Form->hidden("transaction_date_db", array("id" => "transaction_date_db","name"=>"transaction_date_db")); ?><br/>
                 <p class="help-block">Select transaction date.</p>
             </div>            
             <?php

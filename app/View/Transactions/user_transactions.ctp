@@ -147,7 +147,7 @@ $my_params = array(
                                 <?php
                             endforeach;
                         } else {
-                            echo "<tr><td colspan=10><br/><br/>No Data</td></tr>";
+                            echo "<tr><td colspan=10>No records found.</td></tr>";
                         }
                         ?>
                     </tbody>

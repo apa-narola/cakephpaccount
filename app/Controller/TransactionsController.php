@@ -19,7 +19,6 @@ class TransactionsController extends AppController {
      */
     public $components = array('Paginator', 'Flash', 'Session');
 
-    //public $uses = array('Usermgmt.User');
     /**
      * index method
      *
@@ -104,6 +103,7 @@ class TransactionsController extends AppController {
         if(empty($user_id))
         $user_id = $this->request->params["named"]["user_id"];
         
+        $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("id"=>$user_id)));
         $conditions = array();
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
@@ -173,8 +173,8 @@ class TransactionsController extends AppController {
         );
         $transactions = $this->paginate();
         $fullname = "NA";
-        if (isset($transactions[0]["User"]["first_name"]))
-            $fullname = $transactions[0]["User"]["first_name"] . " " . $transactions[0]["User"]["last_name"];
+        if (isset($transactionUser["User"]["first_name"]))
+            $fullname = $transactionUser["User"]["first_name"] . " " . $transactionUser["User"]["last_name"];
         $this->set(compact('fullname', 'transactions',"user_id"));
     }
 

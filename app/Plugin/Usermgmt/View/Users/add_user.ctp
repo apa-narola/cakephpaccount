@@ -40,13 +40,17 @@
         </ol>
         <?php echo $this->Session->flash(); ?>
         <div class="col-lg-6">
-            <?php echo $this->Form->create('User', array('action' => 'addUser','role'=>'form')); ?>
-            <?php if (count($userGroups) > 2) { ?>
-            <div class="form-group">
-                <label><?php echo __('Group'); ?><font color='red'>*</font></label>                
-                <?php echo $this->Form->input("user_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-            <?php } ?>            
+            <?php echo $this->Form->create('User', array('action' => 'addUser', 'role' => 'form')); ?>
+            <?php if ($this->UserAuth->isAdmin()) { ?>
+                <?php if (count($userGroups) > 2) { ?>
+                    <div class="form-group">
+                        <label><?php echo __('Group'); ?><font color='red'>*</font></label>                
+                        <?php echo $this->Form->input("user_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
+                    </div>
+                <?php } ?>   
+            <?php } else { ?>
+                <?php echo $this->Form->input("user_group_id", array('type' => 'hidden', 'label' => false, 'div' => false, 'value' => 2)) ?>
+            <?php } ?>           
             <div class="form-group">
                 <label><?php echo __('Username'); ?><font color='red'>*</font></label>
                 <?php echo $this->Form->input("username", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
@@ -65,11 +69,11 @@
             </div>                             
             <div class="form-group">
                 <label><?php echo __('Password'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("password", array('type'=>'password','label' => false, 'div' => false, 'class' => "form-control")) ?>
+                <?php echo $this->Form->input("password", array('type' => 'password', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>
             <div class="form-group">
                 <label><?php echo __('Confirm Password'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("cpassword", array('type'=>'password','label' => false, 'div' => false, 'class' => "form-control")) ?>
+                <?php echo $this->Form->input("cpassword", array('type' => 'password', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>
             <?php
             $options = array(

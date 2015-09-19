@@ -42,7 +42,7 @@ function UsermgmtInIt(&$controller) {
 		set true if new registrations are allowed
 	*/
 	if(!defined("SITE_REGISTRATION")) {
-		define("SITE_REGISTRATION", true);
+		define("SITE_REGISTRATION", false);
 	}
 
 	/*
@@ -57,7 +57,7 @@ function UsermgmtInIt(&$controller) {
 		sett false you do not want verify user's email id, in this case user becomes active after registration with out email verification
 	*/
 	if(!defined("EMAIL_VERIFICATION")) {
-		define("EMAIL_VERIFICATION", true);
+		define("EMAIL_VERIFICATION", false);
 	}
 
 
