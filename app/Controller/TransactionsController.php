@@ -100,6 +100,84 @@ class TransactionsController extends AppController {
 //        $this->set('transactions', $this->Paginator->paginate());
     }
 
+    public function userTransactions($user_id = null) {
+        if(empty($user_id))
+        $user_id = $this->request->params["named"]["user_id"];
+        
+        $conditions = array();
+        //Transform POST into GET
+        if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
+            $filter_url['user_id'] = $user_id;
+            $filter_url['controller'] = $this->request->params['controller'];
+            $filter_url['action'] = $this->request->params['action'];
+            // We need to overwrite the page every time we change the parameters
+            $filter_url['page'] = 1;
+
+            // for each filter we will add a GET parameter for the generated url
+            foreach ($this->data['Transaction'] as $name => $value) {
+                if ($value) {
+                    // You might want to sanitize the $value here
+                    // or even do a urlencode to be sure
+                    $filter_url[$name] = urlencode($value);
+                }
+            }            
+            // now that we have generated an url with GET parameters, 
+            // we'll redirect to that page
+            return $this->redirect($filter_url);
+        } else {
+            if (!empty($this->params['named']["transaction_from"]) || !empty($this->params['named']["transaction_to"])) {
+                if (!empty($this->params['named']["transaction_from"]) && !empty($this->params['named']["transaction_to"])) {
+                    $conditions[] = array('Transaction.transaction_date >= ' => $this->params['named']["transaction_from"],
+                        'Transaction.transaction_date <= ' => $this->params['named']["transaction_to"]
+                    );
+                } elseif (!empty($this->params['named']["transaction_from"])) {
+                    $conditions[] = array('Transaction.transaction_date >= ' => $this->params['named']["transaction_from"]);
+                } elseif (!empty($this->params['named']["transaction_to"])) {
+                    $conditions[] = array('Transaction.transaction_date <= ' => $this->params['named']["transaction_to"]);
+                }
+            }
+            $ignoreFields = array("transaction_from", "transaction_to");
+            // Inspect all the named parameters to apply the filters
+            foreach ($this->params['named'] as $param_name => $value) {
+                // Don't apply the default named parameters used for pagination
+                if (!in_array($param_name, array('page', 'sort', 'direction', 'limit'))) {
+                    // You may use a switch here to make special filters
+                    // like "between dates", "greater than", etc
+                    if (in_array($param_name, $ignoreFields))
+                        continue;
+
+                    if ($param_name == "search") {
+                        $conditions['OR'] = array(
+                            array('Transaction.id' => $value),
+                            array('Transaction.remarks LIKE' => '%' . $value . '%'),
+                            array('User.first_name LIKE' => '%' . $value . '%'),
+                            array('User.last_name LIKE' => '%' . $value . '%'),
+                            array('User.username LIKE' => '%' . $value . '%'),
+                            array('User.email LIKE' => '%' . $value . '%'),
+                        );
+                    } else {
+                        if ($param_name == "is_interest" && $value == 2)
+                            $value = 0;
+                        $conditions['Transaction.' . $param_name] = $value;
+                    }
+                    $this->request->data['Transaction'][$param_name] = $value;
+                }
+            }
+        }
+        $conditions[] = array("Transaction.user_id" => $user_id);
+        $this->Transaction->recursive = 0;
+        $this->paginate = array(
+            'limit' => 5,
+            'conditions' => $conditions,
+            'order' => 'Transaction.id desc'
+        );
+        $transactions = $this->paginate();
+        $fullname = "NA";
+        if (isset($transactions[0]["User"]["first_name"]))
+            $fullname = $transactions[0]["User"]["first_name"] . " " . $transactions[0]["User"]["last_name"];
+        $this->set(compact('fullname', 'transactions',"user_id"));
+    }
+
     /**
      * view method
      *
@@ -136,7 +214,7 @@ class TransactionsController extends AppController {
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name")));
         else
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name"), "conditions" => array("user_group_id <>" => 1)));
-        
+
         $this->set(compact('users'));
     }
 
@@ -173,7 +251,7 @@ class TransactionsController extends AppController {
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name")));
         else
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name"), "conditions" => array("user_group_id <>" => 1)));
-        
+
         $this->set(compact('users'));
     }
 
