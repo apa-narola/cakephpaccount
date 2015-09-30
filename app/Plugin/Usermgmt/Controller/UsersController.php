@@ -304,8 +304,8 @@ class UsersController extends UserMgmtAppController {
                 $this->request->data['User']['salt'] = $salt;
                 $this->request->data['User']['password'] = $this->UserAuth->makePassword($this->request->data['User']['password'], $salt);
                 $this->User->save($this->request->data, false);
-                //$this->Session->setFlash(__('The user is successfully added'));
-                $this->Flash->success(__('The user is successfully added'));
+                $this->Session->setFlash(__('The user is successfully added'));
+                //$this->Flash->success(__('The user is successfully added'));
                 $this->redirect('/addUser');
             }
         }
@@ -335,8 +335,8 @@ class UsersController extends UserMgmtAppController {
                 $this->User->set($this->data);
                 if ($this->User->RegisterValidate()) {
                     $this->User->save($this->request->data, false);
-//                    $this->Session->setFlash(__('The user is successfully updated'));
-                    $this->Flash->success(__('The user is successfully updated'));
+                    $this->Session->setFlash(__('The user is successfully updated'));
+                    //$this->Flash->success(__('The user is successfully updated'));
                     $this->redirect('/allUsers');
                 }
             } else {

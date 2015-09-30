@@ -180,7 +180,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="<?php echo $this->webroot; ?>sb-admin/index.html">SB Admin</a>
+                        <a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>
                     </div>
                     <!-- Top Menu Items -->
                     <ul class="nav navbar-right top-nav">
@@ -340,24 +340,24 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                                 <a href="<?php echo $this->webroot ?>transactions"><i class="fa fa-fw fa-money"></i> Transactions</a>
                             </li>                                               
 <!--                            <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>/addUser"><i class="fa fa-user-plus"></i> Add User</a>
+                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-user-plus"></i> Add User</a>
                             </li>-->
                             <li <?php echo $cls_list_users; ?>>
-                                <a href="<?php echo $this->webroot ?>/allUsers"><i class="fa fa-fw fa-users"></i> Users</a>
+                                <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Users</a>
                             </li>
                             <?php if ($this->UserAuth->isAdmin()) { ?>
 <!--                                <li <?php echo $cls_add_group; ?>>
-                                    <a href="<?php echo $this->webroot ?>/addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
+                                    <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
                                 </li>-->
                                 <li <?php echo $cls_list_users; ?>>
-                                    <a href="<?php echo $this->webroot ?>/allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                                    <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
                                 </li>
                                 <li <?php echo $cls_list_permissions; ?>>
-                                    <a href="<?php echo $this->webroot ?>/permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                                    <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
                                 </li>
                             <?php } ?>
                             <li>
-                                <a href="<?php echo $this->webroot ?>/logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+                                <a href="<?php echo $this->webroot ?>logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
                             </li>
                             <!--                        <li>
                                                         <a href="<?php echo $this->webroot; ?>sb-admin/index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>

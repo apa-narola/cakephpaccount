@@ -120,3 +120,6 @@ p.error em {
 .bdr-left{
     border-left:1px solid #ccc;
 }
+.padd-right-0{
+padding-left:0;
+}
