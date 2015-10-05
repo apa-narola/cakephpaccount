@@ -76,6 +76,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             echo $this->fetch('meta');
             echo $this->fetch('css');
             echo $this->fetch('script');
+            // below jquery1.11 is required for bootstrap datepicker
+            echo $this->Html->script('jquery-1.11.3.min.js');
             ?>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,15 +90,18 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             <?php echo $this->Html->css('/sb-admin/css/sb-admin'); ?>
             <!-- Custom Fonts -->
             <?php echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min'); ?>
-            <!-- Bootstrap DateTimePicker -->
-            <?php echo $this->Html->css('bootstrap-datetimepicker.min'); ?>
+            <!-- Bootstrap datepicker -->
+            <?php echo $this->Html->css('bootstrap-datepicker3.css'); ?>
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
-
+        <script type="text/javascript">
+        var DATE_FORMAT = '<?php echo Configure::read('App.DATE_FORMAT');?>'
+        var DATE_FORMAT_JS = '<?php echo Configure::read('App.DATE_FORMAT_JS');?>'
+</script>
         </head>
         <?php
         $controller = $this->params["controller"];
@@ -333,15 +338,15 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <li <?php echo $cls_dashboard_users; ?>>
                                 <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
-<!--                            <li <?php echo $cls_add_trans; ?>>
+               <li <?php echo $cls_add_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
-                            </li> -->
+                            </li>
                             <li <?php echo $cls_list_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions"><i class="fa fa-fw fa-money"></i> Transactions</a>
                             </li>                                               
-<!--                            <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-user-plus"></i> Add User</a>
-                            </li>-->
+                            <li <?php echo $cls_add_user; ?>>
+                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add User</a>
+                            </li>
                             <li <?php echo $cls_list_users; ?>>
                                 <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Users</a>
                             </li>
@@ -386,7 +391,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
 
             <?php echo $this->Html->script('/sb-admin/js/jquery.js'); ?>
             <!-- Bootstrap Core JavaScript -->
-            <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>       
+            <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
             <?php // echo $this->element('sql_dump'); ?>
         </body>
 

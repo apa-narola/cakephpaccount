@@ -79,7 +79,8 @@ Configure::write('App.encoding', 'UTF-8');
 /**
  * Application wide charset encoding
  */
-Configure::write('App.DATE_FORMAT', 'd/m/Y H:i:s');
+Configure::write('App.DATE_FORMAT', 'd-m-Y');
+Configure::write('App.DATE_FORMAT_JS', 'dd-mm-yyyy');
 
 /**
  * To configure CakePHP *not* to use mod_rewrite and to

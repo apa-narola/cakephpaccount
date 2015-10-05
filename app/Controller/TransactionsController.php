@@ -200,8 +200,8 @@ class TransactionsController extends AppController {
      */
     public function add() {
         if ($this->request->is('post')) {
-//            if (isset($this->request->data["Transaction"]["transaction_date"]))
-//                $this->request->data["Transaction"]["transaction_date"] = date("Y-m-d H:i:s", strtotime($this->request->data["Transaction"]["transaction_date"]));
+            if (isset($this->request->data["Transaction"]["transaction_date"]))
+                $this->request->data["Transaction"]["transaction_date"] = date("Y-m-d", strtotime($this->request->data["Transaction"]["transaction_date"]));
             $this->Transaction->create();
             if ($this->Transaction->save($this->request->data)) {
                 $this->Flash->success(__('The transaction has been saved.'));
@@ -231,11 +231,8 @@ class TransactionsController extends AppController {
         }
         if ($this->request->is(array('post', 'put'))) {
 
-//            if (isset($this->request->data["Transaction"]["transaction_date"])) {
-//                $this->request->data["Transaction"]["transaction_date"] = date("Y-m-d H:i:s", strtotime($this->request->data["Transaction"]["transaction_date"]));
-//            }
-//            pr($this->request->data);
-//            exit;
+            if (isset($this->request->data["Transaction"]["transaction_date"]))
+                $this->request->data["Transaction"]["transaction_date"] = date("Y-m-d", strtotime($this->request->data["Transaction"]["transaction_date"]));
 
             if ($this->Transaction->save($this->request->data)) {
                 $this->Flash->success(__('The transaction has been saved.'));

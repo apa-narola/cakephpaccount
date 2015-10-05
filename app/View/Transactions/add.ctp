@@ -52,17 +52,13 @@
             </div>
             <div class="form-group">
                 <label>Transaction date</label>
-                <div class="input-group date transaction_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii" data-link-field="transaction_date_db">
+                <div class="input-group date">
                     <?php
-                    echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
-                        "value" => "", "label" => false, "div" => false, "readonly",
-                        "data-link-field" => "dtp_input1"
-                    ));
-                    ?>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
+                                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
+                                        ?>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
-            <?php echo $this->Form->hidden("transaction_date_db", array("id" => "transaction_date_db","name"=>"transaction_date_db")); ?><br/>
                 <p class="help-block">Select transaction date.</p>
             </div>            
             <?php
@@ -76,18 +72,10 @@
         </div>
     </div>
 </div>
-<!--Bootstrap datetime picker js - ref : http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
-<?php echo $this->Html->script('jquery-1.8.3.min.js'); ?>
-<?php echo $this->Html->script('bootstrap-datetimepicker.min.js'); ?>
+<!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
+<?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
 <script type="text/javascript">
-    $('.transaction_datetime').datetimepicker({
-        //language:  'fr',        
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
+    $('.input-group.date').datepicker({
+        format: DATE_FORMAT_JS
     });
 </script>

@@ -50,26 +50,25 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>From</label>
-                    <div class="input-group date from_datetime" data-date-format="yyyy-mm-dd">
+                    <div class="input-group date">
                         <?php
-                        echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                            "value" => "", "label" => false, "div" => false, "readonly"));
-                        ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                                echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
+                                                    "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
+                                                ?>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
+
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>To</label>
-                    <div class="input-group date to_datetime" data-date-format="yyyy-mm-dd">
+                    <div class="input-group date">
                         <?php
                         echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => "", "label" => false, "div" => false, "readonly"));
+                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
                         ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
                 </div>
             </div>
@@ -104,7 +103,7 @@
 						<td class="col-lg-3 bdr-left">
                                 <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
                             </td>
-                            <td class="col-lg-9 bdr-left">            
+                            <td class="col-lg-9 bdr-left">
                                 <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
                                 <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
                                 <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
@@ -113,7 +112,7 @@
                                 <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
                                 <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                 <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                            </td>                            
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -165,17 +164,10 @@
                 ?>
             </ul>
         </div></div>
-    <!--Bootstrap datetime picker js - ref : http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
-    <?php echo $this->Html->script('jquery-1.8.3.min.js'); ?>
-    <?php echo $this->Html->script('bootstrap-datetimepicker.min.js'); ?>
+    <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
+    <?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
     <script type="text/javascript">
-        $('.from_datetime,.to_datetime').datetimepicker({
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0
+        $('.input-group.date').datepicker({
+            orientation: "bottom auto"
         });
     </script>

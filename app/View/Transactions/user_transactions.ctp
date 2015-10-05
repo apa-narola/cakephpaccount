@@ -65,26 +65,25 @@ $my_params = array(
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>From</label>
-                    <div class="input-group date from_datetime" data-date-format="yyyy-mm-dd">
+                    <div class="input-group date">
                         <?php
                         echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                            "value" => "", "label" => false, "div" => false, "readonly"));
+                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
                         ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
+
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>To</label>
-                    <div class="input-group date to_datetime" data-date-format="yyyy-mm-dd">
+                    <div class="input-group date">
                         <?php
                         echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => "", "label" => false, "div" => false, "readonly"));
+                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
                         ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
                 </div>
             </div>
@@ -104,71 +103,92 @@ $my_params = array(
         </div>
 <?php echo $this->Session->flash(); ?>
         <div class="col-lg-12">
-            <div class="table-responsive">                
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th><?php echo $this->Paginator->sort('id'); ?></th>
-                            <th><?php echo $this->Paginator->sort('user_id'); ?></th>
-                            <th><?php echo $this->Paginator->sort('amount'); ?></th>
-                            <th><?php echo $this->Paginator->sort('transaction_type'); ?></th>
-                            <th><?php echo $this->Paginator->sort('is_interest'); ?></th>
-                            <th><?php echo $this->Paginator->sort('remarks'); ?></th>
-                            <th><?php echo $this->Paginator->sort('transaction_date'); ?></th>
-                            <th><?php echo $this->Paginator->sort('created'); ?></th>
-                            <th><?php echo $this->Paginator->sort('modified'); ?></th>
-                            <th class="actions"><?php echo __('Actions'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="col-lg-10"> <h2>Payment</h2></div>
+                    <div class="col-lg-2">
+                        <!--<h2 class="pull-right">Amount</h2>-->
+                    </div>
+
+                    <table class="table-responsive table-hover table-striped" width="100%">
                         <?php
-                        if (!empty($transactions)) {
-                            $sl = 0;
-                            foreach ($transactions as $transaction):
-                                ?>
-                                <tr>
-                                    <td><?php echo h($transaction['Transaction']['id']); ?>&nbsp;</td>
-                                    <td>
-        <?php echo $this->Html->link($transaction['User']['username'], "/viewUser/" . $transaction['User']['id']); ?>
-                                    </td>
-                                    <td><?php echo h($transaction['Transaction']['amount']); ?>&nbsp;</td>
-                                    <td><?php echo h($transaction['Transaction']['transaction_type']); ?>&nbsp;</td>
-                                    <td><?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No" ; ?>&nbsp;</td>
-                                    <td><?php echo h($transaction['Transaction']['remarks']); ?>&nbsp;</td>
-                                    <td><?php echo h($transaction['Transaction']['transaction_date']); ?>&nbsp;</td>
-                                    <td><?php echo h($transaction['Transaction']['created']); ?>&nbsp;</td>
-                                    <td><?php echo h($transaction['Transaction']['modified']); ?>&nbsp;</td>
-                                    <td class="actions">
-                                        <?php echo $this->Html->link(__('View'), array('action' => 'view', $transaction['Transaction']['id'])); ?>
-                                        <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
-        <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                                    </td>
-                                </tr>
-                                <?php
-                            endforeach;
-                        } else {
-                            echo "<tr><td colspan=10>No records found.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-                <div class="pull-right">
-<!--            <p>
-                    <?php
-                    echo $this->Paginator->counter(array(
-                        'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-                    ));
-                    ?>
-            </p>-->
-                    <ul class="pagination">
-                        <?php
-                        echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                        echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
-                        echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                        ?>
-                    </ul>
+                        foreach ($transactions as $transaction):
+                            if ($transaction['Transaction']['transaction_type'] != "Payment")
+                                continue;
+                            ?>
+                            <tr>
+                                <td class="col-lg-3 bdr-left">
+                                    <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                                </td>
+                                <td class="col-lg-9 bdr-left">
+                                    <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
+                                        <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
+                                        <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
+                                        <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
+                                        &nbsp; (<?php echo h($transaction['Transaction']['remarks']); ?>), &nbsp;
+                                        <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
+                                    <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
+                                    <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
                 </div>
+
+                <div class="col-lg-6">
+                    <div class="col-lg-10"> <h2>Receipt</h2></div>
+                    <div class="col-lg-2">
+                        <!--<h2 class="pull-right">Amount</h2>-->
+                    </div>
+                    <table class="table-responsive table-hover table-striped" width="100%">
+                        <?php
+                        foreach ($transactions as $transaction):
+                            if ($transaction['Transaction']['transaction_type'] != "Receipt")
+                                continue;
+                            ?>
+                            <tr>
+                                <td class="col-lg-3 bdr-left">
+                                    <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                                </td>
+                                <td class="col-lg-9 bdr-left">
+                                    <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
+                                        <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
+                                        <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
+                                        <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
+                                        &nbsp; (<?php echo h($transaction['Transaction']['remarks']); ?>), &nbsp;
+                                        <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
+                                    <?php echo $this->Html->link(__('View'), array('action' => 'view', $transaction['Transaction']['id'])); ?>
+                                    <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
+                                    <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+            </div>
+            <div class="row pull-right">
+                <!--            <p>
+            <?php
+                echo $this->Paginator->counter(array(
+                    'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+                ));
+                ?>
+            </p>-->
+                <ul class="pagination">
+                    <?php
+                    echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+                    echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
+                    echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+                    ?>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+<!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
+<?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
+<script type="text/javascript">
+    $('.input-group.date').datepicker({
+        orientation: "bottom auto"
+    });
+</script>
