@@ -52,8 +52,12 @@
                     <label>From</label>
                     <div class="input-group date">
                         <?php
+                        $selected_transaction_from =null;
+                        if(isset($this->params['named']["transaction_from"]))
+                            $selected_transaction_from = $this->params['named']["transaction_from"];
+
                                                 echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                                                    "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
+                                                    "value" => $selected_transaction_from, "label" => false, "div" => false,"readonly"));
                                                 ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -65,8 +69,12 @@
                     <label>To</label>
                     <div class="input-group date">
                         <?php
+                        $selected_transaction_to = null;
+                        if(isset($this->params['named']["transaction_to"]))
+                            $selected_transaction_to =$this->params['named']["transaction_to"];
+
                         echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
+                            "value" => $selected_transaction_to, "label" => false, "div" => false,"readonly"));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -108,7 +116,7 @@
                                 <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
                                 <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
                                 <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
-                                &nbsp; (<?php echo h($transaction['Transaction']['remarks']); ?>), &nbsp;
+                                &nbsp; <?php if(!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;
                                 <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
                                 <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                 <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
@@ -138,7 +146,7 @@
                                 <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
                                 <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
                                 <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
-                                &nbsp; (<?php echo h($transaction['Transaction']['remarks']); ?>), &nbsp;
+                                    &nbsp; <?php if(!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;
                                 <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
                                 <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                 <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
@@ -168,6 +176,7 @@
     <?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
     <script type="text/javascript">
         $('.input-group.date').datepicker({
-            orientation: "bottom auto"
+            orientation: "bottom auto",
+            format: DATE_FORMAT_JS
         });
     </script>

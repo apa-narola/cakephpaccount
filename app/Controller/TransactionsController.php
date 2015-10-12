@@ -68,7 +68,7 @@ class TransactionsController extends AppController {
 
                     if ($param_name == "search") {
                         $conditions['OR'] = array(
-                            array('Transaction.id=' => $value),
+                            //array('Transaction.id=' => $value),
                             array('Transaction.remarks LIKE' => '%' . $value . '%'),
                             array('User.first_name LIKE' => '%' . $value . '%'),
                             array('User.last_name LIKE' => '%' . $value . '%'),
@@ -148,7 +148,6 @@ class TransactionsController extends AppController {
 
                     if ($param_name == "search") {
                         $conditions['OR'] = array(
-                            array('Transaction.id' => $value),
                             array('Transaction.remarks LIKE' => '%' . $value . '%'),
                             array('User.first_name LIKE' => '%' . $value . '%'),
                             array('User.last_name LIKE' => '%' . $value . '%'),
@@ -243,6 +242,7 @@ class TransactionsController extends AppController {
         } else {
             $options = array('conditions' => array('Transaction.' . $this->Transaction->primaryKey => $id));
             $this->request->data = $this->Transaction->find('first', $options);
+            $this->request->data["Transaction"]["transaction_date"] = date(Configure::read('App.DATE_FORMAT'),strtotime($this->request->data["Transaction"]["transaction_date"]));
         }
         if ($this->UserAuth->isAdmin())
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name")));
