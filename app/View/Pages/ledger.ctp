@@ -1,8 +1,3 @@
-<style type="text/css">
-    .typeahead {
-        z-index: 1051;
-    }
-</style>
 <!-- Page Heading -->
 <div class="row">
     <div class="col-lg-12">
@@ -23,28 +18,22 @@
                     Transaction</a>
             </li>-->
         </ol>
-
         <div class="row">
-            <div class="bs-example">
-                <input type="text" class="typeahead tt-query" autocomplete="off" spellcheck="false">
+            <div class="col-md-4">
+                <input type="text" class="typeahead tt-query form-control input-lg " autocomplete="off"
+                       spellcheck="false" placeholder="Type user name">
             </div>
-
         </div>
+
     </div>
 </div>
 <?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
 <script type="text/javascript">
-    var typeaheadSource = [{
-        id: 1, firstName: 'John'}, {
-        id: 2, firstName: 'Alex'}, {
-        id: 3, firstName: 'Terry'
-    }];
-
     $("input.typeahead").typeahead({
-        onSelect: function(item) {
+        onSelect: function (item) {
             var user_id = item.value;
             //console.log(item.text);
-            window.location = site_url + "/transactions/userTransactions/"+user_id;
+            window.location = site_url + "/transactions/userTransactions/" + user_id;
         },
         ajax: {
             url: site_url + "/typeaheadSearch",
