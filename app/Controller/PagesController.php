@@ -26,7 +26,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array();
+	public $uses = array("User");
 
 /**
  * Displays a view
@@ -64,4 +64,33 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+	public function ledger()
+	{
+
+	}
+	public function typeaheadSearch(){
+
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		// get the search term from URL
+		$term = $this->request->query['search'];
+
+		$users = $this->User->find('all',array(
+			'conditions' => array(
+				'User.username LIKE' => '%'.$term.'%'
+			)
+		));
+		// Format the result for select2
+		$result = array();
+		foreach($users as $key => $user) {
+			$tmp = array("id"=>$user['User']['id'],"username"=>$user['User']['username']);
+			array_push($result, $tmp);
+		}
+		$users = $result;
+
+		echo json_encode($users);
+		exit;
+
+	}
+
 }

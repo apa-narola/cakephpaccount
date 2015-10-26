@@ -76,6 +76,11 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             echo $this->fetch('meta');
             echo $this->fetch('css');
             echo $this->fetch('script');
+            ?>
+            <script type="text/javascript">
+            var site_url = "<?php echo $this->webroot;?>";
+</script>
+            <?php
             // below jquery1.11 is required for bootstrap datepicker
             echo $this->Html->script('jquery-1.11.3.min.js');
             ?>
@@ -115,6 +120,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
         $cls_add_group = null;
         $cls_list_groups = null;
         $cls_list_permissions = null;
+        $cls_ledger = null;
         switch ($controller) {
             case "transactions":
                 switch ($action) {
@@ -160,6 +166,15 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                 switch ($action) {
                     case "index":
                         $cls_list_permissions = "class='active'";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "pages":
+                switch ($action) {
+                    case "ledger":
+                        $cls_ledger = "class='active'";
                         break;
                     default:
                         break;
@@ -338,6 +353,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <li <?php echo $cls_dashboard_users; ?>>
                                 <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
+                                <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
+                            </li>
                <li <?php echo $cls_add_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
                             </li>
@@ -392,6 +409,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             <?php echo $this->Html->script('/sb-admin/js/jquery.js'); ?>
             <!-- Bootstrap Core JavaScript -->
             <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
+
             <?php // echo $this->element('sql_dump'); ?>
         </body>
 
