@@ -7,12 +7,12 @@
             echo h($fullname);
             ?>
             <!--<small>Subheading</small>-->
-        </h1>        
+        </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-home"></i>  
-                <?php echo $this->Html->link(__("Home", true), "/") ?>                
-            </li>                       
+                <i class="fa fa-home"></i>
+                <?php echo $this->Html->link(__("Home", true), "/") ?>
+            </li>
             <li>
                 <i class="fa fa-users"></i> <a href="<?php echo $this->webroot ?>allUsers">Users</a>
             </li>
@@ -27,15 +27,15 @@
             <?php
             // The base url is the url where we'll pass the filter parameters
             $url = array(
-    'controller' => 'transactions',
-    'action' => 'userTransactions'
-);
+                'controller' => 'transactions',
+                'action' => 'userTransactions'
+            );
 
-$my_params = array(
-    'user_id' => $user_id,    
-);
+            $my_params = array(
+                'user_id' => $user_id,
+            );
 
-            $base_url = $this->Html->url(array_merge($url, $my_params),true);
+            $base_url = $this->Html->url(array_merge($url, $my_params), true);
             //$base_url = array('controller' => 'transactions', 'action' => 'userTransactions',$user_id);
             echo $this->Form->create("Transaction", array('url' => $base_url, 'class' => 'filter', 'novalidate'));
             // add a select input for each filter. It's a good idea to add a empty value and set
@@ -44,13 +44,13 @@ $my_params = array(
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Transaction Type</label>
-<?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>                    
+                    <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Display interest entries ?</label>
-<?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'empty' => '-- All --', 'default' => '')); ?>
+                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'empty' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -65,14 +65,15 @@ $my_params = array(
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>From</label>
+
                     <div class="input-group date">
                         <?php
-                        $selected_transaction_from =null;
-                        if(isset($this->params['named']["transaction_from"]))
+                        $selected_transaction_from = null;
+                        if (isset($this->params['named']["transaction_from"]))
                             $selected_transaction_from = $this->params['named']["transaction_from"];
 
                         echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_from, "label" => false, "div" => false,"readonly"));
+                            "value" => $selected_transaction_from, "label" => false, "div" => false, "readonly"));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -82,13 +83,14 @@ $my_params = array(
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>To</label>
+
                     <div class="input-group date">
                         <?php
                         $selected_transaction_to = null;
-                        if(isset($this->params['named']["transaction_to"]))
+                        if (isset($this->params['named']["transaction_to"]))
                             $selected_transaction_to = $this->params['named']["transaction_to"];
                         echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_to, "label" => false, "div" => false,"readonly"));
+                            "value" => $selected_transaction_to, "label" => false, "div" => false, "readonly"));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -100,7 +102,7 @@ $my_params = array(
                 ?>
                 &nbsp;&nbsp;
                 <?php
-//                    echo $this->Form->button("Reset", array("type" => "reset", "class" => "btn btn-default"));
+                //                    echo $this->Form->button("Reset", array("type" => "reset", "class" => "btn btn-default"));
                 echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
                 ?>
                 <?php
@@ -108,11 +110,11 @@ $my_params = array(
                 ?>
             </div>
         </div>
-<?php echo $this->Session->flash(); ?>
+        <?php echo $this->Session->flash(); ?>
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="col-lg-10"> <h2>Payment</h2></div>
+                    <div class="col-lg-10"><h2>Payment</h2></div>
                     <div class="col-lg-2">
                         <!--<h2 class="pull-right">Amount</h2>-->
                     </div>
@@ -125,15 +127,21 @@ $my_params = array(
                             ?>
                             <tr>
                                 <td class="col-lg-3 bdr-left">
-                                    <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                                    <div class="text-left"><i
+                                            class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?>
+                                    </div>
                                 </td>
                                 <td class="col-lg-9 bdr-left">
-                                    <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
-                                        <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
-                                        <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
-                                        <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
-                                        &nbsp; <?php if(!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;
-                                        <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
+                                    <p>
+                                        <strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>
+                                        <?php if (!empty($transaction['Transaction']['remarks'])) {
+                                            echo ", " . h(($transaction['Transaction']['remarks']));
+                                        }
+                                        ?>
+                                        <?php if (!empty($transaction['Transaction']['transaction_date'])) {
+                                            echo ", ".$transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA";
+                                        }?>
+                                    </p>
                                     <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                     <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
                                 </td>
@@ -143,7 +151,7 @@ $my_params = array(
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="col-lg-10"> <h2>Receipt</h2></div>
+                    <div class="col-lg-10"><h2>Receipt</h2></div>
                     <div class="col-lg-2">
                         <!--<h2 class="pull-right">Amount</h2>-->
                     </div>
@@ -155,15 +163,21 @@ $my_params = array(
                             ?>
                             <tr>
                                 <td class="col-lg-3 bdr-left">
-                                    <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                                    <div class="text-left"><i
+                                            class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?>
+                                    </div>
                                 </td>
                                 <td class="col-lg-9 bdr-left">
-                                    <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
-                                        <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
-                                        <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
-                                        <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
-                                        &nbsp; <?php if(!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;
-                                        <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
+                                    <p>
+                                        <strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']);?></strong>
+                                        <?php if (!empty($transaction['Transaction']['remarks'])) {
+                                            echo ", " . h(($transaction['Transaction']['remarks']));
+                                        }
+                                        ?>
+                                        <?php if (!empty($transaction['Transaction']['transaction_date'])) {
+                                            echo $transaction['Transaction']['transaction_date'] ? ", ". date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : ", NA";
+                                        }?>
+                                    </p>
                                     <?php echo $this->Html->link(__('View'), array('action' => 'view', $transaction['Transaction']['id'])); ?>
                                     <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                     <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>

@@ -353,6 +353,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <li <?php echo $cls_dashboard_users; ?>>
                                 <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
+                            <li>
                                 <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
                             </li>
                <li <?php echo $cls_add_trans; ?>>

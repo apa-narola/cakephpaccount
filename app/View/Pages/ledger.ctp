@@ -42,7 +42,9 @@
 
     $("input.typeahead").typeahead({
         onSelect: function(item) {
-            console.log(item);
+            var user_id = item.value;
+            //console.log(item.text);
+            window.location = site_url + "/transactions/userTransactions/"+user_id;
         },
         ajax: {
             url: site_url + "/typeaheadSearch",
