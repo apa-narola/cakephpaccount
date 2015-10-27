@@ -10,7 +10,8 @@ App::uses('AppController', 'Controller');
  * @property FlashComponent $Flash
  * @property SessionComponent $Session
  */
-class TransactionsController extends AppController {
+class TransactionsController extends AppController
+{
 
     /**
      * Components
@@ -18,13 +19,14 @@ class TransactionsController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Flash', 'Session');
-
+    const RECORD_PER_PAGE = 40;
     /**
      * index method
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $conditions = array();
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
@@ -47,12 +49,12 @@ class TransactionsController extends AppController {
         } else {
             if (!empty($this->params['named']["transaction_from"]) || !empty($this->params['named']["transaction_to"])) {
                 if (!empty($this->params['named']["transaction_from"]) && !empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_from"]));
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
+                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 } elseif (!empty($this->params['named']["transaction_from"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_from"]));
+                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
                 } elseif (!empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 }
             }
             $ignoreFields = array("transaction_from", "transaction_to");
@@ -76,17 +78,20 @@ class TransactionsController extends AppController {
                         );
                     } else {
                         if ($param_name == "is_interest" && $value == 2)
-                            $value = 0;
-                        $conditions['Transaction.' . $param_name] = $value;
+                            $conditions['Transaction.' . $param_name] = 0;
+                        else
+                            $conditions['Transaction.' . $param_name] = $value;
+
                     }
                     $this->request->data['Transaction'][$param_name] = $value;
                 }
             }
         }
+        //pr($this->request->data);exit;
         //pr($conditions);
         $this->Transaction->recursive = 0;
         $this->paginate = array(
-            'limit' => 5,
+            'limit' => self::RECORD_PER_PAGE,
             'conditions' => $conditions,
             'order' => 'Transaction.modified desc'
         );
@@ -98,7 +103,8 @@ class TransactionsController extends AppController {
 //        $this->set('transactions', $this->Paginator->paginate());
     }
 
-    public function userTransactions($user_id = null) {
+    public function userTransactions($user_id = null)
+    {
         if (empty($user_id))
             $user_id = $this->request->params["named"]["user_id"];
 
@@ -126,12 +132,12 @@ class TransactionsController extends AppController {
         } else {
             if (!empty($this->params['named']["transaction_from"]) || !empty($this->params['named']["transaction_to"])) {
                 if (!empty($this->params['named']["transaction_from"]) && !empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_from"]));
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
+                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 } elseif (!empty($this->params['named']["transaction_from"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_from"]));
+                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
                 } elseif (!empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s",strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 }
             }
             $ignoreFields = array("transaction_from", "transaction_to");
@@ -165,7 +171,7 @@ class TransactionsController extends AppController {
         //pr($conditions);exit;
         $this->Transaction->recursive = 0;
         $this->paginate = array(
-            'limit' => 5,
+            'limit' => self::RECORD_PER_PAGE,
             'conditions' => $conditions,
             'order' => 'Transaction.id desc'
         );
@@ -183,7 +189,8 @@ class TransactionsController extends AppController {
      * @param string $id
      * @return void
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
         if (!$this->Transaction->exists($id)) {
             throw new NotFoundException(__('Invalid transaction'));
         }
@@ -196,7 +203,8 @@ class TransactionsController extends AppController {
      *
      * @return void
      */
-    public function add() {
+    public function add()
+    {
         if ($this->request->is('post')) {
             if (isset($this->request->data["Transaction"]["transaction_date"]))
                 $this->request->data["Transaction"]["transaction_date"] = date("Y-m-d", strtotime($this->request->data["Transaction"]["transaction_date"]));
@@ -223,7 +231,8 @@ class TransactionsController extends AppController {
      * @param string $id
      * @return void
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         if (!$this->Transaction->exists($id)) {
             throw new NotFoundException(__('Invalid transaction'));
         }
@@ -241,7 +250,7 @@ class TransactionsController extends AppController {
         } else {
             $options = array('conditions' => array('Transaction.' . $this->Transaction->primaryKey => $id));
             $this->request->data = $this->Transaction->find('first', $options);
-            $this->request->data["Transaction"]["transaction_date"] = date(Configure::read('App.DATE_FORMAT'),strtotime($this->request->data["Transaction"]["transaction_date"]));
+            $this->request->data["Transaction"]["transaction_date"] = date(Configure::read('App.DATE_FORMAT'), strtotime($this->request->data["Transaction"]["transaction_date"]));
         }
         if ($this->UserAuth->isAdmin())
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name")));
@@ -258,7 +267,8 @@ class TransactionsController extends AppController {
      * @param string $id
      * @return void
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->Transaction->id = $id;
         if (!$this->Transaction->exists()) {
             throw new NotFoundException(__('Invalid transaction'));
@@ -272,40 +282,49 @@ class TransactionsController extends AppController {
         return $this->redirect(array('action' => 'index'));
     }
 
-    public function getAllTransactionCount() {
+    public function getAllTransactionCount()
+    {
         return $this->Transaction->find('count');
     }
 
-    public function getPaymentTransactionCount() {
+    public function getPaymentTransactionCount()
+    {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment')));
     }
 
-    public function getReceiptTransactionCount() {
+    public function getReceiptTransactionCount()
+    {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt')));
     }
 
-    public function getAllMainTransactionCount() {
+    public function getAllMainTransactionCount()
+    {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.is_interest' => 0)));
     }
 
-    public function getMainPaymentTransactionCount() {
-        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment','Transaction.is_interest' => 0)));
+    public function getMainPaymentTransactionCount()
+    {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment', 'Transaction.is_interest' => 0)));
     }
 
-    public function getMainReceiptTransactionCount() {
-        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt','Transaction.is_interest' => 0)));
+    public function getMainReceiptTransactionCount()
+    {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt', 'Transaction.is_interest' => 0)));
     }
 
-    public function getAllInterestTransactionCount() {
+    public function getAllInterestTransactionCount()
+    {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.is_interest' => 1)));
     }
 
-    public function getInterestPaymentTransactionCount() {
-        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment','Transaction.is_interest' => 1)));
+    public function getInterestPaymentTransactionCount()
+    {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment', 'Transaction.is_interest' => 1)));
     }
 
-    public function getInterestReceiptTransactionCount() {
-        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt','Transaction.is_interest' => 1)));
+    public function getInterestReceiptTransactionCount()
+    {
+        return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt', 'Transaction.is_interest' => 1)));
     }
 
 }

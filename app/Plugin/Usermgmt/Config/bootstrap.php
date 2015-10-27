@@ -79,7 +79,7 @@ function UsermgmtInIt(&$controller) {
 		set login redirect url, it means when user gets logged in then site will redirect to this url.
 	*/
 	if(!defined("LOGIN_REDIRECT_URL")) {
-		define("LOGIN_REDIRECT_URL", '/dashboard');
+		define("LOGIN_REDIRECT_URL", '/ledger');
 	}
 
 	/*

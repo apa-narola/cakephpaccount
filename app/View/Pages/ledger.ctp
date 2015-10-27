@@ -32,6 +32,10 @@
     $("input.typeahead").typeahead({
         onSelect: function (item) {
             var user_id = item.value;
+            if(!user_id) {
+                alert("Could not find userID.");
+                return false;
+            }
             //console.log(item.text);
             window.location = site_url + "/transactions/userTransactions/" + user_id;
         },

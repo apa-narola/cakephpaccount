@@ -35,7 +35,7 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Display interest entries ?</label>
-                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'empty' => '-- All --', 'default' => '')); ?>
+                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'empty' => '-- All --')); ?>
                 </div>
             </div>
             <div class="col-lg-4">
