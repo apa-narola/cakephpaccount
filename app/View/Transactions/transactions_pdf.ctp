@@ -6,6 +6,8 @@
 <!-- Custom Fonts -->
 <?php echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min'); ?>
 <?php
+//tcpdf integration with php
+// http://www.startutorial.com/articles/view/how-to-create-pdf-helper-with-tcpdf
 // set document information
 $this->pdf->core->setPageOrientation("L");
 $this->pdf->core->SetCreator(PDF_CREATOR);
