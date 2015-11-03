@@ -90,6 +90,9 @@
                 echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
                 ?>
                 <?php
+                echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
+                ?>
+                <?php
                 echo $this->Form->end();
                 ?>
             </div>

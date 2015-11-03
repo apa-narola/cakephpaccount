@@ -19,7 +19,9 @@ class TransactionsController extends AppController
      * @var array
      */
     public $components = array('Paginator', 'Flash', 'Session');
+    var $helpers = array('Pdf');
     const RECORD_PER_PAGE = 40;
+
     /**
      * index method
      *
@@ -325,6 +327,13 @@ class TransactionsController extends AppController
     public function getInterestReceiptTransactionCount()
     {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt', 'Transaction.is_interest' => 1)));
+    }
+
+    public function transactionsPdf()
+    {
+        $this->layout = 'pdf';
+        $transactions = $this->Transaction->find('all');
+        $this->set(compact('transactions'));
     }
 
 }
