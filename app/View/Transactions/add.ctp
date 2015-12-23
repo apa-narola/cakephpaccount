@@ -7,8 +7,8 @@
         </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-home"></i>  
-                 <?php echo $this->Html->link(__("Home", true), "/") ?>                
+                <i class="fa fa-home"></i>
+                 <?php echo $this->Html->link(__("Home", true), "/") ?>
             </li>
             <li>
                 <i class="fa fa-dashboard"></i>  <a href="<?php echo $this->webroot ?>transactions">Transactions</a>
@@ -23,6 +23,8 @@
 
             <div class="form-group">
                 <label>Select party name</label>
+                <!-- Button trigger modal -->
+                &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x" data-toggle="modal" data-target="#addNewPartyModal"></i></a>
                 <input id="" type="text" class="typeahead tt-query form-control" autocomplete="off"
                        spellcheck="false" placeholder="Type user name" required>
                 <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control")); ?>
@@ -36,7 +38,7 @@
             </div>
 
             <div class="form-group">
-                <label>Select transaction type</label>                
+                <label>Select transaction type</label>
                 <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
                 <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or <strong>Receipt</strong>.</p>
             </div>
@@ -63,7 +65,7 @@
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
                 <p class="help-block">Select transaction date.</p>
-            </div>            
+            </div>
             <?php
             $options = array(
                 'label' => __('Submit'),
@@ -75,8 +77,11 @@
         </div>
     </div>
 </div>
+<!--add new party popup-->
+<?php echo $this->element("add_new_party");?>
 <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
 <?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
+<?php echo $this->Html->script('transaction.js'); ?>
 <script type="text/javascript">
     $('.input-group.date').datepicker({
         format: DATE_FORMAT_JS

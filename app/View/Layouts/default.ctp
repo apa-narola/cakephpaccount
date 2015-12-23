@@ -55,6 +55,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             <!-- Bootstrap Core JavaScript -->
             <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
 
+            <?php echo $this->Html->script('/js/common.js'); ?>
+
         </body>
 
     </html>
@@ -410,6 +412,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             <?php echo $this->Html->script('/sb-admin/js/jquery.js'); ?>
             <!-- Bootstrap Core JavaScript -->
             <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
+
+            <?php echo $this->Html->script('/js/common.js'); ?>
 
             <?php // echo $this->element('sql_dump'); ?>
         </body>

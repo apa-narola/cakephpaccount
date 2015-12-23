@@ -38,19 +38,19 @@
             $base_url = $this->Html->url(array_merge($url, $my_params), true);
             //$base_url = array('controller' => 'transactions', 'action' => 'userTransactions',$user_id);
             echo $this->Form->create("Transaction", array('url' => $base_url, 'class' => 'filter', 'novalidate'));
-            // add a select input for each filter. It's a good idea to add a empty value and set
+            // add a select input for each filter. It's a good idea to add a add_new_party.ctp value and set
             // the default option to that.
             ?>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Transaction Type</label>
-                    <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>
+                    <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'add_new_party.ctp' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Display interest entries ?</label>
-                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'empty' => '-- All --', 'default' => '')); ?>
+                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'add_new_party.ctp' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
             <div class="col-lg-4">

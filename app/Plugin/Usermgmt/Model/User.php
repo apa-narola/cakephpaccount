@@ -162,6 +162,38 @@ class User extends UserMgmtAppModel {
         return $this->validates();
     }
 
+    function AddPartyValidate() {
+        $validate1 = array(
+            'username' => array(
+                'mustNotEmpty' => array(
+                    'rule' => 'notBlank',
+                    'message' => 'Please enter username',
+                    'last' => true),
+                'mustUnique' => array(
+                    'rule' => 'isUnique',
+                    'message' => 'This username already taken',
+                    'last' => true),
+                'mustBeLonger' => array(
+                    'rule' => array('minLength', 4),
+                    'message' => 'Username must be greater than 3 characters',
+                    'last' => true),
+            ),
+            'first_name' => array(
+                'mustNotEmpty' => array(
+                    'rule' => 'notBlank',
+                    'message' => 'Please enter first name')
+            ),
+            'last_name' => array(
+                'mustNotEmpty' => array(
+                    'rule' => 'notBlank',
+                    'on' => 'create',
+                    'message' => 'Please enter last name')
+            )
+        );
+        $this->validate = $validate1;
+        return $this->validates();
+    }
+
     /**
      * Used to validate captcha
      *
@@ -323,7 +355,7 @@ Thanks,\n" .
         switch ($type) {
             case 'guest':
                 // You can return any non-null value here, if you don't
-                // have a guest account, just return an empty array
+                // have a guest account, just return an add_new_party.ctp array
                 return array();
             case 'cookie':
                 $loginToken = false;
