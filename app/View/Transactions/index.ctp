@@ -29,13 +29,13 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Transaction Type</label>
-                    <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'add_new_party.ctp' => '-- All --', 'default' => '')); ?>
+                    <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label>Display interest entries ?</label>
-                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'add_new_party.ctp' => '-- All --')); ?>
+                    <label>Entries view option</label>
+                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Display only interest entries", "2" => "Don't display interest entries"), 'empty' => '-- All --')); ?>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -90,7 +90,10 @@
                 echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
                 ?>
                 <?php
-                echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
+                // echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
+                ?>
+                <?php
+                echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name"=>"exportToexcel","value"=>1));
                 ?>
                 <?php
                 echo $this->Form->end();
@@ -137,7 +140,7 @@
                 <table class="table-responsive table-hover table-striped" width="100%">
                     <?php
                     foreach ($transactions as $transaction):
-                        if ($transaction['Transaction']['transaction_type'] != "Receipt")
+                            if ($transaction['Transaction']['transaction_type'] != "Receipt")
                             continue;
                         ?>
                         <tr>

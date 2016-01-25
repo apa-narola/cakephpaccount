@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('CakeNumber', 'Utility');
 
 /**
  * Transactions Controller
@@ -19,7 +20,8 @@ class TransactionsController extends AppController
      * @var array
      */
     public $components = array('Paginator', 'Flash', 'Session');
-    var $helpers = array('Pdf');
+    var $helpers = array('Html', 'Form', 'Csv', 'Pdf',"Number");
+
     const RECORD_PER_PAGE = 40;
 
     /**
@@ -45,6 +47,8 @@ class TransactionsController extends AppController
                     $filter_url[$name] = urlencode($value);
                 }
             }
+            if (isset($this->data["exportToexcel"]))
+                $filter_url["exportToexcel"] = urlencode(1);
             // now that we have generated an url with GET parameters, 
             // we'll redirect to that page
             return $this->redirect($filter_url);
@@ -59,7 +63,7 @@ class TransactionsController extends AppController
                     $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 }
             }
-            $ignoreFields = array("transaction_from", "transaction_to");
+            $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel");
             // Inspect all the named parameters to apply the filters
             foreach ($this->params['named'] as $param_name => $value) {
                 // Don't apply the default named parameters used for pagination
@@ -83,14 +87,20 @@ class TransactionsController extends AppController
                             $conditions['Transaction.' . $param_name] = 0;
                         else
                             $conditions['Transaction.' . $param_name] = $value;
-
                     }
                     $this->request->data['Transaction'][$param_name] = $value;
                 }
             }
         }
-        //pr($this->request->data);exit;
-        //pr($conditions);
+
+        if (!empty($this->params['named']["exportToexcel"])) {
+            $searchedTransactions = $this->Transaction->find('all', array("conditions" => $conditions));
+            ///pr($searchedTransactions);exit;
+            if (!empty($searchedTransactions)) {
+                $filename = "transactions-" . time() . ".xls";
+                $this->exportToExcel($searchedTransactions, $filename);
+            }
+        }
         $this->Transaction->recursive = 0;
         $this->paginate = array(
             'limit' => self::RECORD_PER_PAGE,
@@ -128,6 +138,8 @@ class TransactionsController extends AppController
                     $filter_url[$name] = urlencode($value);
                 }
             }
+            if (isset($this->data["exportToexcel"]))
+                $filter_url["exportToexcel"] = urlencode(1);
             // now that we have generated an url with GET parameters,
             // we'll redirect to that page
             return $this->redirect($filter_url);
@@ -142,7 +154,7 @@ class TransactionsController extends AppController
                     $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 }
             }
-            $ignoreFields = array("transaction_from", "transaction_to");
+            $ignoreFields = array("transaction_from", "transaction_to","exportToexcel");
             // Inspect all the named parameters to apply the filters
             foreach ($this->params['named'] as $param_name => $value) {
                 // Don't apply the default named parameters used for pagination
@@ -169,7 +181,15 @@ class TransactionsController extends AppController
                 }
             }
         }
-        //$conditions[] = array("Transaction.user_id" => $user_id);
+        $conditions[] = array("Transaction.user_id" => $user_id);
+        if (!empty($this->params['named']["exportToexcel"])) {
+            $searchedTransactions = $this->Transaction->find('all', array("conditions" => $conditions));
+            ///pr($searchedTransactions);exit;
+            if (!empty($searchedTransactions)) {
+                $filename = "transactions-" . time() . ".xls";
+                $this->exportToExcel($searchedTransactions, $filename);
+            }
+        }
         //pr($conditions);exit;
         $this->Transaction->recursive = 0;
         $this->paginate = array(
@@ -334,6 +354,133 @@ class TransactionsController extends AppController
         $this->layout = 'pdf';
         $transactions = $this->Transaction->find('all');
         $this->set(compact('transactions'));
+    }
+
+    public function exportToExcel($data = array(), $filename = null)
+    {
+        /*
+         * Export to excel - php
+         */
+        // http://www.codexworld.com/export-data-to-excel-in-php/
+        $preparedArray = array();
+        if (!empty($data)) {
+            $payment_total = 0;
+            $receipt_total = 0;
+            foreach ($data as $signleTransaction) {
+                $recordArray = array();
+                if ($signleTransaction["Transaction"]["transaction_type"] == "Payment") {
+                    $amount = $signleTransaction["Transaction"]["amount"];
+                    $recordArray["Payment Amount"] =  CakeNumber::currency($amount,"");
+                    $recordArray["Payment Particulars"] = $this->getParticulars($signleTransaction);
+                    $payment_total += $amount;
+                } else {
+                    $recordArray["Payment Amount"] = null;
+                    $recordArray["Payment Particulars"] = null;
+                }
+
+                if ($signleTransaction["Transaction"]["transaction_type"] == "Receipt") {
+                    $amount = $signleTransaction["Transaction"]["amount"];
+                    $recordArray["Receipt Amount"] = CakeNumber::currency($amount,"");
+                    $recordArray["Receipt Particulars"] = $this->getParticulars($signleTransaction);
+                    $receipt_total += $amount;
+                } else {
+                    $recordArray["Receipt Amount"] = null;
+                    $recordArray["Receipt Particulars"] = null;
+                }
+                $preparedArray[] = $recordArray;
+            }
+            $recordArray = array();
+            $recordArray["Payment Amount"] = null;
+            $recordArray["Payment Particulars"] = null;
+            $recordArray["Receipt Amount"] = null;
+            $recordArray["Receipt Particulars"] = null;
+            $preparedArray[] = $recordArray;
+
+            $recordArray = array();
+            $recordArray["Payment Amount"] = "Total Payment";
+            $recordArray["Payment Particulars"] = null;
+            $recordArray["Receipt Amount"] = "Total Receipt";
+            $recordArray["Receipt Particulars"] = null;
+            $preparedArray[] = $recordArray;
+
+            $recordArray["Payment Amount"] = CakeNumber::currency($payment_total,"");
+            $recordArray["Payment Particulars"] = null;
+            $recordArray["Receipt Amount"] = CakeNumber::currency($receipt_total,"");
+            $recordArray["Receipt Particulars"] = null;
+            $preparedArray[] = $recordArray;
+        }
+
+//        $preparedArray = array();
+//        if (!empty($data)) {
+//            foreach ($data as $signleTransaction) {
+//                $recordArray = array();
+//                $recordArray["Amount"] = $signleTransaction["Transaction"]["amount"];
+//                $recordArray["Transaction Type"] = $signleTransaction["Transaction"]["transaction_type"];
+//                $recordArray["Is Interest Entry"] = $signleTransaction["Transaction"]["is_interest"];
+//                $recordArray["Remarks"] = $signleTransaction["Transaction"]["remarks"];
+//                $recordArray["Transaction Date"] = $signleTransaction["Transaction"]["transaction_date"];
+//                $recordArray["Created Date"] = $signleTransaction["Transaction"]["created"];
+//                $recordArray["Modified Date"] = $signleTransaction["Transaction"]["modified"];
+//                $preparedArray[] = $recordArray;
+//            }
+//        }
+        if (empty($filename)) {
+            // file name for download
+            $filename = "export_data" . date('Ymd') . ".xls";
+        }
+        $columnHeadings = array("Amount", "Particulars(Payment)", "Amount", "Particulars(Receipt)");
+        // headers for download
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+        header("Content-Type: application/vnd.ms-excel");
+
+        $flag = false;
+        foreach ($preparedArray as $row) {
+            if (!$flag) {
+                // display column names as first row
+                //echo implode("\t", array_keys($row)) . "\n";
+                echo implode("\t", $columnHeadings) . "\n";
+                $flag = true;
+            }
+            // filter data
+            array_walk($row, array($this, 'filterData'));
+            echo implode("\t", array_values($row)) . "\n";
+        }
+        exit;
+    }
+
+    private function filterData(&$str)
+    {
+        $str = preg_replace("/\t/", "\\t", $str);
+        $str = preg_replace("/\r?\n/", "\\n", $str);
+        if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+    }
+
+    private function getParticulars($signleTransaction)
+    {
+        $string = "NA";
+        if (!empty($signleTransaction["User"]["first_name"]))
+            $string = $signleTransaction["User"]["first_name"];
+        if (!empty($signleTransaction["User"]["last_name"]))
+            $string .= " " . $signleTransaction["User"]["last_name"];
+
+
+        if (!empty($signleTransaction["Transaction"]["remarks"]))
+            $string .= ", " . $signleTransaction["Transaction"]["remarks"];
+
+        if (!empty($signleTransaction["Transaction"]["transaction_date"]))
+            $string .= ", " . date("d-m-Y", strtotime($signleTransaction["Transaction"]["transaction_date"]));
+
+        return $string;
+    }
+
+    function export()
+    {
+        // not used anywhere in code, just for reference
+        //http://www.php-dev-zone.com/2013/12/export-data-into-excel-or-csv-file-in.html
+        $this->set('transactions', $this->Transacitons->find('all'));
+        $this->layout = null;
+        $this->autoLayout = false;
+        Configure::write('debug', '0');
     }
 
 }
