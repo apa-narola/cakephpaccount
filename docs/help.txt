@@ -1,0 +1,6 @@
+// wamp headers
+http://stackoverflow.com/questions/18137094/how-to-allow-access-control-allow-origin-aka-cross-domain-on-wampserver
+
+
+// php headers
+http://stackoverflow.com/questions/7564832/how-to-bypass-access-control-allow-origin
