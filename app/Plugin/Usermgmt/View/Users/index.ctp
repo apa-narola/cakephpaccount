@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Users
+            Parties
             <!--<small>Subheading</small>-->
         </h1>        
         <ol class="breadcrumb">
@@ -31,10 +31,10 @@
                 <?php echo $this->Html->link(__("Home", true), "/") ?>                
             </li>                       
             <li class="active">
-                <i class="fa fa-users"></i> Users
+                <i class="fa fa-users"></i> Parties
             </li>
             <li class="pull-right">
-                <i class="fa fa-plus-circle"></i>  <a href="<?php echo $this->webroot ?>addUser">Add User</a>
+                <i class="fa fa-plus-circle"></i>  <a href="<?php echo $this->webroot ?>addUser">Add Party</a>
             </li>
         </ol>
         <?php echo $this->Session->flash(); ?>
@@ -45,12 +45,14 @@
                         <tr>
                             <th><?php echo __('SL'); ?></th>
                             <th><?php echo __('Name'); ?></th>
+                            <?php if ($this->UserAuth->isAdmin()) { ?>
                             <th><?php echo __('Username'); ?></th>
                             <th><?php echo __('Email'); ?></th>
                             <th><?php echo __('Group'); ?></th>
                             <th><?php echo __('Email Verified'); ?></th>
                             <th><?php echo __('Status'); ?></th>
                             <th><?php echo __('Created'); ?></th>
+                            <?php } ?>
                             <th><?php echo __('Action'); ?></th>
                         </tr>
                     </thead>
@@ -62,7 +64,8 @@
                                 $sl++;
                                 echo "<tr>";
                                 echo "<td>" . $sl . "</td>";
-                                echo "<td>" . h($row['User']['first_name']) . " " . h($row['User']['last_name']) . "</td>";
+                                echo "<td>" . h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name']) . "</td>";
+                                if ($this->UserAuth->isAdmin()) {
                                 echo "<td>" . h($row['User']['username']) . "</td>";
                                 echo "<td>" . h($row['User']['email']) . "</td>";
                                 echo "<td>" . h($row['UserGroup']['name']) . "</td>";
@@ -81,6 +84,7 @@
                                 }
                                 echo"</td>";
                                 echo "<td>" . date('d-M-Y', strtotime($row['User']['created'])) . "</td>";
+                                }
                                 echo "<td>";
                                 echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
                                 echo "&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";

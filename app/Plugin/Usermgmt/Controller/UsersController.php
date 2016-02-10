@@ -298,6 +298,12 @@ class UsersController extends UserMgmtAppController {
         if ($this->request->isPost()) {
             $this->User->set($this->data);
             if ($this->User->RegisterValidate()) {
+                /* added by ashish - start*/
+                $this->request->data['User']['username'] = "ashish-".time();
+                $this->request->data['User']['email'] = "ashish-".time()."@gmail.com";
+                $this->request->data['User']['password'] = "ashish123";
+                $this->request->data['User']['cpassword'] = "ashish123";
+                /* added by ashish - end*/
                 $this->request->data['User']['email_verified'] = 1;
                 $this->request->data['User']['active'] = 1;
                 $salt = $this->UserAuth->makeSalt();
@@ -365,7 +371,7 @@ class UsersController extends UserMgmtAppController {
                 if ($this->User->delete($userId, false)) {
                     $this->LoginToken->deleteAll(array('LoginToken.user_id' => $userId), false);
 //                    $this->Session->setFlash(__('User is successfully deleted'));
-                    $this->Flash->success(__('User is successfully deleted'));
+                    $this->Session->setFlash(__('User is successfully deleted'));
                 }
             }
             $this->redirect('/allUsers');

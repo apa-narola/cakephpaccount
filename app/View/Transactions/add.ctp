@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                 <?php echo $this->Html->link(__("Home", true), "/") ?>
+                <?php echo $this->Html->link(__("Home", true), "/") ?>
             </li>
             <li>
                 <i class="fa fa-dashboard"></i>  <a href="<?php echo $this->webroot ?>transactions">Transactions</a>
@@ -20,15 +20,34 @@
 
         <div class="col-lg-6">
             <?php echo $this->Form->create('Transaction', array("role" => "form")); ?>
-
+            <div class="form-group">
+                <label class="radio control-label">Transaction type</label>
+                <!--<div class="col-sm-8">-->
+                    <?php
+                    echo $this->Form->input('transaction_type', array(
+                        "type" => "radio",
+                        "class" => "radio-inline cls_transaction_type",
+                        "div" => false,
+                        "legend"=>false,
+                        "label"=>array("style"=>"margin-left:10px;"),
+//                'before' => '--before--',
+//                'after' => '--after--',
+//                'between' => '--between---',
+                        'separator' => '&nbsp;&nbsp;&nbsp;&nbsp;',
+                        'options' => array("Receipt" => "Receipt", "Payment" => "Payment"),
+//                        'onchange'=>"alert('test');"
+                    ));
+                    ?>
+                <!--</div>-->
+            </div>
             <div class="form-group">
                 <label>Select party name</label>
                 <!-- Button trigger modal -->
                 &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x" data-toggle="modal" data-target="#addNewPartyModal"></i></a>
                 <input id="" type="text" class="typeahead tt-query form-control" autocomplete="off"
                        spellcheck="false" placeholder="Type user name" required>
-                <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control")); ?>
-                <?php echo $this->Form->input('user_id', array("type"=>"hidden","label" => false)); ?>
+                       <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
+                       <?php echo $this->Form->input('user_id', array("type" => "hidden", "label" => false)); ?>
                 <p class="help-block">Choose party name for which you are making transaction.</p>
             </div>
             <div class="form-group">
@@ -37,11 +56,11 @@
                 <p class="help-block">Enter amount. E.g. 10000</p>
             </div>
 
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label>Select transaction type</label>
                 <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
                 <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or <strong>Receipt</strong>.</p>
-            </div>
+            </div>-->
             <div class="form-group">
                 <div class="checkbox">
                     <label>
@@ -59,9 +78,9 @@
                 <label>Transaction date</label>
                 <div class="input-group date">
                     <?php
-                                        echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
-                                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false,"readonly"));
-                                        ?>
+                    echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
+                        "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false, "readonly"));
+                    ?>
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
                 <p class="help-block">Select transaction date.</p>
@@ -78,7 +97,7 @@
     </div>
 </div>
 <!--add new party popup-->
-<?php echo $this->element("add_new_party");?>
+<?php echo $this->element("add_new_party"); ?>
 <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
 <?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
 <?php echo $this->Html->script('transaction.js'); ?>
@@ -91,9 +110,9 @@
 <?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
 <script type="text/javascript">
     $("input.typeahead").typeahead({
-        onSelect: function (item) {
+        onSelect: function(item) {
             var user_id = item.value;
-            if(!user_id) {
+            if (!user_id) {
                 alert("Could not find userID.");
                 return false;
             }
@@ -108,13 +127,13 @@
             triggerLength: 1,
             method: "get",
             loadingClass: "loading-circle",
-            preDispatch: function (query) {
+            preDispatch: function(query) {
                 //showLoadingMask(true);
                 return {
                     search: query
                 }
             },
-            preProcess: function (data) {
+            preProcess: function(data) {
                 console.log(data);
                 //showLoadingMask(false);
                 if (data.success === false) {
@@ -125,5 +144,9 @@
                 return data;
             }
         }
+    });
+    
+    $(document).on("change",".cls_transaction_type",function(){
+        alert($(this).val());
     });
 </script>

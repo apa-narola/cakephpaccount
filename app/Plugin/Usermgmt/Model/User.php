@@ -107,12 +107,12 @@ class User extends UserMgmtAppModel {
                     'rule' => 'notBlank',
                     'message' => 'Please enter first name')
             ),
-            'last_name' => array(
+           /* 'last_name' => array(
                 'mustNotEmpty' => array(
                     'rule' => 'notBlank',
                     'on' => 'create',
                     'message' => 'Please enter last name')
-            ),
+            ),*/
             'email' => array(
                 'mustNotEmpty' => array(
                     'rule' => 'notBlank',
@@ -142,11 +142,11 @@ class User extends UserMgmtAppModel {
                     'message' => 'Please enter password',
                     'on' => 'create',
                     'last' => true),
-                'mustBeLonger' => array(
-                    'rule' => array('minLength', 6),
-                    'message' => 'Password must be greater than 5 characters',
-                    'on' => 'create',
-                    'last' => true),
+//                'mustBeLonger' => array(
+//                    'rule' => array('minLength', 6),
+//                    'message' => 'Password must be greater than 5 characters',
+//                    'on' => 'create',
+//                    'last' => true),
                 'mustMatch' => array(
                     'rule' => array('verifies'),
                     'message' => 'Both passwords must match'),
@@ -183,12 +183,12 @@ class User extends UserMgmtAppModel {
                     'rule' => 'notBlank',
                     'message' => 'Please enter first name')
             ),
-            'last_name' => array(
+            /*'last_name' => array(
                 'mustNotEmpty' => array(
                     'rule' => 'notBlank',
                     'on' => 'create',
                     'message' => 'Please enter last name')
-            )
+            )*/
         );
         $this->validate = $validate1;
         return $this->validates();

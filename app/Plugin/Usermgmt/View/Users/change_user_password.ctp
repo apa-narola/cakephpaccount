@@ -31,7 +31,7 @@
                 <?php echo $this->Html->link(__("Home", true), "/") ?>                
             </li>
             <li>
-                <i class="fa fa-users fa-fw"></i>  <a href="<?php echo $this->webroot ?>allUsers">Users</a>
+                <i class="fa fa-users fa-fw"></i>  <a href="<?php echo $this->webroot ?>allUsers">Parties</a>
             </li>
             <li class="active">
                 <i class="fa fa-unlock"></i> <?php echo __('Change Password for '); echo h($name); ?>

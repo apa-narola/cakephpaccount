@@ -52,13 +52,13 @@
                     <label>From</label>
                     <div class="input-group date">
                         <?php
-                        $selected_transaction_from =null;
-                        if(isset($this->params['named']["transaction_from"]))
+                        $selected_transaction_from = null;
+                        if (isset($this->params['named']["transaction_from"]))
                             $selected_transaction_from = $this->params['named']["transaction_from"];
 
-                                                echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                                                    "value" => $selected_transaction_from, "label" => false, "div" => false,"readonly"));
-                                                ?>
+                        echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
+                            "value" => $selected_transaction_from, "label" => false, "div" => false, "readonly"));
+                        ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
 
@@ -70,11 +70,11 @@
                     <div class="input-group date">
                         <?php
                         $selected_transaction_to = null;
-                        if(isset($this->params['named']["transaction_to"]))
-                            $selected_transaction_to =$this->params['named']["transaction_to"];
+                        if (isset($this->params['named']["transaction_to"]))
+                            $selected_transaction_to = $this->params['named']["transaction_to"];
 
                         echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_to, "label" => false, "div" => false,"readonly"));
+                            "value" => $selected_transaction_to, "label" => false, "div" => false, "readonly"));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -93,19 +93,47 @@
                 // echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
                 ?>
                 <?php
-                echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name"=>"exportToexcel","value"=>1));
+                echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name" => "exportToexcel", "value" => 1));
                 ?>
                 <?php
                 echo $this->Form->end();
                 ?>
             </div>
         </div>
-        <div class="row">
+        <div class="row">            
+            <div class="col-lg-6">
+                <div class="col-lg-10"> <h2>Receipt</h2></div>
+                <div class="col-lg-2">
+                    <!--<h2 class="pull-right">Amount</h2>-->
+                </div>
+                <table class="table-responsive table-hover table-striped" width="100%">
+                    <?php
+                    foreach ($transactions as $transaction):
+                        if ($transaction['Transaction']['transaction_type'] != "Receipt")
+                            continue;
+                        ?>
+                        <tr>
+                            <td class="col-lg-3 bdr-left" valign="top">
+                                <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                            </td>
+                            <td class="col-lg-9 bdr-left">            
+                                <table width="100%"><tr>
+                                        <td width="25%" valign="top" align="left"><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,</td>
+                                        <td width="55%" valign="top" align="left">&nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;</td>
+                                        <td valign="top" align="left"><?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></td>
+                                </table>
+                                <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
+                                <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
+                            </td>                            
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
             <div class="col-lg-6">
                 <div class="col-lg-10"> <h2>Payment</h2></div>
                 <div class="col-lg-2">
-					<!--<h2 class="pull-right">Amount</h2>-->
-				</div>
+                    <!--<h2 class="pull-right">Amount</h2>-->
+                </div>
 
                 <table class="table-responsive table-hover table-striped" width="100%">
                     <?php
@@ -114,49 +142,18 @@
                             continue;
                         ?>
                         <tr>
-						<td class="col-lg-3 bdr-left">
+                            <td class="col-lg-3 bdr-left" valign="top">
                                 <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
                             </td>
                             <td class="col-lg-9 bdr-left">
-                                <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
-                                <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
-                                <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
-                                <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
-                                &nbsp; <?php if(!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;
-                                <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
+                                <table width="100%"><tr>
+                                        <td width="25%" valign="top" align="left"><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,</td>
+                                        <td width="55%" valign="top" align="left">&nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;</td>
+                                        <td valign="top" align="left"><?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></td>
+                                </table>
                                 <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                 <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
                             </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="col-lg-10"> <h2>Receipt</h2></div>
-                <div class="col-lg-2">
-				<!--<h2 class="pull-right">Amount</h2>-->
-				</div>
-                <table class="table-responsive table-hover table-striped" width="100%">
-                    <?php
-                    foreach ($transactions as $transaction):
-                            if ($transaction['Transaction']['transaction_type'] != "Receipt")
-                            continue;
-                        ?>
-                        <tr>
-						<td class="col-lg-3 bdr-left">
-                                <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
-                            </td>
-                            <td class="col-lg-9 bdr-left">            
-                                <p><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
-                                <!--<p>Transaction ID : <?php echo h($transaction['Transaction']['id']); ?></p>-->
-                                <!--<p>Transaction type : <?php echo h($transaction['Transaction']['transaction_type']); ?></p>-->
-                                <!--<p>Is Interest entry : <?php echo h($transaction['Transaction']['is_interest']) == 1 ? "Yes" : "No"; ?></p>-->
-                                    &nbsp; <?php if(!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;
-                                <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></p>
-                                <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
-                                <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                            </td>                            
                         </tr>
                     <?php endforeach; ?>
                 </table>

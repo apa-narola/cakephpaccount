@@ -365,10 +365,10 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                                 <a href="<?php echo $this->webroot ?>transactions"><i class="fa fa-fw fa-money"></i> Transactions</a>
                             </li>                                               
                             <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add User</a>
+                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add Party</a>
                             </li>
                             <li <?php echo $cls_list_users; ?>>
-                                <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Users</a>
+                                <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
                             </li>
                             <?php if ($this->UserAuth->isAdmin()) { ?>
 <!--                                <li <?php echo $cls_add_group; ?>>

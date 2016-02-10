@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Add User
+            Add Party
             <!--<small>Subheading</small>-->
         </h1>
         <ol class="breadcrumb">
@@ -32,10 +32,10 @@
                 <?php echo $this->Html->link(__("Home", true), "/") ?>                
             </li>
             <li>
-                <i class="fa fa-edit fa-fw"></i>  <a href="<?php echo $this->webroot ?>allUsers">Users</a>
+                <i class="fa fa-edit fa-fw"></i>  <a href="<?php echo $this->webroot ?>allUsers">Parties</a>
             </li>
             <li class="active">
-                <i class="fa fa-user"></i> Add User
+                <i class="fa fa-user"></i> Add Party
             </li>
         </ol>
         <?php echo $this->Session->flash(); ?>
@@ -51,19 +51,29 @@
             <?php } else { ?>
                 <?php echo $this->Form->input("user_group_id", array('type' => 'hidden', 'label' => false, 'div' => false, 'value' => 2)) ?>
             <?php } ?>           
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label><?php echo __('Username'); ?><font color='red'>*</font></label>
                 <?php echo $this->Form->input("username", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
+            </div>-->
             <div class="form-group">
-                <label><?php echo __('First Name'); ?><font color='red'>*</font></label>
+                <label><?php echo __('First Name'); ?>
+                    <font color='red'>*</font>
+                </label>
                 <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>
-            <div class="form-group">
-                <label><?php echo __('Last Name'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+              <div class="form-group">
+                <label><?php echo __('Middle Name'); ?>
+                    <!--<font color='red'>*</font>-->
+                </label>
+                <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>
             <div class="form-group">
+                <label><?php echo __('Last Name'); ?>
+                    <!--<font color='red'>*</font>-->
+                </label>
+                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+<!--            <div class="form-group">
                 <label><?php echo __('Email'); ?><font color='red'>*</font></label>
                 <?php echo $this->Form->input("email", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>                             
@@ -74,10 +84,10 @@
             <div class="form-group">
                 <label><?php echo __('Confirm Password'); ?><font color='red'>*</font></label>
                 <?php echo $this->Form->input("cpassword", array('type' => 'password', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
+            </div>-->
             <?php
             $options = array(
-                'label' => __('Add User'),
+                'label' => __('Add Party'),
                 'class' => "btn btn-default"
             );
             echo $this->Form->end($options);
