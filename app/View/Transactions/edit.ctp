@@ -22,6 +22,18 @@
             <?php echo $this->Form->create('Transaction', array("role" => "form")); ?>
             <?php echo $this->Form->input('id'); ?>
             <div class="form-group">
+                <label class="radio control-label">Transaction type</label>
+                <!--<div class="col-sm-8">-->
+
+                <?php
+//                echo $cookieTransactionType;
+                $options = array("Receipt" => "Receipt", "Payment" => "Payment");
+                $attributes = array('legend' => false, "style" => "margin:0px;width:20px;");
+                echo $this->Form->radio('transaction_type', $options, $attributes);
+                ?>
+                <!--</div>-->
+            </div>
+            <div class="form-group">
                 <label>Select party name</label>
                 <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control")); ?>
                 <input id="" type="text" class="typeahead tt-query form-control" autocomplete="off"
@@ -36,12 +48,12 @@
                 <p class="help-block">Enter amount. E.g. 10000</p>
             </div>
 
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label>Select transaction type</label>
                 <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
                 <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or
                     <strong>Receipt</strong>.</p>
-            </div>
+            </div>-->
             <div class="form-group">
                 <div class="checkbox">
                     <label>

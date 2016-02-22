@@ -35,7 +35,18 @@ class User extends UserMgmtAppModel {
      *
      * @var array
      */
-    var $hasMany = array('LoginToken' => array('className' => 'Usermgmt.LoginToken', 'limit' => 1));
+    var $hasMany = array('LoginToken' => array('className' => 'Usermgmt.LoginToken', 'limit' => 1), 
+        "Transaction" => array('className' => 'Transaction'),
+        "PendingTransaction" => array(
+            'className' => 'Transaction',
+            'conditions' => array('transaction_type'=>"Payment")
+            ),
+        "ReceiptTransaction" => array(
+            'className' => 'Transaction',
+            'conditions' => array('transaction_type'=>"Receipt")
+            )
+        
+        );
 
     /**
      * model validation array
@@ -56,7 +67,6 @@ class User extends UserMgmtAppModel {
      *
      * @var array
      */
-    
     public $virtualFields = array(
         'full_name' => 'CONCAT(User.first_name, " ", User.last_name)'
     );
@@ -107,12 +117,12 @@ class User extends UserMgmtAppModel {
                     'rule' => 'notBlank',
                     'message' => 'Please enter first name')
             ),
-           /* 'last_name' => array(
-                'mustNotEmpty' => array(
-                    'rule' => 'notBlank',
-                    'on' => 'create',
-                    'message' => 'Please enter last name')
-            ),*/
+            /* 'last_name' => array(
+              'mustNotEmpty' => array(
+              'rule' => 'notBlank',
+              'on' => 'create',
+              'message' => 'Please enter last name')
+              ), */
             'email' => array(
                 'mustNotEmpty' => array(
                     'rule' => 'notBlank',
@@ -183,12 +193,12 @@ class User extends UserMgmtAppModel {
                     'rule' => 'notBlank',
                     'message' => 'Please enter first name')
             ),
-            /*'last_name' => array(
-                'mustNotEmpty' => array(
-                    'rule' => 'notBlank',
-                    'on' => 'create',
-                    'message' => 'Please enter last name')
-            )*/
+                /* 'last_name' => array(
+                  'mustNotEmpty' => array(
+                  'rule' => 'notBlank',
+                  'on' => 'create',
+                  'message' => 'Please enter last name')
+                  ) */
         );
         $this->validate = $validate1;
         return $this->validates();

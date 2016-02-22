@@ -71,7 +71,7 @@ class Transaction extends AppModel {
  */
 	public $belongsTo = array(
 		'User' => array(
-			'className' => 'User',
+			'className' => 'Usermgmt.User',
 			'foreignKey' => 'user_id',
 			'conditions' => '',
 			'fields' => '',

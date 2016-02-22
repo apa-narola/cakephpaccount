@@ -1,4 +1,5 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 /**
  * Static content controller.
@@ -26,7 +27,7 @@ class PagesController extends AppController {
      *
      * @var array
      */
-    public $uses = array("User");
+    public $uses = array("Usermgmt.User");
 
     /**
      * Displays a view
@@ -66,7 +67,45 @@ class PagesController extends AppController {
     }
 
     public function ledger() {
-        
+        $users = $this->User->find('all', array("conditions" => array("User.user_group_id <>" => 1)));
+//        pr($users);
+        $data = array();
+        if (!empty($users)) {
+//            pr($users);
+            foreach ($users as $u_key => $u_value) {
+                $total_payment = $this->getTotalAmountTransaction($u_value["PendingTransaction"]);
+                $total_receipt = $this->getTotalAmountTransaction($u_value["ReceiptTransaction"]);
+                $arr = array();
+                $arr["id"] = $u_value["User"]["id"];
+                $arr["party_name"] = $this->prepareUserName($u_value["User"]);
+                $arr["total_payment"] = $total_payment;
+                $arr["total_receipt"] = $total_receipt;
+                $arr["balance"] = $total_payment - $total_receipt;
+                $data[] = $arr;
+            }
+        }
+        $this->set(compact("data"));
+    }
+
+    private function prepareUserName($user = array()) {
+        $fullname = null;
+        if (!empty($user["first_name"]))
+            $fullname = $user["first_name"];
+        if (!empty($user["middle_name"]))
+            $fullname .=" " . $user["middle_name"];
+        if (!empty($user["last_name"]))
+            $fullname .=" " . $user["last_name"];
+        return $fullname;
+    }
+
+    private function getTotalAmountTransaction($transactions = array()) {
+        $total = 0;
+        if (!empty($transactions)) {
+            foreach ($transactions as $key => $value) {
+                $total+=$value["amount"];
+            }
+        }
+        return $total;
     }
 
     public function typeaheadSearch() {
@@ -88,7 +127,7 @@ class PagesController extends AppController {
         // Format the result for select2
         $result = array();
         foreach ($users as $key => $user) {
-            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name']." ".$user['User']['middle_name']." ".$user['User']['last_name']);
+            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name']);
             array_push($result, $tmp);
         }
         $users = $result;

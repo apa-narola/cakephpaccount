@@ -11,16 +11,15 @@ App::uses('CakeNumber', 'Utility');
  * @property FlashComponent $Flash
  * @property SessionComponent $Session
  */
-class TransactionsController extends AppController
-{
+class TransactionsController extends AppController {
 
     /**
      * Components
      *
      * @var array
      */
-    public $components = array('Paginator', 'Flash', 'Session');
-    var $helpers = array('Html', 'Form', 'Csv', 'Pdf',"Number");
+    public $components = array('Paginator', 'Flash', 'Session', "Cookie");
+    var $helpers = array('Html', 'Form', 'Csv', 'Pdf', "Number");
 
     const RECORD_PER_PAGE = 40;
 
@@ -29,8 +28,7 @@ class TransactionsController extends AppController
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $conditions = array();
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
@@ -101,13 +99,21 @@ class TransactionsController extends AppController
                 $this->exportToExcel($searchedTransactions, $filename);
             }
         }
-        $this->Transaction->recursive = 0;
-        $this->paginate = array(
-            'limit' => self::RECORD_PER_PAGE,
-            'conditions' => $conditions,
-            'order' => 'Transaction.modified desc'
-        );
-        $this->set('transactions', $this->paginate());
+        /*
+          $this->Transaction->recursive = 0;
+          $this->paginate = array(
+          'limit' => self::RECORD_PER_PAGE,
+          'conditions' => $conditions,
+          'order' => 'Transaction.modified desc'
+          );
+          $this->set('transactions', $this->paginate()); */
+
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.modified desc'));
+        $conditions['Transaction.transaction_type'] = "Payment";
+        $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
+        $conditions['Transaction.transaction_type'] = "Receipt";
+        $receipt_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
+        $this->set(compact('transactions', "payment_total", "receipt_total"));
         // Pass the search parameter to highlight the text
         $this->set('search', isset($this->params['named']['search']) ? $this->params['named']['search'] : "");
 
@@ -115,12 +121,11 @@ class TransactionsController extends AppController
 //        $this->set('transactions', $this->Paginator->paginate());
     }
 
-    public function userTransactions($user_id = null)
-    {
+    public function userTransactions($user_id = null) {
         if (empty($user_id))
             $user_id = $this->request->params["named"]["user_id"];
 
-        $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("id" => $user_id)));
+        $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("User.id" => $user_id)));
         $conditions = array();
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
@@ -154,7 +159,7 @@ class TransactionsController extends AppController
                     $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 }
             }
-            $ignoreFields = array("transaction_from", "transaction_to","exportToexcel");
+            $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel");
             // Inspect all the named parameters to apply the filters
             foreach ($this->params['named'] as $param_name => $value) {
                 // Don't apply the default named parameters used for pagination
@@ -191,17 +196,23 @@ class TransactionsController extends AppController
             }
         }
         //pr($conditions);exit;
-        $this->Transaction->recursive = 0;
-        $this->paginate = array(
-            'limit' => self::RECORD_PER_PAGE,
-            'conditions' => $conditions,
-            'order' => 'Transaction.id desc'
-        );
-        $transactions = $this->paginate();
+//        $this->Transaction->recursive = 0;
+//        $this->paginate = array(
+//            'limit' => self::RECORD_PER_PAGE,
+//            'conditions' => $conditions,
+//            'order' => 'Transaction.id desc'
+//        );
+//        $transactions = $this->paginate();
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.modified desc'));
+        $conditions['Transaction.transaction_type'] = "Payment";
+        $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
+        $conditions['Transaction.transaction_type'] = "Receipt";
+        $receipt_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
+        $this->set(compact('transactions', "payment_total", "receipt_total"));
         $fullname = "NA";
         if (isset($transactionUser["User"]["first_name"]))
             $fullname = $transactionUser["User"]["first_name"] . " " . $transactionUser["User"]["last_name"];
-        $this->set(compact('fullname', 'transactions', "user_id"));
+        $this->set(compact('fullname', 'transactions', "user_id", "payment_total", "receipt_total"));
     }
 
     /**
@@ -211,8 +222,7 @@ class TransactionsController extends AppController
      * @param string $id
      * @return void
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         if (!$this->Transaction->exists($id)) {
             throw new NotFoundException(__('Invalid transaction'));
         }
@@ -225,15 +235,16 @@ class TransactionsController extends AppController
      *
      * @return void
      */
-    public function add()
-    {
+    public function add() {
+        $cookieTransactionType = $this->Cookie->read('transactionType');
         if ($this->request->is('post')) {
             if (isset($this->request->data["Transaction"]["transaction_date"]))
                 $this->request->data["Transaction"]["transaction_date"] = date("Y-m-d", strtotime($this->request->data["Transaction"]["transaction_date"]));
             $this->Transaction->create();
             if ($this->Transaction->save($this->request->data)) {
+                $this->Cookie->write('transactionType', $this->request->data["Transaction"]["transaction_type"]);
                 $this->Flash->success(__('The transaction has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'add'));
             } else {
                 $this->Flash->error(__('The transaction could not be saved. Please, try again.'));
             }
@@ -243,7 +254,7 @@ class TransactionsController extends AppController
         else
             $users = $this->Transaction->User->find('list', array("fields" => array("id", "first_name"), "conditions" => array("user_group_id <>" => 1)));
 
-        $this->set(compact('users'));
+        $this->set(compact('users', "cookieTransactionType"));
     }
 
     /**
@@ -253,8 +264,7 @@ class TransactionsController extends AppController
      * @param string $id
      * @return void
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         if (!$this->Transaction->exists($id)) {
             throw new NotFoundException(__('Invalid transaction'));
         }
@@ -289,8 +299,7 @@ class TransactionsController extends AppController
      * @param string $id
      * @return void
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->Transaction->id = $id;
         if (!$this->Transaction->exists()) {
             throw new NotFoundException(__('Invalid transaction'));
@@ -304,60 +313,49 @@ class TransactionsController extends AppController
         return $this->redirect(array('action' => 'index'));
     }
 
-    public function getAllTransactionCount()
-    {
+    public function getAllTransactionCount() {
         return $this->Transaction->find('count');
     }
 
-    public function getPaymentTransactionCount()
-    {
+    public function getPaymentTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment')));
     }
 
-    public function getReceiptTransactionCount()
-    {
+    public function getReceiptTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt')));
     }
 
-    public function getAllMainTransactionCount()
-    {
+    public function getAllMainTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.is_interest' => 0)));
     }
 
-    public function getMainPaymentTransactionCount()
-    {
+    public function getMainPaymentTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment', 'Transaction.is_interest' => 0)));
     }
 
-    public function getMainReceiptTransactionCount()
-    {
+    public function getMainReceiptTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt', 'Transaction.is_interest' => 0)));
     }
 
-    public function getAllInterestTransactionCount()
-    {
+    public function getAllInterestTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.is_interest' => 1)));
     }
 
-    public function getInterestPaymentTransactionCount()
-    {
+    public function getInterestPaymentTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Payment', 'Transaction.is_interest' => 1)));
     }
 
-    public function getInterestReceiptTransactionCount()
-    {
+    public function getInterestReceiptTransactionCount() {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt', 'Transaction.is_interest' => 1)));
     }
 
-    public function transactionsPdf()
-    {
+    public function transactionsPdf() {
         $this->layout = 'pdf';
         $transactions = $this->Transaction->find('all');
         $this->set(compact('transactions'));
     }
 
-    public function exportToExcel($data = array(), $filename = null)
-    {
+    public function exportToExcel($data = array(), $filename = null) {
         /*
          * Export to excel - php
          */
@@ -370,7 +368,7 @@ class TransactionsController extends AppController
                 $recordArray = array();
                 if ($signleTransaction["Transaction"]["transaction_type"] == "Payment") {
                     $amount = $signleTransaction["Transaction"]["amount"];
-                    $recordArray["Payment Amount"] =  CakeNumber::currency($amount,"");
+                    $recordArray["Payment Amount"] = CakeNumber::currency($amount, "");
                     $recordArray["Payment Particulars"] = $this->getParticulars($signleTransaction);
                     $payment_total += $amount;
                 } else {
@@ -380,7 +378,7 @@ class TransactionsController extends AppController
 
                 if ($signleTransaction["Transaction"]["transaction_type"] == "Receipt") {
                     $amount = $signleTransaction["Transaction"]["amount"];
-                    $recordArray["Receipt Amount"] = CakeNumber::currency($amount,"");
+                    $recordArray["Receipt Amount"] = CakeNumber::currency($amount, "");
                     $recordArray["Receipt Particulars"] = $this->getParticulars($signleTransaction);
                     $receipt_total += $amount;
                 } else {
@@ -403,9 +401,9 @@ class TransactionsController extends AppController
             $recordArray["Receipt Particulars"] = null;
             $preparedArray[] = $recordArray;
 
-            $recordArray["Payment Amount"] = CakeNumber::currency($payment_total,"");
+            $recordArray["Payment Amount"] = CakeNumber::currency($payment_total, "");
             $recordArray["Payment Particulars"] = null;
-            $recordArray["Receipt Amount"] = CakeNumber::currency($receipt_total,"");
+            $recordArray["Receipt Amount"] = CakeNumber::currency($receipt_total, "");
             $recordArray["Receipt Particulars"] = null;
             $preparedArray[] = $recordArray;
         }
@@ -448,15 +446,14 @@ class TransactionsController extends AppController
         exit;
     }
 
-    private function filterData(&$str)
-    {
+    private function filterData(&$str) {
         $str = preg_replace("/\t/", "\\t", $str);
         $str = preg_replace("/\r?\n/", "\\n", $str);
-        if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+        if (strstr($str, '"'))
+            $str = '"' . str_replace('"', '""', $str) . '"';
     }
 
-    private function getParticulars($signleTransaction)
-    {
+    private function getParticulars($signleTransaction) {
         $string = "NA";
         if (!empty($signleTransaction["User"]["first_name"]))
             $string = $signleTransaction["User"]["first_name"];
@@ -473,8 +470,7 @@ class TransactionsController extends AppController
         return $string;
     }
 
-    function export()
-    {
+    function export() {
         // not used anywhere in code, just for reference
         //http://www.php-dev-zone.com/2013/12/export-data-into-excel-or-csv-file-in.html
         $this->set('transactions', $this->Transacitons->find('all'));

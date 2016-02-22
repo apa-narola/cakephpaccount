@@ -107,6 +107,13 @@
                     <!--<h2 class="pull-right">Amount</h2>-->
                 </div>
                 <table class="table-responsive table-hover table-striped" width="100%">
+                    <?php if (!empty($transactions)) { ?>                        
+                        <tr>
+                            <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                        </tr>
+                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                    <?php } ?>
                     <?php
                     foreach ($transactions as $transaction):
                         if ($transaction['Transaction']['transaction_type'] != "Receipt")
@@ -127,6 +134,30 @@
                             </td>                            
                         </tr>
                     <?php endforeach; ?>
+                    <?php if (!empty($transactions)) { ?>
+                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                        <tr>
+                            <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                        </tr>
+                        <?php if ($receipt_total[0]["total"] > $payment_total[0]["total"]) { ?>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr>
+                                <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                            </tr>
+                            <tr>
+                                <th class="col-lg-3 bdr-left" valign="top">- <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                            </tr>
+
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr>
+                                <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($receipt_total[0]["total"] - $payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>    
+                            </tr>
+                        <?php } ?>
+                    <?php } ?>
                 </table>
             </div>
             <div class="col-lg-6">
@@ -136,6 +167,14 @@
                 </div>
 
                 <table class="table-responsive table-hover table-striped" width="100%">
+                    <?php if (!empty($transactions)) { ?>
+                        
+                        <tr>
+                            <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                        </tr>
+                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                    <?php } ?>
                     <?php
                     foreach ($transactions as $transaction):
                         if ($transaction['Transaction']['transaction_type'] != "Payment")
@@ -156,25 +195,50 @@
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                    <?php if (!empty($transactions)) { ?>
+                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                        <tr>
+                            <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                        </tr>
+                        <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr>
+                                <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                            </tr>
+                            <tr>
+                                <th class="col-lg-3 bdr-left" valign="top">- <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                            </tr>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr>
+                                <th class="col-lg-3 bdr-left" valign="top"><?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>    
+                            </tr>
+                        <?php } ?>
+                    <?php } ?>
                 </table>
             </div>
+            <div class="clearfix"></div>            
         </div>
-        <div class="row pull-right">
-<!--            <p>
-            <?php
-            echo $this->Paginator->counter(array(
-                'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-            ));
-            ?>
-            </p>-->
-            <ul class="pagination">
-                <?php
-                echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
-                echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                ?>
-            </ul>
-        </div></div>
+        <!--        <div class="row pull-right">
+                    <p>
+        <?php
+        echo $this->Paginator->counter(array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+        ));
+        ?>
+                    </p>
+                    <ul class="pagination">
+        <?php
+        echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+        echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
+        echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+        ?>
+                    </ul>
+                </div>-->
+    </div>
     <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
     <?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
     <script type="text/javascript">

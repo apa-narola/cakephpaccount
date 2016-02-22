@@ -19,25 +19,18 @@
         </ol>
 
         <div class="col-lg-6">
+            <?php // echo $this->Cookie->read('transactionType');?>
             <?php echo $this->Form->create('Transaction', array("role" => "form")); ?>
             <div class="form-group">
                 <label class="radio control-label">Transaction type</label>
                 <!--<div class="col-sm-8">-->
-                    <?php
-                    echo $this->Form->input('transaction_type', array(
-                        "type" => "radio",
-                        "class" => "radio-inline cls_transaction_type",
-                        "div" => false,
-                        "legend"=>false,
-                        "label"=>array("style"=>"margin-left:10px;"),
-//                'before' => '--before--',
-//                'after' => '--after--',
-//                'between' => '--between---',
-                        'separator' => '&nbsp;&nbsp;&nbsp;&nbsp;',
-                        'options' => array("Receipt" => "Receipt", "Payment" => "Payment"),
-//                        'onchange'=>"alert('test');"
-                    ));
-                    ?>
+
+                <?php
+//                echo $cookieTransactionType;
+                $options = array("Receipt" => "Receipt", "Payment" => "Payment");
+                $attributes = array('legend' => false, "value" => $cookieTransactionType, "style" => "margin:0px;width:20px;");
+                echo $this->Form->radio('transaction_type', $options, $attributes);
+                ?>
                 <!--</div>-->
             </div>
             <div class="form-group">
@@ -56,11 +49,11 @@
                 <p class="help-block">Enter amount. E.g. 10000</p>
             </div>
 
-<!--            <div class="form-group">
-                <label>Select transaction type</label>
-                <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
-                <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or <strong>Receipt</strong>.</p>
-            </div>-->
+            <!--            <div class="form-group">
+                            <label>Select transaction type</label>
+            <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
+                            <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or <strong>Receipt</strong>.</p>
+                        </div>-->
             <div class="form-group">
                 <div class="checkbox">
                     <label>
@@ -145,8 +138,8 @@
             }
         }
     });
-    
-    $(document).on("change",".cls_transaction_type",function(){
-        alert($(this).val());
-    });
+
+//    $(document).on("change",".cls_transaction_type",function(){
+//        alert($(this).val());
+//    });
 </script>
