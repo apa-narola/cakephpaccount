@@ -80,7 +80,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             echo $this->fetch('script');
             ?>
             <script type="text/javascript">
-            var site_url = "<?php echo $this->webroot;?>";
+            var site_url = "<?php echo $this->Html->url('/', true);?>";
 </script>
             <?php
             // below jquery1.11 is required for bootstrap datepicker

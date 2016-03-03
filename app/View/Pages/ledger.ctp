@@ -91,7 +91,7 @@
             window.location = site_url + "/transactions/userTransactions/" + user_id;
         },
         ajax: {
-            url: site_url + "/typeaheadSearch",
+            url: site_url + "typeaheadSearch",
             timeout: 500,
             displayField: "username",
             triggerLength: 1,
