@@ -26,19 +26,20 @@
             // add a select input for each filter. It's a good idea to add a add_new_party.ctp value and set
             // the default option to that.
             ?>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>Transaction Type</label>
                     <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
-            <div class="col-lg-4">
+<!--            <div class="col-lg-4"><div class="form-group">&nbsp;</div></div>-->
+           <!-- <div class="col-lg-4">
                 <div class="form-group">
                     <label>Entries view option</label>
-                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Display only interest entries", "2" => "Don't display interest entries"), 'empty' => '-- All --')); ?>
+                    <?php /*echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Display only interest entries", "2" => "Don't display interest entries"), 'empty' => '-- All --')); */?>
                 </div>
-            </div>
-            <div class="col-lg-4">
+            </div>-->
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>Search </label>
                     <?php
@@ -47,7 +48,7 @@
                     ?>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>From</label>
                     <div class="input-group date">
@@ -64,7 +65,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>To</label>
                     <div class="input-group date">
@@ -109,7 +110,7 @@
                 <table class="table-responsive table-hover table-striped" width="100%">
                     <?php if (!empty($transactions)) { ?>                        
                         <tr>
-                            <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
                             <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
                         </tr>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
@@ -121,7 +122,7 @@
                         ?>
                         <tr>
                             <td class="col-lg-3 bdr-left" valign="top">
-                                <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                                <div class="text-left"> <?php echo h($transaction['Transaction']['amount']); ?></div>
                             </td>
                             <td class="col-lg-9 bdr-left">            
                                 <table width="100%"><tr>
@@ -137,23 +138,23 @@
                     <?php if (!empty($transactions)) { ?>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                         <tr>
-                            <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
                             <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
                         </tr>
                         <?php if ($receipt_total[0]["total"] > $payment_total[0]["total"]) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
                             </tr>
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top">- <i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top">-  <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
                             </tr>
 
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"] - $payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"] - $payment_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>    
                             </tr>
                         <?php } ?>
@@ -170,7 +171,7 @@
                     <?php if (!empty($transactions)) { ?>
                         
                         <tr>
-                            <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
                             <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
                         </tr>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
@@ -182,7 +183,7 @@
                         ?>
                         <tr>
                             <td class="col-lg-3 bdr-left" valign="top">
-                                <div class="text-left"><i class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                                <div class="text-left"> <?php echo h($transaction['Transaction']['amount']); ?></div>
                             </td>
                             <td class="col-lg-9 bdr-left">
                                 <table width="100%"><tr>
@@ -198,27 +199,27 @@
                     <?php if (!empty($transactions)) { ?>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                         <tr>
-                            <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
                             <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
                         </tr>
                         <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
                             </tr>
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top">- <i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top">-  <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
                             </tr>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>    
                             </tr>
                         <?php } ?>
                     <?php } ?>
-                </table>
+                </tab le>
             </div>
             <div class="clearfix"></div>            
         </div>

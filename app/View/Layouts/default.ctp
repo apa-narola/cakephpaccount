@@ -123,14 +123,19 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
         $cls_list_groups = null;
         $cls_list_permissions = null;
         $cls_ledger = null;
+        $cls_list_interest = null;
         switch ($controller) {
             case "transactions":
+                $type = $this->params["pass"][0];
                 switch ($action) {
                     case "add":
                         $cls_add_trans = "class='active'";
                         break;
                     case "index":
+                        if($type == "T")
                         $cls_list_trans = "class='active'";
+                        else
+                        $cls_list_interest = "class='active'";
                         break;
 
                     default:
@@ -362,8 +367,11 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                                 <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
                             </li>
                             <li <?php echo $cls_list_trans; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions"><i class="fa fa-fw fa-money"></i> Transactions</a>
-                            </li>                                               
+                                <a href="<?php echo $this->webroot ?>transactions/index/T"><i class="fa fa-fw fa-money"></i> Transactions</a>
+                            </li>
+                            <li <?php echo $cls_list_interest; ?>>
+                                <a href="<?php echo $this->webroot ?>transactions/index/I"><i class="fa fa-fw fa-money"></i> Interests</a>
+                            </li>
                             <li <?php echo $cls_add_user; ?>>
                                 <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add Party</a>
                             </li>

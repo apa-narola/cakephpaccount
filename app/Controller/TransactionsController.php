@@ -28,8 +28,13 @@ class TransactionsController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index($type="T") {
         $conditions = array();
+        if($type == "I")
+            $conditions["Transaction.is_interest"] = 1;
+        else
+            $conditions["Transaction.is_interest"] = 0;
+
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
             $filter_url['controller'] = $this->request->params['controller'];
