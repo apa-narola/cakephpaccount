@@ -126,12 +126,12 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
         $cls_list_interest = null;
         switch ($controller) {
             case "transactions":
-                $type = $this->params["pass"][0];
                 switch ($action) {
                     case "add":
                         $cls_add_trans = "class='active'";
                         break;
                     case "index":
+                    $type = $this->params["named"]["type"];
                         if($type == "T")
                         $cls_list_trans = "class='active'";
                         else
@@ -209,6 +209,56 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                         </button>
                         <a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>
                     </div>
+                    <ul class="nav navbar-nav">
+                    <li <?php echo $cls_dashboard_users; ?>>
+                                <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            </li>
+                            <li <?php echo $cls_ledger;?>>
+                                <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
+                            </li>
+               <li <?php echo $cls_add_trans; ?>>
+                                <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
+                            </li>
+                            <li <?php echo $cls_list_trans; ?>>
+                                <a href="<?php echo $this->webroot ?>transactions/index/type:T"><i class="fa fa-fw fa-money"></i> Transactions</a>
+                            </li>
+                            <li <?php echo $cls_list_interest; ?>>
+                                <a href="<?php echo $this->webroot ?>transactions/index/type:I"><i class="fa fa-fw fa-money"></i> Interests</a>
+                            </li>
+                            <li <?php echo $cls_add_user; ?>>
+                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add Party</a>
+                            </li>
+                            <li <?php echo $cls_list_users; ?>>
+                                <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
+                            </li>
+                            <?php if ($this->UserAuth->isAdmin()) { ?>
+<!--                                <li <?php echo $cls_add_group; ?>>
+                                    <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
+                                </li>-->
+                                <li <?php echo $cls_list_groups; ?>>
+                                    <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                                </li>
+                                <li <?php echo $cls_list_permissions; ?>>
+                                    <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                                </li>
+                            <?php } ?>
+<!--                            <li>-->
+<!--                                <a href="--><?php //echo $this->webroot ?><!--logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>-->
+<!--                            </li>-->
+
+             <!-- <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>-->
+            </ul>
                     <!-- Top Menu Items -->
                     <ul class="nav navbar-right top-nav">
                         <!--                    <li class="dropdown">
@@ -324,78 +374,43 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                     </ul>
                     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <ul class="nav navbar-nav side-nav">
-                            <!--                        <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                                                        <ul id="demo" class="collapse">
-                                                            <li>
-                                                                <a href="#">Dropdown Item</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Dropdown Item</a>
-                                                            </li>
-                                                        </ul>
-                                                    </li>-->
-                            <!--                        <li class="active">
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                                                    </li>-->
-                            <li <?php echo $cls_dashboard_users; ?>>
-                                <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                       <!-- <ul class="nav navbar-nav side-nav">
+                            <li <?php /*echo $cls_dashboard_users; */?>>
+                                <a href="<?php /*echo $this->webroot */?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
-                            <li <?php echo $cls_ledger;?>>
-                                <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
+                            <li <?php /*echo $cls_ledger;*/?>>
+                                <a href="<?php /*echo $this->webroot */?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
                             </li>
-               <li <?php echo $cls_add_trans; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
+               <li <?php /*echo $cls_add_trans; */?>>
+                                <a href="<?php /*echo $this->webroot */?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
                             </li>
-                            <li <?php echo $cls_list_trans; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions/index/T"><i class="fa fa-fw fa-money"></i> Transactions</a>
+                            <li <?php /*echo $cls_list_trans; */?>>
+                                <a href="<?php /*echo $this->webroot */?>transactions/index/T"><i class="fa fa-fw fa-money"></i> Transactions</a>
                             </li>
-                            <li <?php echo $cls_list_interest; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions/index/I"><i class="fa fa-fw fa-money"></i> Interests</a>
+                            <li <?php /*echo $cls_list_interest; */?>>
+                                <a href="<?php /*echo $this->webroot */?>transactions/index/I"><i class="fa fa-fw fa-money"></i> Interests</a>
                             </li>
-                            <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add Party</a>
+                            <li <?php /*echo $cls_add_user; */?>>
+                                <a href="<?php /*echo $this->webroot */?>addUser"><i class="fa fa-users"></i> Add Party</a>
                             </li>
-                            <li <?php echo $cls_list_users; ?>>
-                                <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
+                            <li <?php /*echo $cls_list_users; */?>>
+                                <a href="<?php /*echo $this->webroot */?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
                             </li>
-                            <?php if ($this->UserAuth->isAdmin()) { ?>
-<!--                                <li <?php echo $cls_add_group; ?>>
-                                    <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
-                                </li>-->
-                                <li <?php echo $cls_list_groups; ?>>
-                                    <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                            <?php /*if ($this->UserAuth->isAdmin()) { */?>
+                                <li <?php /*echo $cls_add_group; */?>>
+                                    <a href="<?php /*echo $this->webroot */?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
                                 </li>
-                                <li <?php echo $cls_list_permissions; ?>>
-                                    <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                                <li <?php /*echo $cls_list_groups; */?>>
+                                    <a href="<?php /*echo $this->webroot */?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
                                 </li>
-                            <?php } ?>
+                                <li <?php /*echo $cls_list_permissions; */?>>
+                                    <a href="<?php /*echo $this->webroot */?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                                </li>
+                            <?php /*} */?>
                             <li>
-                                <a href="<?php echo $this->webroot ?>logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+                                <a href="<?php /*echo $this->webroot */?>logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
                             </li>
-                            <!--                        <li>
-                                                        <a href="<?php echo $this->webroot; ?>sb-admin/index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-                                                    </li>-->
-                        </ul>
+                        </ul>-->
                     </div>
                     <!-- /.navbar-collapse -->
                 </nav>

@@ -28,8 +28,9 @@ class TransactionsController extends AppController {
      *
      * @return void
      */
-    public function index($type="T") {
+    public function index() {
         $conditions = array();
+        $type = !empty( $this->params["named"]["type"]) ?  $this->params["named"]["type"] : "T";
         if($type == "I")
             $conditions["Transaction.is_interest"] = 1;
         else
@@ -37,10 +38,12 @@ class TransactionsController extends AppController {
 
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
+
             $filter_url['controller'] = $this->request->params['controller'];
             $filter_url['action'] = $this->request->params['action'];
+            $filter_url['type'] = $type;
             // We need to overwrite the page every time we change the parameters
-            $filter_url['page'] = 1;
+//            $filter_url['page'] = 1;
 
             // for each filter we will add a GET parameter for the generated url
             foreach ($this->data['Transaction'] as $name => $value) {
@@ -66,7 +69,7 @@ class TransactionsController extends AppController {
                     $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
                 }
             }
-            $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel");
+            $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel","type");
             // Inspect all the named parameters to apply the filters
             foreach ($this->params['named'] as $param_name => $value) {
                 // Don't apply the default named parameters used for pagination
@@ -280,7 +283,7 @@ class TransactionsController extends AppController {
 
             if ($this->Transaction->save($this->request->data)) {
                 $this->Flash->success(__('The transaction has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'index',"type"=> $this->params["named"]["type"]));
             } else {
                 $this->Flash->error(__('The transaction could not be saved. Please, try again.'));
             }
