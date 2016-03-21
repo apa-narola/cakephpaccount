@@ -71,8 +71,8 @@
                 <label>Transaction date</label>
                 <div class="input-group date">
                     <?php
-                    echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
-                        "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false, "readonly"));
+                    echo $this->Form->input('transaction_date', array("id"=>"transaction-date","type" => "text", "class" => "form-control",
+                        "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false));
                     ?>
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
@@ -92,11 +92,12 @@
 <!--add new party popup-->
 <?php echo $this->element("add_new_party"); ?>
 <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
-<?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
+<?php echo $this->Html->script('jquery.mask'); ?>
+<?php //echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
 <?php echo $this->Html->script('transaction.js'); ?>
 <script type="text/javascript">
-    $('.input-group.date').datepicker({
-        format: DATE_FORMAT_JS
+    $(document).ready(function() {
+        $('#transaction-date').mask(DATE_FORMAT_MASK);
     });
 </script>
 

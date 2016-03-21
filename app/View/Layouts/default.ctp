@@ -108,6 +108,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
         <script type="text/javascript">
         var DATE_FORMAT = '<?php echo Configure::read('App.DATE_FORMAT');?>'
         var DATE_FORMAT_JS = '<?php echo Configure::read('App.DATE_FORMAT_JS');?>'
+        var DATE_FORMAT_MASK = '<?php echo Configure::read('App.DATE_FORMAT_MASK');?>'
 </script>
         </head>
         <?php
@@ -432,7 +433,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
 
             <!-- jQuery -->
 
-            <?php echo $this->Html->script('/sb-admin/js/jquery.js'); ?>
+            <?php //echo $this->Html->script('/sb-admin/js/jquery.js');  // it conflicts with mask input js?>
             <!-- Bootstrap Core JavaScript -->
             <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
 

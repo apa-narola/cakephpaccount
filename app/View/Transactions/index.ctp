@@ -57,8 +57,8 @@
                         if (isset($this->params['named']["transaction_from"]))
                             $selected_transaction_from = $this->params['named']["transaction_from"];
 
-                        echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_from, "label" => false, "div" => false, "readonly"));
+                        echo $this->Form->input('transaction_from', array("id"=>"transaction_from","type" => "text", "class" => "form-control",
+                            "value" => $selected_transaction_from, "label" => false, "div" => false));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -74,8 +74,8 @@
                         if (isset($this->params['named']["transaction_to"]))
                             $selected_transaction_to = $this->params['named']["transaction_to"];
 
-                        echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_to, "label" => false, "div" => false, "readonly"));
+                        echo $this->Form->input('transaction_to', array("id"=>"transaction_to","type" => "text", "class" => "form-control",
+                            "value" => $selected_transaction_to, "label" => false, "div" => false));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -199,7 +199,7 @@
                     <?php endforeach; ?>
                     <?php if (!empty($transactions)) { ?>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                        <tr>
+                        <tr style="border-top:5px double #333;">
                             <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
                             <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
                         </tr>
@@ -214,7 +214,7 @@
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
                             </tr>-->
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr>
+                            <tr style="border-top:5px double #333;border-bottom:5px double #333;">
                                 <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
                                 <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>    
                             </tr>
@@ -242,10 +242,18 @@
                 </div>-->
     </div>
     <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
-    <?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
+<!--    <?php /*echo $this->Html->script('bootstrap-datepicker.min.js'); */?>
     <script type="text/javascript">
         $('.input-group.date').datepicker({
             orientation: "bottom auto",
             format: DATE_FORMAT_JS
+        });
+    </script>-->
+<!--    ref link : http://igorescobar.github.io/jQuery-Mask-Plugin/-->
+<?php echo $this->Html->script('jquery.mask'); ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#transaction_from').mask(DATE_FORMAT_MASK);
+            $('#transaction_to').mask(DATE_FORMAT_MASK);
         });
     </script>

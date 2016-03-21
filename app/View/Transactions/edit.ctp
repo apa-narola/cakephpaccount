@@ -72,8 +72,8 @@
 
                 <div class="input-group date">
                     <?php
-                    echo $this->Form->input('transaction_date', array("type" => "text", "class" => "form-control",
-                        "label" => false, "div" => false, "readonly"));
+                    echo $this->Form->input('transaction_date', array("id"=>"transaction-date","type" => "text", "class" => "form-control",
+                        "label" => false, "div" => false));
                     ?>
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
@@ -91,12 +91,12 @@
     </div>
 </div>
 <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
-<?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
+<?php /*echo $this->Html->script('bootstrap-datepicker.min.js'); */?><!--
 <script type="text/javascript">
     $('.input-group.date').datepicker({
         format: DATE_FORMAT_JS
     });
-</script>
+</script>-->
 
 <?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
 <script type="text/javascript">
@@ -135,5 +135,11 @@
                 return data;
             }
         }
+    });
+</script>
+<?php echo $this->Html->script('jquery.mask'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#transaction-date').mask(DATE_FORMAT_MASK);
     });
 </script>
