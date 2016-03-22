@@ -218,7 +218,7 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                                 <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
                             </li>
                <li <?php echo $cls_add_trans; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
+                                <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Data Entry</a>
                             </li>
                             <li <?php echo $cls_list_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/index/type:T"><i class="fa fa-fw fa-money"></i> Transactions</a>

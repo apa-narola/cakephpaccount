@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Add Transaction
+            Data Entry
             <!--<small>Subheading</small>-->
         </h1>
         <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                 <i class="fa fa-dashboard"></i>  <a href="<?php echo $this->webroot ?>transactions">Transactions</a>
             </li>
             <li class="active">
-                <i class="fa fa-file"></i> Add Transaction
+                <i class="fa fa-file"></i> Data Entry
             </li>
         </ol>
 

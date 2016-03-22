@@ -64,9 +64,7 @@
                                 $sl++;
                                 echo "<tr>";
                                 echo "<td>" . $sl . "</td>";
-                                echo "<td>" .
-                                    $this->Html->link(h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name']),
-                                        array('controller' => 'transactions', 'action' => 'userTransactions', $row['User']['id'])). "</td>";
+                                echo "<td><a href='" . $this->Html->url('/Transactions/userTransactions/' . $row['User']['id']) . "'>".h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name'])."</a></td>";
 
                                 if ($this->UserAuth->isAdmin()) {
                                 echo "<td>" . h($row['User']['username']) . "</td>";
