@@ -24,7 +24,95 @@
                        spellcheck="false" placeholder="Type user name">
             </div>
         </div>
+
         <div class="row">
+            <div class="col-lg-6">
+                <div class="col-lg-10"> <h2>Receipt</h2></div>
+                <div class="col-lg-2">
+                    <!--<h2 class="pull-right">Amount</h2>-->
+                </div>
+                <table class="table-responsive table-hover table-striped" width="100%">
+                    <?php
+                    $grand_total_payment = 0;
+                    $grand_total_receipt = 0;
+                    foreach ($data as $d_key => $d_val):
+                        $grand_total_payment +=$d_val["total_payment"];
+                        $grand_total_receipt +=$d_val["total_receipt"];
+                        if ($d_val['transaction_type'] != "Receipt")
+                            continue;
+                        ?>
+                        <tr>
+                            <td class="col-lg-3 bdr-left" valign="top">
+                                <div class="text-left"> <?php echo h($d_val['balance']); ?></div>
+                            </td>
+                            <td class="col-lg-9 bdr-left">
+                                <?php echo h($d_val['party_name']); ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if (!empty($data)) { ?>
+                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                        <tr style="border-top:5px double #333;">
+                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_receipt; ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
+                        </tr>
+                        <?php if ($grand_total_receipt> $grand_total_payment) { ?>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr style="border-top:5px double #333;border-bottom:5px double #333;">
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_receipt; ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>
+                            </tr>
+                        <?php } ?>
+                    <?php } ?>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <div class="col-lg-10"> <h2>Payment</h2></div>
+                <div class="col-lg-2">
+                    <!--<h2 class="pull-right">Amount</h2>-->
+                </div>
+
+                <table class="table-responsive table-hover table-striped" width="100%">
+                    <?php
+                    $grand_total_payment = 0;
+                    $grand_total_receipt = 0;
+                    foreach ($data as $d_key => $d_val):
+                        $grand_total_payment +=$d_val["total_payment"];
+                        $grand_total_receipt +=$d_val["total_receipt"];
+                        if ($d_val['transaction_type'] != "Payment")
+                            continue;
+                        ?>
+                        <tr>
+                            <td class="col-lg-3 bdr-left" valign="top">
+                                <div class="text-left"> <?php echo h($d_val['balance']); ?></div>
+                            </td>
+                            <td class="col-lg-9 bdr-left">
+                                <?php echo h($d_val['party_name']); ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if (!empty($data)) { ?>
+                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                        <tr style="border-top:5px double #333;">
+                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_payment; ?></th>
+                            <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>
+                        </tr>
+                        <?php if ($grand_total_payment > $grand_total_receipt) { ?>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
+                            <tr style="border-top:5px double #333;border-bottom:5px double #333;">
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_payment; ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>
+                            </tr>
+                        <?php } ?>
+                    <?php } ?>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!--<div class="row">
             <div class="col-lg-6">
                 <h2>Balance Sheet</h2>
                 <div class="table-responsive">
@@ -35,46 +123,46 @@
                                 <th>Party Name</th>
                                 <th>Payment</th>
                                 <th>Receipt</th>
-                                <th>Balance (Payment - Receipt)</th>
+                                <th>Balance (Receipt-Payment)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($data)) { ?>
+                            <?php /*if (empty($data)) { */?>
                                 <tr>
                                     <td colspan="4">No records found.</td>
                                 </tr>
                                 <?php
-                            } else {
+/*                            } else {
                                 $grand_total_payment = 0;
                                 $grand_total_receipt = 0;
                                 foreach ($data as $d_key => $d_val) {
                                     $grand_total_payment +=$d_val["total_payment"];
                                     $grand_total_receipt +=$d_val["total_receipt"];
-                                    ?>
+                                    */?>
                                     <tr>
-                                        <td><?php echo ++$d_key; ?></td>
-                                        <td><?php echo $d_val["party_name"] ?></td>
-                                        <td><?php echo $this->Number->currency($d_val["total_payment"],""); ?></td>
-                                        <td><?php echo $this->Number->currency($d_val["total_receipt"],""); ?></td>
-                                        <td><?php echo $this->Number->currency($d_val["balance"],""); ?></td>
+                                        <td><?php /*echo ++$d_key; */?></td>
+                                        <td><?php /*echo $d_val["party_name"] */?></td>
+                                        <td><?php /*echo $d_val["total_payment"]; */?></td>
+                                        <td><?php /*echo $d_val["total_receipt"]; */?></td>
+                                        <td><?php /*echo $d_val["balance"]; */?></td>
                                     </tr>
                                     <?php
-                                }
+/*                                }
                             }
-                            ?>                            
+                            */?>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th colspan="2" align="left">Grand Total</th>
-                                <th><?php echo $this->Number->currency($grand_total_payment,""); ?></th>
-                                <th><?php echo $this->Number->currency($grand_total_receipt,""); ?></th>
+                                <th><?php /*echo $this->Number->currency($grand_total_payment,""); */?></th>
+                                <th><?php /*echo $this->Number->currency($grand_total_receipt,""); */?></th>
                                 <th></th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     </div>
 </div>

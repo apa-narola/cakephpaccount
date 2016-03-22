@@ -144,15 +144,6 @@
                         </tr>
                         <?php if ($receipt_total[0]["total"] > $payment_total[0]["total"]) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <!--<tr>
-                                <th class="col-lg-3 bdr-left" valign="top"> <?php /*echo $this->Number->currency($receipt_total[0]["total"], ""); */?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
-                            </tr>
-                            <tr>
-                                <th class="col-lg-3 bdr-left" valign="top">-  <?php /*echo $this->Number->currency($payment_total[0]["total"], ""); */?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>
-                            </tr>-->
-
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr style="border-top:5px double #333;border-bottom:5px double #333;">
                                 <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"] - $payment_total[0]["total"], ""); ?></th>
@@ -205,14 +196,6 @@
                         </tr>
                         <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <!--<tr>
-                                <th class="col-lg-3 bdr-left" valign="top"> <?php /*echo $this->Number->currency($payment_total[0]["total"], ""); */?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>
-                            </tr>
-                            <tr>
-                                <th class="col-lg-3 bdr-left" valign="top">-  <?php /*echo $this->Number->currency($receipt_total[0]["total"], ""); */?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
-                            </tr>-->
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr style="border-top:5px double #333;border-bottom:5px double #333;">
                                 <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
@@ -224,32 +207,7 @@
             </div>
             <div class="clearfix"></div>            
         </div>
-        <!--        <div class="row pull-right">
-                    <p>
-        <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-        ));
-        ?>
-                    </p>
-                    <ul class="pagination">
-        <?php
-        echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
-        echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        ?>
-                    </ul>
-                </div>-->
     </div>
-    <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
-<!--    <?php /*echo $this->Html->script('bootstrap-datepicker.min.js'); */?>
-    <script type="text/javascript">
-        $('.input-group.date').datepicker({
-            orientation: "bottom auto",
-            format: DATE_FORMAT_JS
-        });
-    </script>-->
-<!--    ref link : http://igorescobar.github.io/jQuery-Mask-Plugin/-->
 <?php echo $this->Html->script('jquery.mask'); ?>
     <script type="text/javascript">
         $(document).ready(function() {

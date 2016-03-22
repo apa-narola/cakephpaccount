@@ -41,56 +41,56 @@
             // add a select input for each filter. It's a good idea to add a empty value and set
             // the default option to that.
             ?>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>Transaction Type</label>
                     <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <!--            <div class="col-lg-4"><div class="form-group">&nbsp;</div></div>-->
+            <!-- <div class="col-lg-4">
                 <div class="form-group">
-                    <label>Display interest entries ?</label>
-                    <?php echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Yes", "2" => "No"), 'empty' => '-- All --', 'default' => '')); ?>
+                    <label>Entries view option</label>
+                    <?php /*echo $this->Form->input("is_interest", array('label' => false, "class" => "form-control", 'options' => array("1" => "Display only interest entries", "2" => "Don't display interest entries"), 'empty' => '-- All --')); */?>
                 </div>
-            </div>
-            <div class="col-lg-4">
+            </div>-->
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>Search </label>
                     <?php
-                    // Add a basic search 
+                    // Add a basic search
                     echo $this->Form->input("search", array('label' => false, "class" => "form-control", 'placeholder' => "Type Party name or remarks..."));
                     ?>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>From</label>
-
                     <div class="input-group date">
                         <?php
                         $selected_transaction_from = null;
                         if (isset($this->params['named']["transaction_from"]))
                             $selected_transaction_from = $this->params['named']["transaction_from"];
 
-                        echo $this->Form->input('transaction_from', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_from, "label" => false, "div" => false, "readonly"));
+                        echo $this->Form->input('transaction_from', array("id"=>"transaction_from","type" => "text", "class" => "form-control",
+                            "value" => $selected_transaction_from, "label" => false, "div" => false));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
 
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>To</label>
-
                     <div class="input-group date">
                         <?php
                         $selected_transaction_to = null;
                         if (isset($this->params['named']["transaction_to"]))
                             $selected_transaction_to = $this->params['named']["transaction_to"];
-                        echo $this->Form->input('transaction_to', array("type" => "text", "class" => "form-control",
-                            "value" => $selected_transaction_to, "label" => false, "div" => false, "readonly"));
+
+                        echo $this->Form->input('transaction_to', array("id"=>"transaction_to","type" => "text", "class" => "form-control",
+                            "value" => $selected_transaction_to, "label" => false, "div" => false));
                         ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
@@ -106,6 +106,9 @@
                 echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
                 ?>
                 <?php
+                // echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
+                ?>
+                <?php
                 echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name" => "exportToexcel", "value" => 1));
                 ?>
                 <?php
@@ -116,19 +119,16 @@
         <?php echo $this->Session->flash(); ?>
         <div class="col-lg-12">
             <div class="row">
-
-
                 <div class="col-lg-6">
-                    <div class="col-lg-10"><h2>Receipt</h2></div>
+                    <div class="col-lg-10"> <h2>Receipt</h2></div>
                     <div class="col-lg-2">
                         <!--<h2 class="pull-right">Amount</h2>-->
                     </div>
                     <table class="table-responsive table-hover table-striped" width="100%">
                         <?php if (!empty($transactions)) { ?>
-                            
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
                             </tr>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                         <?php } ?>
@@ -138,10 +138,8 @@
                                 continue;
                             ?>
                             <tr>
-                                <td class="col-lg-3 bdr-left">
-                                    <div class="text-left"><i
-                                            class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?>
-                                    </div>
+                                <td class="col-lg-3 bdr-left" valign="top">
+                                    <div class="text-left"> <?php echo h($transaction['Transaction']['amount']); ?></div>
                                 </td>
                                 <td class="col-lg-9 bdr-left">
                                     <table width="100%"><tr>
@@ -149,7 +147,7 @@
                                             <td width="55%" valign="top" align="left">&nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;</td>
                                             <td valign="top" align="left"><?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></td>
                                     </table>
-                                    <?php echo $this->Html->link(__('View'), array('action' => 'view', $transaction['Transaction']['id'])); ?>
+                                    <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                     <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                     <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
                                 </td>
@@ -157,42 +155,33 @@
                         <?php endforeach; ?>
                         <?php if (!empty($transactions)) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                            <tr style="border-top:5px double #333;">
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
                             </tr>
-
                             <?php if ($receipt_total[0]["total"] > $payment_total[0]["total"]) { ?>
                                 <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                                <tr>
-                                    <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
-                                    <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
-                                </tr>
-                                <tr>
-                                    <th class="col-lg-3 bdr-left" valign="top">- <i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
-                                    <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
-                                </tr>
-
                                 <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                                <tr>
-                                    <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"] - $payment_total[0]["total"], ""); ?></th>
-                                    <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>    
+                                <tr style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($receipt_total[0]["total"] - $payment_total[0]["total"], ""); ?></th>
+                                    <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>
                                 </tr>
                             <?php } ?>
                         <?php } ?>
                     </table>
                 </div>
                 <div class="col-lg-6">
-                    <div class="col-lg-10"><h2>Payment</h2></div>
+                    <div class="col-lg-10"> <h2>Payment</h2></div>
                     <div class="col-lg-2">
                         <!--<h2 class="pull-right">Amount</h2>-->
                     </div>
 
                     <table class="table-responsive table-hover table-striped" width="100%">
-                        <?php if (!empty($transactions)) { ?>                            
+                        <?php if (!empty($transactions)) { ?>
+
                             <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>
                             </tr>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                         <?php } ?>
@@ -202,10 +191,8 @@
                                 continue;
                             ?>
                             <tr>
-                                <td class="col-lg-3 bdr-left">
-                                    <div class="text-left"><i
-                                            class="fa fa-rupee"></i> <?php echo h($transaction['Transaction']['amount']); ?>
-                                    </div>
+                                <td class="col-lg-3 bdr-left" valign="top">
+                                    <div class="text-left"> <?php echo h($transaction['Transaction']['amount']); ?></div>
                                 </td>
                                 <td class="col-lg-9 bdr-left">
                                     <table width="100%"><tr>
@@ -220,54 +207,30 @@
                         <?php endforeach; ?>
                         <?php if (!empty($transactions)) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr>
-                                <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                            <tr style="border-top:5px double #333;">
+                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>
                             </tr>
                             <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
                                 <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                                <tr>
-                                    <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"], ""); ?></th>
-                                    <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
-                                </tr>
-                                <tr>
-                                    <th class="col-lg-3 bdr-left" valign="top">- <i class="fa fa-rupee"></i> <?php echo $this->Number->currency($receipt_total[0]["total"], ""); ?></th>
-                                    <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
-                                </tr>
                                 <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                                <tr>
-                                    <th class="col-lg-3 bdr-left" valign="top"><i class="fa fa-rupee"></i> <?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
-                                    <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>    
+                                <tr style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <th class="col-lg-3 bdr-left" valign="top"> <?php echo $this->Number->currency($payment_total[0]["total"] - $receipt_total[0]["total"], ""); ?></th>
+                                    <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>
                                 </tr>
                             <?php } ?>
                         <?php } ?>
                     </table>
                 </div>
+                <div class="clearfix"></div>
             </div>
-<!--            <div class="row pull-right">
-                            <p>
-                <?php
-                echo $this->Paginator->counter(array(
-                    'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-                ));
-                ?>
-            </p>
-                <ul class="pagination">
-                    <?php
-                    echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                    echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
-                    echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                    ?>
-                </ul>
-            </div>-->
         </div>
     </div>
 </div>
-<!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
-<?php echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
+<?php echo $this->Html->script('jquery.mask'); ?>
 <script type="text/javascript">
-    $('.input-group.date').datepicker({
-        orientation: "bottom auto",
-        format: DATE_FORMAT_JS
+    $(document).ready(function() {
+        $('#transaction_from').mask(DATE_FORMAT_MASK);
+        $('#transaction_to').mask(DATE_FORMAT_MASK);
     });
 </script>

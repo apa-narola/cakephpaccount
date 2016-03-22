@@ -80,7 +80,12 @@ class PagesController extends AppController {
                 $arr["party_name"] = $this->prepareUserName($u_value["User"]);
                 $arr["total_payment"] = $total_payment;
                 $arr["total_receipt"] = $total_receipt;
-                $arr["balance"] = $total_payment - $total_receipt;
+                $balance = $total_receipt - $total_payment;
+                $arr["balance"] = $balance;
+                if($balance < 0)
+                    $arr["transaction_type"] = "Payment";
+                else
+                    $arr["transaction_type"] = "Receipt";
                 $data[] = $arr;
             }
         }
