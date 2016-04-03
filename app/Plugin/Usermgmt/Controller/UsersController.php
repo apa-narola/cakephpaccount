@@ -50,9 +50,9 @@ class UsersController extends UserMgmtAppController {
     public function index() {
         $this->User->unbindModel(array('hasMany' => array('LoginToken')));
         if ($this->UserAuth->isAdmin())
-            $users = $this->User->find('all', array('order' => 'User.id desc'));
+            $users = $this->User->find('all', array('order' => 'User.first_name asc'));
         else
-            $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.id desc'));
+            $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.first_name asc'));
         
         $this->set('users', $users);
     }

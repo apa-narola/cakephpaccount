@@ -11,7 +11,7 @@
                 <?php echo $this->Html->link(__("Home", true), "/") ?>
             </li>
             <li>
-                <i class="fa fa-dashboard"></i>  <a href="<?php echo $this->webroot ?>transactions">Transactions</a>
+                <i class="fa fa-dashboard"></i> <a href="<?php echo $this->webroot ?>transactions">Transactions</a>
             </li>
             <li class="active">
                 <i class="fa fa-file"></i> Data Entry
@@ -21,63 +21,84 @@
         <div class="col-lg-6">
             <?php // echo $this->Cookie->read('transactionType');?>
             <?php echo $this->Form->create('Transaction', array("role" => "form")); ?>
-            <div class="form-group">
-                <label class="radio control-label">Transaction type</label>
-                <!--<div class="col-sm-8">-->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="radio control-label">Transaction type</label>
+                    <!--<div class="col-sm-8">-->
 
-                <?php
-//                echo $cookieTransactionType;
-                $options = array("Receipt" => "Receipt", "Payment" => "Payment");
-                $attributes = array('legend' => false, "value" => $cookieTransactionType, "style" => "margin:0px;width:20px;");
-                echo $this->Form->radio('transaction_type', $options, $attributes);
-                ?>
-                <!--</div>-->
-            </div>
-            <div class="form-group">
-                <label>Select party name</label>
-                <!-- Button trigger modal -->
-                &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x" data-toggle="modal" data-target="#addNewPartyModal"></i></a>
-                <input id="" type="text" class="typeahead tt-query form-control" autocomplete="off"
-                       spellcheck="false" placeholder="Type user name" required>
-                       <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
-                       <?php echo $this->Form->input('user_id', array("type" => "hidden", "label" => false)); ?>
-                <p class="help-block">Choose party name for which you are making transaction.</p>
-            </div>
-            <div class="form-group">
-                <label>Enter amount</label>
-                <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control")); ?>
-                <p class="help-block">Enter amount. E.g. 10000</p>
-            </div>
-
-            <!--            <div class="form-group">
-                            <label>Select transaction type</label>
-            <?php echo $this->Form->input('transaction_type', array("label" => false, "class" => "form-control", "options" => array("Receipt" => "Receipt", "Payment" => "Payment"))); ?>
-                            <p class="help-block">Choose transaction type. it can be <strong>Payment</strong> or <strong>Receipt</strong>.</p>
-                        </div>-->
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <?php echo $this->Form->input('is_interest', array("label" => false)); ?>
-                        Is this transaction of interest ?
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Remarks</label>
-                <?php echo $this->Form->input('remarks', array("label" => false, "class" => "form-control")); ?>
-                <p class="help-block">Type remarks for this transaction here.</p>
-            </div>
-            <div class="form-group">
-                <label>Transaction date</label>
-                <div class="input-group date">
                     <?php
-                    echo $this->Form->input('transaction_date', array("id"=>"transaction-date","type" => "text", "class" => "form-control",
-                        "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false));
+                    //                echo $cookieTransactionType;
+                    $options = array("Receipt" => "Receipt", "Payment" => "Payment");
+                    $attributes = array('legend' => false, "value" => $cookieTransactionType, "style" => "margin:0px;width:20px;");
+                    echo $this->Form->radio('transaction_type', $options, $attributes);
                     ?>
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    <!--</div>-->
                 </div>
-                <p class="help-block">Select transaction date.</p>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Select party name</label>
+                    <!-- Button trigger modal -->
+                    &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
+                                                                        data-toggle="modal"
+                                                                        data-target="#addNewPartyModal"></i></a>
+                    <input id="" type="text" class="typeahead tt-query form-control" autocomplete="off"
+                           spellcheck="false" placeholder="Type user name" required>
+                    <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
+                    <?php echo $this->Form->input('user_id', array("type" => "hidden", "label" => false)); ?>
+                    <p class="help-block">Choose party name for which you are making transaction.</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <?php echo $this->Form->input('is_interest', array("label" => false)); ?>
+                            Is Interest ?
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Enter amount</label>
+                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15)); ?>
+                    <p class="help-block">Enter amount. E.g. 10000</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <?php echo $this->Form->input('remarks', array("label" => false, "class" => "form-control","rows"=>3)); ?>
+                    <p class="help-block">Type remarks for this transaction here.</p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Transaction date</label>
+
+                    <div class="input-group date">
+                        <?php
+                        echo $this->Form->input('transaction_date', array("id" => "transaction-date", "type" => "text", "class" => "form-control",
+                            "value" => date(Configure::read('App.DATE_FORMAT')), "label" => false, "div" => false));
+                        ?>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                    <p class="help-block">Select transaction date.</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Short Notes </label>
+                    <?php echo $this->Form->input('short_notes', array("label" => false, "class" => "form-control","rows"=>3)); ?>
+                    <p class="help-block">Type short note for this transaction here.</p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
             <?php
             $options = array(
                 'label' => __('Submit'),
@@ -85,6 +106,9 @@
             );
             echo $this->Form->end($options);
             ?>
+                    </div>
+                </div>
+
 
         </div>
     </div>
@@ -96,7 +120,7 @@
 <?php //echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
 <?php echo $this->Html->script('transaction.js'); ?>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#transaction-date').mask(DATE_FORMAT_MASK);
     });
 </script>
@@ -104,7 +128,7 @@
 <?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
 <script type="text/javascript">
     $("input.typeahead").typeahead({
-        onSelect: function(item) {
+        onSelect: function (item) {
             var user_id = item.value;
             if (!user_id) {
                 alert("Could not find userID.");
@@ -121,13 +145,13 @@
             triggerLength: 1,
             method: "get",
             loadingClass: "loading-circle",
-            preDispatch: function(query) {
+            preDispatch: function (query) {
                 //showLoadingMask(true);
                 return {
                     search: query
                 }
             },
-            preProcess: function(data) {
+            preProcess: function (data) {
                 console.log(data);
                 //showLoadingMask(false);
                 if (data.success === false) {
@@ -140,7 +164,7 @@
         }
     });
 
-//    $(document).on("change",".cls_transaction_type",function(){
-//        alert($(this).val());
-//    });
+    //    $(document).on("change",".cls_transaction_type",function(){
+    //        alert($(this).val());
+    //    });
 </script>

@@ -116,7 +116,7 @@ class TransactionsController extends AppController {
           );
           $this->set('transactions', $this->paginate()); */
 
-        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.modified desc'));
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created'));
         $conditions['Transaction.transaction_type'] = "Payment";
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $conditions['Transaction.transaction_type'] = "Receipt";
@@ -129,10 +129,10 @@ class TransactionsController extends AppController {
 //        $this->set('transactions', $this->Paginator->paginate());
     }
 
-    public function userTransactions($user_id = null) {
+    public function userTransactions($user_id = null,$type='T') {
         if (empty($user_id))
             $user_id = $this->request->params["named"]["user_id"];
-
+        $type = $type == 'T' ? 0 : 1;
         $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("User.id" => $user_id)));
         $conditions = array();
         //Transform POST into GET
@@ -194,7 +194,8 @@ class TransactionsController extends AppController {
                 }
             }
         }
-        $conditions[] = array("Transaction.user_id" => $user_id);
+
+        $conditions[] = array("Transaction.user_id" => $user_id,"Transaction.is_interest"=>$type);
         if (!empty($this->params['named']["exportToexcel"])) {
             $searchedTransactions = $this->Transaction->find('all', array("conditions" => $conditions));
             ///pr($searchedTransactions);exit;
@@ -211,7 +212,7 @@ class TransactionsController extends AppController {
 //            'order' => 'Transaction.id desc'
 //        );
 //        $transactions = $this->paginate();
-        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.modified desc'));
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created'));
         $conditions['Transaction.transaction_type'] = "Payment";
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $conditions['Transaction.transaction_type'] = "Receipt";
@@ -318,7 +319,29 @@ class TransactionsController extends AppController {
         } else {
             $this->Flash->error(__('The transaction could not be deleted. Please, try again.'));
         }
-        return $this->redirect(array('action' => 'index'));
+        return $this->redirect(array('action' => 'index',"type"=>  $this->params["named"]["type"]));
+    }
+
+    public function hide($id = null,$is_hidden = 0,$type="T",$is_user_transaction=0,$user_id=null) {
+
+        $this->Transaction->id = $id;
+        if (!$this->Transaction->exists()) {
+            throw new NotFoundException(__('Invalid transaction'));
+        }
+        $this->request->allowMethod('post', 'hide');
+        $is_hidden = $is_hidden == 0 ? 1 : 0;
+        $this->request->data["is_hidden"] = $is_hidden;
+        if ($this->Transaction->save($this->request->data)) {
+            $this->Flash->success(__('The transaction has been hidden.'));
+        } else {
+            $this->Flash->error(__('The transaction could not be hidden. Please, try again.'));
+        }
+        if($is_user_transaction){
+            return $this->redirect(array('action' => 'userTransactions',$type,$user_id));
+        }else{
+
+        return $this->redirect(array('action' => 'index',"type"=> $type));
+        }
     }
 
     public function getAllTransactionCount() {

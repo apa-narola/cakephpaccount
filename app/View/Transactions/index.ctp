@@ -108,46 +108,59 @@
                     <!--<h2 class="pull-right">Amount</h2>-->
                 </div>
                 <table class="table-responsive table-hover table-striped" width="100%">
-                    <?php if (!empty($transactions)) { ?>                        
-                        <tr>
-                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $receipt_total[0]["total"]; ?></th>
-                            <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
-                        </tr>
-                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                    <?php } ?>
                     <?php
                     foreach ($transactions as $transaction):
                         if ($transaction['Transaction']['transaction_type'] != "Receipt")
                             continue;
+
+                        $hidden_style="";
+                        $hidden_text="Hide";
+                        if($transaction['Transaction']['is_hidden'] == 1){
+                            $hidden_text="Show";
+                            $hidden_style="style='opacity:0.2'";
+                        }
                         ?>
-                        <tr>
-                            <td class="col-lg-3 bdr-left" valign="top">
-                                <div class="text-left"> <?php echo h($transaction['Transaction']['amount']); ?></div>
+                        <tr <?php echo $hidden_style;?> >
+                            <td class="col-lg-2 bdr-left" valign="top">
+                                <div class="text-right">
+                                    <?php echo h($transaction['Transaction']['amount']); ?></div>
                             </td>
-                            <td class="col-lg-9 bdr-left">            
+                            <td class="col-lg-1 bdr-left" valign="top">
+                                <div class="text-right">
+                                    <?php echo h($transaction['Transaction']['short_notes']); ?></div>
+                            </td>
+                            <td class="col-lg-9 bdr-left">
                                 <table width="100%"><tr>
                                         <td width="25%" valign="top" align="left"><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,</td>
                                         <td width="55%" valign="top" align="left">&nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;</td>
-                                        <td valign="top" align="left"><?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></td>
                                 </table>
                                 <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                 <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'],"type"=> $this->params["named"]["type"])); ?>
                                 <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                            </td>                            
+                                <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'],$transaction['Transaction']['is_hidden'],$this->params["named"]["type"],1), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+                            </td>
+                            <td class="col-lg-1 bdr-left" valign="top">
+                                <div class="text-left">
+                                    <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?>
+                                </div>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     <?php if (!empty($transactions)) { ?>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                         <tr style="border-top:5px double #333;">
                             <th class="col-lg-3 bdr-left" valign="top"> <?php echo $receipt_total[0]["total"]; ?></th>
-                            <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>    
+                            <th class="col-lg-3 bdr-left" valign="top"> Cr, Total Receipt </th>
                         </tr>
                         <?php if ($receipt_total[0]["total"] > $payment_total[0]["total"]) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr style="border-top:5px double #333;border-bottom:5px double #333;">
-                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $receipt_total[0]["total"] - $payment_total[0]["total"]; ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>    
+                                <th class="col-lg-3 bdr-left" valign="top">
+                                    <?php $rt = $receipt_total[0]["total"] - $payment_total[0]["total"];
+                                    echo $rt;
+                                    ?></th>
+                                <th class="col-lg-3 bdr-left" valign="top">Cr, Total Receipt</th>
                             </tr>
                         <?php } ?>
                     <?php } ?>
@@ -160,46 +173,55 @@
                 </div>
 
                 <table class="table-responsive table-hover table-striped" width="100%">
-                    <?php if (!empty($transactions)) { ?>
-                        
-                        <tr>
-                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $payment_total[0]["total"]; ?></th>
-                            <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
-                        </tr>
-                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                    <?php } ?>
-                    <?php
+                   <?php
                     foreach ($transactions as $transaction):
                         if ($transaction['Transaction']['transaction_type'] != "Payment")
-                            continue;
+                            continue; $hidden_style="";
+                        $hidden_text="Hide";
+                        if($transaction['Transaction']['is_hidden'] == 1){
+                            $hidden_text="Show";
+                            $hidden_style="style='opacity:0.2'";
+                        }
                         ?>
-                        <tr>
-                            <td class="col-lg-3 bdr-left" valign="top">
+                        <tr <?php echo $hidden_style;?> >
+                            <td class="col-lg-2 bdr-left" valign="top">
                                 <div class="text-left"> <?php echo h($transaction['Transaction']['amount']); ?></div>
                             </td>
-                            <td class="col-lg-9 bdr-left">
+                            <td class="col-lg-1 bdr-left" valign="top">
+                                <div class="text-right">
+                                    <?php echo h($transaction['Transaction']['short_notes']); ?></div>
+                            </td>
+                            <td class="col-lg-8 bdr-left">
                                 <table width="100%"><tr>
                                         <td width="25%" valign="top" align="left"><strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,</td>
                                         <td width="55%" valign="top" align="left">&nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>, &nbsp;</td>
                                         <td valign="top" align="left"><?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?></td>
                                 </table>
+                                <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
                                 <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'],"type"=> $this->params["named"]["type"])); ?>
                                 <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
+                                <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'],$transaction['Transaction']['is_hidden'],$this->params["named"]["type"],1), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
                             </td>
+                            <td class="col-lg-1 bdr-left" valign="top">
+                                <div class="text-right">
+                                    <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?>
+                                </div>
+                            </td>
+
                         </tr>
                     <?php endforeach; ?>
                     <?php if (!empty($transactions)) { ?>
                         <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                         <tr style="border-top:5px double #333;">
                             <th class="col-lg-3 bdr-left" valign="top"> <?php echo $payment_total[0]["total"]; ?></th>
-                            <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>    
+                            <th class="col-lg-3 bdr-left" valign="top"> Dr, Total Payment</th>
                         </tr>
                         <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
                             <tr style="border-top:5px double #333;border-bottom:5px double #333;">
                                 <th class="col-lg-3 bdr-left" valign="top"> <?php echo $payment_total[0]["total"] - $receipt_total[0]["total"]; ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>    
+                                <th class="col-lg-3 bdr-left" valign="top"> Dr, Total Payment</th>
                             </tr>
                         <?php } ?>
                     <?php } ?>

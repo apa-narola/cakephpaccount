@@ -1,6 +1,4 @@
-
-# change by ashish - 8th Feb 2016
-ALTER TABLE `users` ADD `middle_name` VARCHAR(100) NULL AFTER `first_name`;
-
-# change by ashish - 18th March 2016
-ALTER TABLE `transactions` CHANGE `amount` `amount` DOUBLE(20,2) NULL DEFAULT NULL;
+# change by ashish - 3rd April 2016
+ALTER TABLE `transactions` CHANGE `amount` `amount` BIGINT(20) NULL DEFAULT NULL;
+ALTER TABLE `transactions` ADD `short_notes` VARCHAR(255) NULL DEFAULT NULL AFTER `remarks`;
+ALTER TABLE `transactions` ADD `is_hidden` TINYINT(1) NOT NULL DEFAULT '0' AFTER `transaction_date`;
