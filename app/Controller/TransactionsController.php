@@ -118,7 +118,7 @@ class TransactionsController extends AppController
           );
           $this->set('transactions', $this->paginate()); */
 
-        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created'));
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created ASC'));
         $conditions['Transaction.transaction_type'] = "Payment";
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $conditions['Transaction.transaction_type'] = "Receipt";

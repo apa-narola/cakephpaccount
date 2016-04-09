@@ -53,6 +53,7 @@
                     <label>Is interest ?</label>
 
                     <?php
+
                     echo $this->Form->input('is_interest', array(
                         "label" => false,
                         "options"=>array("1"=>"Yes","0"=>"No"),
