@@ -123,3 +123,9 @@ p.error em {
 .padd-right-0{
 padding-left:0;
 }
+.trans_action a{
+    font-size: 12px;
+}
+.trans_action .remark{
+    font-size: 12px;
+}

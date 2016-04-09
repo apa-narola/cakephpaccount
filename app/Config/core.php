@@ -79,7 +79,7 @@ Configure::write('App.encoding', 'UTF-8');
 /**
  * Application wide charset encoding
  */
-Configure::write('App.DATE_FORMAT', 'd-m-Y');
+Configure::write('App.DATE_FORMAT', 'd-m-y');
 Configure::write('App.DATE_FORMAT_JS', 'dd-mm-yyyy');
 Configure::write('App.DATE_FORMAT_MASK', '00-00-00');
 

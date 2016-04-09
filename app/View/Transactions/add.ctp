@@ -50,14 +50,20 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="col-sm-6">
+            <!--<div class="col-sm-6">
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <?php echo $this->Form->input('is_interest', array("label" => false)); ?>
+                            <?php /*echo $this->Form->input('is_interest', array("label" => false)); */?>
                             Is Interest ?
                         </label>
                     </div>
+                </div>
+            </div>-->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Is interest ?</label>
+                    <?php echo $this->Form->input('is_interest', array("label" => false, 'default' =>0, "options"=>array("1"=>"Yes","0"=>"No"), "class" => "form-control", "maxlength" => 15)); ?>
                 </div>
             </div>
             <div class="col-sm-6">
