@@ -205,7 +205,7 @@
                                             </table>
                                             <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'],"type"=> $this->request->param["pass"][1])); ?>
                                             <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],$this->request->param["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                                            <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'],$transaction['Transaction']['is_hidden'],$this->request->param["pass"][1],1), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+                                            <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'],$transaction['Transaction']['is_hidden'],$this->request->param["pass"][1]), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
                                         </td>
                                         <td width="8%" class="bdr-left" valign="top">
                                             <div class="text-left">
@@ -215,6 +215,7 @@
 
                                     </tr>
                                 <?php endforeach; ?>
+
                             </table>
                         </div>
                         <div class="clearfix"></div>

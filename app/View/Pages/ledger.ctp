@@ -26,7 +26,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6" style="min-height: 600px;">
                 <div class="col-lg-10"> <h2>Receipt</h2></div>
                 <div class="col-lg-2">
                     <!--<h2 class="pull-right">Amount</h2>-->
@@ -50,24 +50,9 @@
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                    <?php if (!empty($data)) { ?>
-                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                        <tr style="border-top:5px double #333;">
-                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_receipt; ?></th>
-                            <th class="col-lg-3 bdr-left" valign="top"> Total Receipt</th>
-                        </tr>
-                        <?php if ($grand_total_receipt> $grand_total_payment) { ?>
-                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr style="border-top:5px double #333;border-bottom:5px double #333;">
-                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_receipt; ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Receipt</th>
-                            </tr>
-                        <?php } ?>
-                    <?php } ?>
                 </table>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6" style="min-height: 600px;">
                 <div class="col-lg-10"> <h2>Payment</h2></div>
                 <div class="col-lg-2">
                     <!--<h2 class="pull-right">Amount</h2>-->
@@ -92,24 +77,65 @@
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                    <?php if (!empty($data)) { ?>
-                        <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                        <tr style="border-top:5px double #333;">
-                            <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_payment; ?></th>
-                            <th class="col-lg-3 bdr-left" valign="top"> Total Payment</th>
-                        </tr>
-                        <?php if ($grand_total_payment > $grand_total_receipt) { ?>
-                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr><td class="col-lg-3 bdr-left" colspan="2">&nbsp;</td></tr>
-                            <tr style="border-top:5px double #333;border-bottom:5px double #333;">
-                                <th class="col-lg-3 bdr-left" valign="top"> <?php echo $grand_total_payment; ?></th>
-                                <th class="col-lg-3 bdr-left" valign="top"> Total Remaining Payment</th>
-                            </tr>
-                        <?php } ?>
-                    <?php } ?>
                 </table>
             </div>
             <div class="clearfix"></div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <table class="table-responsive table-hover table-striped" width="100%">
+
+                        <?php if (!empty($data)) { ?>
+                            <tr style="border-top:5px double #333;">
+                                <th width="10%" class=" bdr-left text-right" valign="top">
+                                    <?php echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_receipt); ?>
+                                </th>
+                                <th class="bdr-left" valign="top"> Cr, Total Receipt</th>
+                            </tr>
+                            <?php if ($grand_total_receipt> $grand_total_payment) { ?>
+                                <tr>
+                                    <td class="bdr-left" colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <th width="10%" class="bdr-left text-right" valign="top">
+                                        <?php
+                                        echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_receipt);
+                                        ?></th>
+                                    <th class="bdr-left" valign="top">Cr, Total Receipt</th>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
+                    </table>
+                </div>
+                <div class="col-lg-6">
+                    <table class="table-responsive table-hover table-striped" width="100%">
+                        <?php if (!empty($data)) { ?>
+
+                            <tr style="border-top:5px double #333;">
+                                <th width="10%" class="bdr-left text-right" valign="top">
+                                    <?php
+                                    if (!empty($grand_total_payment))
+                                        echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_payment);
+                                    ?>
+                                </th>
+                                <th class="bdr-left" valign="top"> Dr, Total Payment</th>
+                            </tr>
+                            <?php if ($grand_total_payment > $grand_total_receipt) { ?>
+
+                                <tr style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <th width="10%" class="bdr-left text-right" valign="top">
+                                        <?php
+                                            echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_payment);
+                                        ?>
+                                    </th>
+                                    <th class="bdr-left" valign="top"> Dr, Total Payment</th>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
+                    </table>
+                </div>
+
+            </div>
         </div>
 
         <!--<div class="row">

@@ -355,7 +355,7 @@ class TransactionsController extends AppController
     public function hide($id = null, $is_hidden = 0, $type = "T", $is_user_transaction = 0, $user_id = null)
     {
 
-        
+
         $this->Transaction->id = $id;
         if (!$this->Transaction->exists()) {
             throw new NotFoundException(__('Invalid transaction'));

@@ -81,7 +81,7 @@ class PagesController extends AppController {
                 $arr["total_payment"] = $total_payment;
                 $arr["total_receipt"] = $total_receipt;
                 $balance = $total_receipt - $total_payment;
-                $arr["balance"] = $balance;
+                $arr["balance"] = abs($balance);
                 if($balance < 0)
                     $arr["transaction_type"] = "Payment";
                 else
@@ -89,6 +89,7 @@ class PagesController extends AppController {
                 $data[] = $arr;
             }
         }
+        pr($data);
         $this->set(compact("data"));
     }
 

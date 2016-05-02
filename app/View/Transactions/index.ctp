@@ -156,7 +156,7 @@
                                         ?>
                                         <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
                                         <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                                        <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], $transaction['Transaction']['is_hidden'], $this->params["named"]["type"], 1), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+                                        <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], $transaction['Transaction']['is_hidden'], $this->params["named"]["type"]), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
                                     </td>
                                     <td width="8%" class="bdr-left" valign="top">
                                         <div class="text-right">
@@ -212,7 +212,7 @@
                                         ?>
                                         <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
                                         <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                                        <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], $transaction['Transaction']['is_hidden'], $this->params["named"]["type"], 1), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+                                        <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], $transaction['Transaction']['is_hidden'], $this->params["named"]["type"]), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
                                     </td>
                                     <td width="8%" class="bdr-left" valign="top">
                                         <div class="text-right">
