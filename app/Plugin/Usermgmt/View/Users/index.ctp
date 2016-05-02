@@ -24,49 +24,78 @@
         <h1 class="page-header">
             Parties
             <!--<small>Subheading</small>-->
-        </h1>        
+        </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-home"></i>  
-                <?php echo $this->Html->link(__("Home", true), "/") ?>                
-            </li>                       
+                <i class="fa fa-home"></i>
+                <?php echo $this->Html->link(__("Home", true), "/") ?>
+            </li>
             <li class="active">
                 <i class="fa fa-users"></i> Parties
             </li>
             <li class="pull-right">
-                <i class="fa fa-plus-circle"></i>  <a href="<?php echo $this->webroot ?>addUser">Add Party</a>
+                <i class="fa fa-plus-circle"></i> <a href="<?php echo $this->webroot ?>addUser">Add Party</a>
             </li>
         </ol>
         <?php echo $this->Session->flash(); ?>
+<!--        <div class="row">-->
+            <!--<div class="panel panel-default">
+                <div class="panel-heading">Employee Search</div>
+                <div class="panel-body">
+
+                </div>
+            </div>-->
+
+            <?php echo $this->Form->create('User', array('action' => 'index', 'role' => 'form')); ?>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <?php echo $this->Form->input("search_text", array('label' => false, 'div' => false, 'class' => "form-control","placeholder"=>"Enter party name")) ?>
+                </div>
+            </div>
+            <?php
+            $options = array(
+                'div' => array("class" => 'col-lg-1'),
+                'label' => __('Search'),
+                'class' => "btn btn-default"
+            );
+            echo $this->Form->end($options);
+
+            ?>
+        <div class="col-lg-1">
+            <div class="form-group">
+                <?php echo $this->Form->button('Reset', array('type' => 'button', 'class' => "btn btn-default","onclick"=>"window.location='allUsers'"));?>
+            </div>
+        </div>
+
         <div class="col-lg-12">
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
-                        <tr>
-                            <th><?php echo __('SL'); ?></th>
-                            <th><?php echo __('Name'); ?></th>
-                            <?php if ($this->UserAuth->isAdmin()) { ?>
+                    <tr>
+                        <th><?php echo __('SL'); ?></th>
+                        <th><?php echo __('Name'); ?></th>
+                        <?php if ($this->UserAuth->isAdmin()) { ?>
                             <th><?php echo __('Username'); ?></th>
                             <th><?php echo __('Email'); ?></th>
                             <th><?php echo __('Group'); ?></th>
                             <th><?php echo __('Email Verified'); ?></th>
                             <th><?php echo __('Status'); ?></th>
                             <th><?php echo __('Created'); ?></th>
-                            <?php } ?>
-                            <th><?php echo __('Action'); ?></th>
-                        </tr>
+                        <?php } ?>
+                        <th><?php echo __('Action'); ?></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        if (!empty($users)) {
-                            $sl = 0;
-                            foreach ($users as $row) {
-                                $sl++;
-                                echo "<tr>";
-                                echo "<td>" . $sl . "</td>";
-                                echo "<td><a href='" . $this->Html->url('/Transactions/userTransactions/' . $row['User']['id']) . "'>".h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name'])."</a></td>";
+                    <?php
+                    if (!empty($users)) {
+                        $sl = 0;
+                        foreach ($users as $row) {
+                            $sl++;
+                            echo "<tr>";
+                            echo "<td>" . $sl . "</td>";
+                            echo "<td><a href='" . $this->Html->url('/Transactions/userTransactions/' . $row['User']['id']) . "'>" . h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name']) . "</a></td>";
 
-                                if ($this->UserAuth->isAdmin()) {
+                            if ($this->UserAuth->isAdmin()) {
                                 echo "<td>" . h($row['User']['username']) . "</td>";
                                 echo "<td>" . h($row['User']['email']) . "</td>";
                                 echo "<td>" . h($row['UserGroup']['name']) . "</td>";
@@ -76,40 +105,40 @@
                                 } else {
                                     echo "No";
                                 }
-                                echo"</td>";
+                                echo "</td>";
                                 echo "<td>";
                                 if ($row['User']['active'] == 1) {
                                     echo "Active";
                                 } else {
                                     echo "Inactive";
                                 }
-                                echo"</td>";
-                                echo "<td>" . date('d-M-Y', strtotime($row['User']['created'])) . "</td>";
-                                }
-                                echo "<td>";
-                                echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
-                                echo "&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";
-                                echo "&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
-                                echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'].'/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
-                                echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'].'/I') . "'><i class='fa fa-glass' title='Interests'></i></a>";
-                                if ($row['User']['email_verified'] == 0) {
-                                    echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/verifyEmail/' . $row['User']['id']) . "'><i class='fa fa-envelope' title='Verify email'></i></a>";
-                                }
-                                if ($row['User']['active'] == 0) {
-                                    echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/1') . "'> <i class='fa fa-check' title='Make Active'></i></span>";
-                                } else {
-                                    echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
-                                }
-                                if ($row['User']['id'] != 1 && $row['User']['username'] != 'Admin') {
-                                    echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteUser', $row['User']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this user?')));
-                                }
                                 echo "</td>";
-                                echo "</tr>";
+                                echo "<td>" . date('d-M-Y', strtotime($row['User']['created'])) . "</td>";
                             }
-                        } else {
-                            echo "<tr><td colspan=10><br/><br/>No Data</td></tr>";
+                            echo "<td>";
+                            echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
+                            echo "&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";
+                            echo "&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
+                            echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
+                            echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/I') . "'><i class='fa fa-glass' title='Interests'></i></a>";
+                            if ($row['User']['email_verified'] == 0) {
+                                echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/verifyEmail/' . $row['User']['id']) . "'><i class='fa fa-envelope' title='Verify email'></i></a>";
+                            }
+                            if ($row['User']['active'] == 0) {
+                                echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/1') . "'> <i class='fa fa-check' title='Make Active'></i></span>";
+                            } else {
+                                echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
+                            }
+                            if ($row['User']['id'] != 1 && $row['User']['username'] != 'Admin') {
+                                echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteUser', $row['User']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this user?')));
+                            }
+                            echo "</td>";
+                            echo "</tr>";
                         }
-                        ?>
+                    } else {
+                        echo "<tr><td colspan=10><br/><br/>No Data</td></tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>

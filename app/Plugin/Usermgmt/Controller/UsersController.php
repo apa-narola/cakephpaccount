@@ -48,12 +48,28 @@ class UsersController extends UserMgmtAppController {
      * @return array
      */
     public function index() {
+        $conditions = array();
+        if(!empty($this->request->data["User"]["search_text"]))
+            $conditions[] = array(
+                "OR"=>array(
+                    "User.first_name LIKE '%".$this->request->data["User"]["search_text"]."%'",
+                    "User.middle_name LIKE '%".$this->request->data["User"]["search_text"]."%'",
+                    "User.last_name LIKE '%".$this->request->data["User"]["search_text"]."%'",
+                )
+            );
+
+        if(!$this->UserAuth->isAdmin())
+            $conditions[] =  array("user_group_id <>" => 1);
+
+
         $this->User->unbindModel(array('hasMany' => array('LoginToken')));
-        if ($this->UserAuth->isAdmin())
+        $users = $this->User->find('all', array("conditions" => $conditions, 'order' => 'User.first_name asc'));
+
+       /* if ($this->UserAuth->isAdmin())
             $users = $this->User->find('all', array('order' => 'User.first_name asc'));
         else
-            $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.first_name asc'));
-        
+            $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.first_name asc'));*/
+
         $this->set('users', $users);
     }
 

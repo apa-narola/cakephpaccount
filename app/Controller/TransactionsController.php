@@ -319,6 +319,7 @@ class TransactionsController extends AppController
             $this->request->data = $this->Transaction->find('first', $options);
             //pr($this->request->data);
             $this->request->data["Transaction"]["transaction_date"] = date(Configure::read('App.DATE_FORMAT'), strtotime($this->request->data["Transaction"]["transaction_date"]));
+            $this->request->data["Transaction"]["is_interest"] = empty($this->request->data["Transaction"]["is_interest"]) ? 0 : 1;
 
         }
         if ($this->UserAuth->isAdmin())
@@ -354,6 +355,7 @@ class TransactionsController extends AppController
     public function hide($id = null, $is_hidden = 0, $type = "T", $is_user_transaction = 0, $user_id = null)
     {
 
+        
         $this->Transaction->id = $id;
         if (!$this->Transaction->exists()) {
             throw new NotFoundException(__('Invalid transaction'));
