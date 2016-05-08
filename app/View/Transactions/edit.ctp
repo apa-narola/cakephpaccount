@@ -18,10 +18,10 @@
             </li>
         </ol>
 
-        <div class="col-lg-6">
+        <div class="row">
             <?php echo $this->Form->create('Transaction', array("role" => "form")); ?>
             <?php echo $this->Form->input('id'); ?>
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label class="radio control-label">Transaction type</label>
                     <!--<div class="col-sm-8">-->
@@ -35,7 +35,7 @@
                     <!--</div>-->
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label>Select party name</label>
                     <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control")); ?>
@@ -47,8 +47,14 @@
                     <p class="help-block">Choose party name for which you are making transaction.</p>
                 </div>
             </div>
-            <div class="clearfix"></div>
-            <div class="col-sm-6">
+             <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Enter amount</label>
+                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15)); ?>
+                    <p class="help-block">Enter amount. E.g. 10000</p>
+                </div>
+            </div>
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label>Is interest ?</label>
                     <?php echo $this->Form->input('is_interest',
@@ -59,22 +65,23 @@
 
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Enter amount</label>
-                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15)); ?>
-                    <p class="help-block">Enter amount. E.g. 10000</p>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-sm-6">
+			</div>
+			<div class="row">           
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label>Remarks</label>
                     <?php echo $this->Form->input('remarks', array("label" => false, "class" => "form-control", "rows" => 3)); ?>
                     <p class="help-block">Type remarks for this transaction here.</p>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Short Notes </label>
+                    <?php echo $this->Form->input('short_notes', array("label" => false, "class" => "form-control", "rows" => 3)); ?>
+                    <p class="help-block">Type short notes for this transaction here.</p>
+                </div>
+            </div>
+			<div class="col-sm-3">
                 <div class="form-group">
                     <label>Transaction date</label>
 
@@ -88,16 +95,8 @@
                     <p class="help-block">Select transaction date.</p>
                 </div>
             </div>
-            <div class="clearfix"></div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Short Notes </label>
-                    <?php echo $this->Form->input('short_notes', array("label" => false, "class" => "form-control", "rows" => 3)); ?>
-                    <p class="help-block">Type short notes for this transaction here.</p>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
+            <div class="col-sm-3">
+                <div class="form-group" style="margin-top:25px;">
                     <?php
                     $options = array(
                         'label' => __('Submit'),

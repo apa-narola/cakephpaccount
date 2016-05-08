@@ -59,7 +59,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'testdata',
+		'database' => 'moneylender',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);

@@ -32,6 +32,7 @@ class TransactionsController extends AppController
     public function index()
     {
         $conditions = array();
+		//$conditions["Transaction.is_hidden"] = 0;
         $type = !empty($this->params["named"]["type"]) ? $this->params["named"]["type"] : "T";
         if ($type == "I")
             $conditions["Transaction.is_interest"] = 1;
@@ -120,8 +121,10 @@ class TransactionsController extends AppController
 
         $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created ASC'));
         $conditions['Transaction.transaction_type'] = "Payment";
+        $conditions['Transaction.is_hidden'] = 0;
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $conditions['Transaction.transaction_type'] = "Receipt";
+		$conditions['Transaction.is_hidden'] = 0;
         $receipt_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $this->set(compact('transactions', "payment_total", "receipt_total"));
         // Pass the search parameter to highlight the text
@@ -217,8 +220,10 @@ class TransactionsController extends AppController
 //        $transactions = $this->paginate();
         $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created'));
         $conditions['Transaction.transaction_type'] = "Payment";
+		$conditions['Transaction.is_hidden'] = 0;
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $conditions['Transaction.transaction_type'] = "Receipt";
+		$conditions['Transaction.is_hidden'] = 0;
         $receipt_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $this->set(compact('transactions', "payment_total", "receipt_total"));
         $fullname = "NA";

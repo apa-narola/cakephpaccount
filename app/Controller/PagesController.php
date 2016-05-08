@@ -89,7 +89,7 @@ class PagesController extends AppController {
                 $data[] = $arr;
             }
         }
-        pr($data);
+        //pr($data);
         $this->set(compact("data"));
     }
 

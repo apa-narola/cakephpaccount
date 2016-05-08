@@ -129,3 +129,16 @@ padding-left:0;
 .trans_action .remark{
     font-size: 12px;
 }
+.short_note{
+font-size:10px;
+text-align:right;
+}
+.cr-dr{
+padding-left:10px;
+}
+.amount-green{
+color:green;
+}
+.amount-red{
+color:red;
+}
