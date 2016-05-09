@@ -16,6 +16,21 @@
             <li class="active">
                 <i class="fa fa-file"></i> Add Transaction
             </li>
+            <li class="pull-right">
+                <?php
+                $urlArr = array('action' => 'delete', $this->request->data["Transaction"]["id"],"type"=>$this->request->params["named"]["type"]);
+                if(!empty($user_id))
+                    $urlArr["user_id"] = $user_id;
+
+                echo $this->Form->postLink(
+                    $this->Html->tag('i', '', array('class' => 'fa fa-trash')) . " Delete",
+                    $urlArr,
+                    array('escape' => false),
+                    __('Are you sure you want to delete # %s?', $this->request->data["Transaction"]["id"]),
+                    array('class' => 'btn btn-mini')
+                );
+                ?>
+            </li>
         </ol>
 
         <div class="row">
@@ -47,7 +62,7 @@
                     <p class="help-block">Choose party name for which you are making transaction.</p>
                 </div>
             </div>
-             <div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label>Enter amount</label>
                     <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15)); ?>
@@ -59,14 +74,14 @@
                     <label>Is interest ?</label>
                     <?php echo $this->Form->input('is_interest',
                         array("label" => false,
-                            "options"=>array("1"=>"Yes","0"=>"No"),
+                            "options" => array("1" => "Yes", "0" => "No"),
 //                            "selected"=>  $this->request->data["Transaction"]["is_interest"],
                             "class" => "form-control")); ?>
 
                 </div>
             </div>
-			</div>
-			<div class="row">           
+        </div>
+        <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
                     <label>Remarks</label>
@@ -81,7 +96,7 @@
                     <p class="help-block">Type short notes for this transaction here.</p>
                 </div>
             </div>
-			<div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label>Transaction date</label>
 

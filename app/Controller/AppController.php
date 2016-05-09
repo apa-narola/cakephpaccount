@@ -35,7 +35,7 @@ class AppController extends Controller {
     }
 
     ## ref link : http://stackoverflow.com/questions/10042485/how-to-display-currency-in-indian-numbering-format-in-php
-    public  function moneyFormatIndia($num){
+    public  function moneyFormatIndia($num=null){
         $explrestunits = "" ;
         if(strlen($num)>3){
             $lastthree = substr($num, strlen($num)-3, strlen($num));

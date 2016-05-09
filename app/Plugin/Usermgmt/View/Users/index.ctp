@@ -120,7 +120,7 @@
                             echo "&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";
                             echo "&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
                             echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
-                            echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/I') . "'><i class='fa fa-glass' title='Interests'></i></a>";
+                            echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/I') . "'><i class='fa fa-percent' title='Interests'></i></a>";
                             if ($row['User']['email_verified'] == 0) {
                                 echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/verifyEmail/' . $row['User']['id']) . "'><i class='fa fa-envelope' title='Verify email'></i></a>";
                             }
