@@ -68,12 +68,12 @@ class TransactionsController extends AppController
         } else {
             if (!empty($this->params['named']["transaction_from"]) || !empty($this->params['named']["transaction_to"])) {
                 if (!empty($this->params['named']["transaction_from"]) && !empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date >= "] = $this->getDBDate($this->params['named']["transaction_from"]);
+                    $conditions["Transaction.transaction_date <= "] = $this->getDBDate($this->params['named']["transaction_to"]);
                 } elseif (!empty($this->params['named']["transaction_from"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
+                    $conditions["Transaction.transaction_date >= "] = $this->getDBDate($this->params['named']["transaction_from"]);
                 } elseif (!empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date <= "] = $this->getDBDate($this->params['named']["transaction_to"]);
                 }
             }
             $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel", "type");
@@ -122,7 +122,7 @@ class TransactionsController extends AppController
           'order' => 'Transaction.modified desc'
           );
           $this->set('transactions', $this->paginate()); */
-
+//pr($conditions);exit;
         $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created ASC'));
         $conditions['Transaction.transaction_type'] = "Payment";
         $conditions['Transaction.is_hidden'] = 0;
@@ -170,12 +170,12 @@ class TransactionsController extends AppController
         } else {
             if (!empty($this->params['named']["transaction_from"]) || !empty($this->params['named']["transaction_to"])) {
                 if (!empty($this->params['named']["transaction_from"]) && !empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date >= "] =$this->getDBDate($this->params['named']["transaction_from"]);
+                    $conditions["Transaction.transaction_date <= "] = $this->getDBDate($this->params['named']["transaction_to"]);
                 } elseif (!empty($this->params['named']["transaction_from"])) {
-                    $conditions["Transaction.transaction_date >= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_from"]));
+                    $conditions["Transaction.transaction_date >= "] =$this->getDBDate($this->params['named']["transaction_from"]);
                 } elseif (!empty($this->params['named']["transaction_to"])) {
-                    $conditions["Transaction.transaction_date <= "] = date("Y-m-d H:i:s", strtotime($this->params['named']["transaction_to"]));
+                    $conditions["Transaction.transaction_date <= "] =$this->getDBDate($this->params['named']["transaction_to"]);
                 }
             }
             $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel");

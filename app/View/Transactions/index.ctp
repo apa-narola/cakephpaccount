@@ -25,7 +25,7 @@
                     <!--                    <h3 style="padding-left: 15px;">Search Transaction</h3>-->
                     <?php
                     // The base url is the url where we'll pass the filter parameters
-                    $base_url = array('controller' => 'transactions', 'action' => 'index');
+                    $base_url = array('controller' => 'transactions', 'action' => 'index',"type"=>$type);
                     echo $this->Form->create("Transaction", array('class' => 'filter', 'novalidate'));
                     // add a select input for each filter. It's a good idea to add a add_new_party.ctp value and set
                     // the default option to that.

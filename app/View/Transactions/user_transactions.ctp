@@ -173,7 +173,7 @@
                                                         &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>
                                                         , &nbsp;</td>
                                             </table>
-                                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->request->params["pass"][1], "user_id" => $user_id)); ?>
+                                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $type, "user_id" => $user_id)); ?>
                                             <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],"type"=> $this->request->params["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id'])));
                                             ?>
                                             <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type, "user_id" => $user_id), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
@@ -223,7 +223,7 @@
                                                         &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>
                                                         , &nbsp;</td>
                                             </table>
-                                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->request->params["pass"][1], "user_id" => $user_id)); ?>
+                                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $type, "user_id" => $user_id)); ?>
                                             <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],$this->request->param["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id'])));
                                             ?>
                                             <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type, "user_id" => $user_id), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
