@@ -124,9 +124,9 @@ class PagesController extends AppController {
         $users = $this->User->find('all', array(
             'conditions' => array(
                 'OR' => array(
-                    array('User.first_name LIKE' => '%' . $term . '%'),
-                    array('User.last_name LIKE' => '%' . $term . '%'),
-                    array('User.middle_name LIKE' => '%' . $term . '%'),
+                    array('User.first_name LIKE' => '' . $term . '%'),
+                    array('User.last_name LIKE' => '' . $term . '%'),
+                    array('User.middle_name LIKE' => '' . $term . '%'),
                 )
             )
         ));

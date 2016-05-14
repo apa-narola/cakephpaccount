@@ -59,7 +59,7 @@ class UsersController extends UserMgmtAppController {
             );
 
         if(!$this->UserAuth->isAdmin())
-            $conditions[] =  array("user_group_id <>" => 1);
+            $conditions[] =  array("user_group_id NOT IN" => array(1,4));
 
 
         $this->User->unbindModel(array('hasMany' => array('LoginToken')));

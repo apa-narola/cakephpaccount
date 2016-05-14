@@ -232,7 +232,7 @@
                         <table class="table-responsive table-hover table-striped" width="100%">
 
                             <?php if (!empty($transactions)) { ?>
-                                <tr style="border-top:2px solid #333;">
+                                <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
                                     <th width="10%" class=" bdr-left text-right" valign="top">
                                         <?php echo $this->requestAction('App/moneyFormatIndia/' . $receipt_total[0]["total"]); ?>
                                     </th>
@@ -242,7 +242,7 @@
                                     <tr>
                                         <td class="bdr-left" colspan="2">&nbsp;</td>
                                     </tr>
-                                    <tr  class="amount-green" style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <tr  class="amount-green" style="border-bottom:5px double #333;">
                                         <th width="10%" class="bdr-left text-right" valign="top">
                                             <?php $rt = $receipt_total[0]["total"] - $payment_total[0]["total"];
                                             echo $this->requestAction('App/moneyFormatIndia/' . $rt);
@@ -257,7 +257,7 @@
                         <table class="table-responsive table-hover table-striped" width="100%">
                             <?php if (!empty($transactions)) { ?>
 
-                                <tr style="border-top:2px solid #333;">
+                                <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
                                     <th width="10%" class="bdr-left text-right" valign="top">
                                         <?php
                                         if (!empty($payment_total[0]["total"]))
@@ -268,12 +268,12 @@
                                 </tr>
                                 <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
 
-                                    <tr  class="amount-red" style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <tr  class="amount-red" style="border-bottom:5px double #333;">
                                         <th width="10%" class="bdr-left text-right" valign="top">
                                             <?php
                                             $t = $payment_total[0]["total"] - $receipt_total[0]["total"];
                                             if (!empty($t))
-                                                echo "- ". $this->requestAction('App/moneyFormatIndia/' . $t);
+                                                echo $this->requestAction('App/moneyFormatIndia/' . $t);
                                             ?>
                                         </th>
                                         <th class="bdr-left cr-dr" valign="top"> Dr. Net Payment</th>

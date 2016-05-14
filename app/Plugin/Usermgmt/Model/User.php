@@ -39,11 +39,11 @@ class User extends UserMgmtAppModel {
         "Transaction" => array('className' => 'Transaction'),
         "PendingTransaction" => array(
             'className' => 'Transaction',
-            'conditions' => array('transaction_type'=>"Payment")
+            'conditions' => array('transaction_type'=>"Payment","is_interest"=>0)
             ),
         "ReceiptTransaction" => array(
             'className' => 'Transaction',
-            'conditions' => array('transaction_type'=>"Receipt")
+            'conditions' => array('transaction_type'=>"Receipt","is_interest"=>0)
             )
         
         );

@@ -74,7 +74,7 @@
                     <label>Is interest ?</label>
                     <?php echo $this->Form->input('is_interest',
                         array("label" => false,
-                            "options" => array("1" => "Yes", "0" => "No"),
+                            "options" => array("0" => "No","1" => "Yes",),
 //                            "selected"=>  $this->request->data["Transaction"]["is_interest"],
                             "class" => "form-control")); ?>
 
@@ -115,10 +115,17 @@
                     <?php
                     $options = array(
                         'label' => __('Submit'),
-                        'class' => "btn btn-default"
+                        'class' => "btn btn-default",
+						'div'=>false
                     );
                     echo $this->Form->end($options);
                     ?>
+					&nbsp;
+					<?php echo $this->Form->button('Cancel',array(
+					"onclick"=>"history.go(-1);",
+					'class' => "btn btn-default"
+					));?>
+					
                 </div>
             </div>
 

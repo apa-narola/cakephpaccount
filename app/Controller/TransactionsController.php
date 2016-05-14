@@ -123,7 +123,7 @@ class TransactionsController extends AppController
           );
           $this->set('transactions', $this->paginate()); */
 //pr($conditions);exit;
-        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created ASC'));
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.transaction_date'));
         $conditions['Transaction.transaction_type'] = "Payment";
         $conditions['Transaction.is_hidden'] = 0;
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
@@ -143,7 +143,7 @@ class TransactionsController extends AppController
         if (empty($user_id))
             $user_id = $this->request->params["named"]["user_id"];
         $db_type = $type == 'T' ? 0 : 1;
-        $typeStr = $type == 'T' ? "Transactions" : "Interests";
+        
         $transactionUser = $this->Transaction->User->find('first', array("conditions" => array("User.id" => $user_id)));
         $conditions = array();
         //Transform POST into GET
@@ -223,7 +223,7 @@ class TransactionsController extends AppController
 //            'order' => 'Transaction.id desc'
 //        );
 //        $transactions = $this->paginate();
-        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.created'));
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.transaction_date'));
         $conditions['Transaction.transaction_type'] = "Payment";
 		$conditions['Transaction.is_hidden'] = 0;
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
@@ -232,8 +232,22 @@ class TransactionsController extends AppController
         $receipt_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $this->set(compact('transactions', "payment_total", "receipt_total"));
         $fullname = "NA";
-        if (isset($transactionUser["User"]["first_name"]))
+        if (isset($transactionUser["User"]["first_name"])){
             $fullname = $transactionUser["User"]["first_name"] . " " . $transactionUser["User"]["last_name"];
+			$fullname .= $type == 'T' ? "" : " - Interests";
+			}
+			
+			$paymentTransactionCount = 0;
+			$receiptTransactionCount = 0;
+			if(!empty($transactions)){
+			 foreach ($transactions as $transaction):
+              if ($transaction['Transaction']['transaction_type'] == "Receipt")
+                                    $receiptTransactionCount++;
+									else
+									$paymentTransactionCount++;
+									
+			endforeach;
+			}
         $this->set(compact(
             'fullname',
             'transactions',
@@ -241,7 +255,9 @@ class TransactionsController extends AppController
             "payment_total",
             "receipt_total",
             "type",
-            "typeStr"
+            "typeStr",
+			"paymentTransactionCount",
+			"receiptTransactionCount"
         ));
     }
 

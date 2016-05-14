@@ -142,3 +142,15 @@ color:green;
 .amount-red{
 color:red;
 }
+.bdr-left-double{
+border-left:5px double #333;
+}
+
+.bdr-right-double{
+border-right:5px double #333;
+}
+
+.table-hover>tbody>tr:hover {
+    background-color: #f5f5f5;
+    border: 1px solid #333;
+}

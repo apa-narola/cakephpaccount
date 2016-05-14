@@ -42,7 +42,7 @@
                     &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
                                                                         data-toggle="modal"
                                                                         data-target="#addNewPartyModal"></i></a>
-                    <input id="" type="text" class="typeahead tt-query form-control" autocomplete="off"
+                    <input id="partyName" type="text" class="typeahead tt-query form-control" autocomplete="off"
                            spellcheck="false" placeholder="Type user name" required>
                     <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
                     <?php echo $this->Form->input('user_id', array("type" => "hidden", "label" => false)); ?>
@@ -59,7 +59,7 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label>Is interest ?</label>
-                    <?php echo $this->Form->input('is_interest', array("label" => false, 'default' =>0, "options"=>array("1"=>"Yes","0"=>"No"), "class" => "form-control", "maxlength" => 15)); ?>
+                    <?php echo $this->Form->input('is_interest', array("label" => false, 'default' =>0, "options"=>array("0"=>"No","1"=>"Yes"), "class" => "form-control", "maxlength" => 15)); ?>
                 </div>
             </div>
 			
@@ -166,4 +166,5 @@
     //    $(document).on("change",".cls_transaction_type",function(){
     //        alert($(this).val());
     //    });
+	document.getElementById("partyName").focus();
 </script>
