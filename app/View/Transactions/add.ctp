@@ -52,7 +52,7 @@
              <div class="col-sm-3">
                 <div class="form-group">
                     <label>Enter amount</label>
-                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15)); ?>
+                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15,"data-d-group"=>2)); ?>
                     <p class="help-block">Enter amount. E.g. 10000</p>
                 </div>
             </div>
@@ -116,8 +116,9 @@
 <?php echo $this->element("add_new_party"); ?>
 <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
 <?php echo $this->Html->script('jquery.mask'); ?>
+<?php echo $this->Html->script('Easy-Numbers-Currency-Formatting-Plugin-autoNumeric/autoNumeric'); ?>
 <?php //echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
-<?php echo $this->Html->script('transaction.js'); ?>
+<?php echo $this->Html->script('add_transaction.js'); ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#transaction-date').mask(DATE_FORMAT_MASK);
@@ -167,4 +168,5 @@
     //        alert($(this).val());
     //    });
 	document.getElementById("partyName").focus();
+	
 </script>

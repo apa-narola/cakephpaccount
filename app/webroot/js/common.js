@@ -30,3 +30,11 @@ jQuery(document).on("submit", "#frmAddNewPary", function (event) {
         }
     });
 });
+
+$(function() {
+    //TODO 2 It would be great to have a fadeIn while the slide down is happening.
+    //http://greensock.com/docs/#/HTML5/GSAP/TweenLite/
+    $('#flashMessage,#Message').slideDown({duration: 800});//.fadeIn(800);
+    setTimeout(function(){$('#flashMessage,#Message').slideUp({duration: 1000, queue: false}).fadeOut(1000);}, 5000);
+//    $('#flashMessage').slideDown(500).delay(5000).slideUp({duration: 1000, queue: false;}).fadeOut(1000);
+});

@@ -65,7 +65,7 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label>Enter amount</label>
-                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15)); ?>
+                    <?php echo $this->Form->input('amount', array("label" => false, "class" => "form-control", "maxlength" => 15,"data-d-group"=>2)); ?>
                     <p class="help-block">Enter amount. E.g. 10000</p>
                 </div>
             </div>
@@ -181,6 +181,9 @@
     });
 </script>
 <?php echo $this->Html->script('jquery.mask'); ?>
+<?php echo $this->Html->script('Easy-Numbers-Currency-Formatting-Plugin-autoNumeric/autoNumeric'); ?>
+
+<?php echo $this->Html->script('add_transaction.js'); ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#transaction-date').mask(DATE_FORMAT_MASK);

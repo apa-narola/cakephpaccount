@@ -286,6 +286,10 @@ class TransactionsController extends AppController
     {
         $cookieTransactionType = $this->Cookie->read('transactionType');
         if ($this->request->is('post')) {
+            if (isset($this->request->data["Transaction"]["amount"])){
+                $this->request->data["Transaction"]["amount"] = str_replace(",","",$this->request->data["Transaction"]["amount"]);
+            }
+//            pr($this->request->data);exit;
             if (isset($this->request->data["Transaction"]["transaction_date"]))
                 $this->request->data["Transaction"]["transaction_date"] = $this->getDBDate($this->request->data["Transaction"]["transaction_date"]);
 
@@ -334,6 +338,10 @@ class TransactionsController extends AppController
             throw new NotFoundException(__('Invalid transaction'));
         }
         if ($this->request->is(array('post', 'put'))) {
+
+            if (isset($this->request->data["Transaction"]["amount"])){
+                $this->request->data["Transaction"]["amount"] = str_replace(",","",$this->request->data["Transaction"]["amount"]);
+            }
 
             if (isset($this->request->data["Transaction"]["transaction_date"]))
                 $this->request->data["Transaction"]["transaction_date"] = $this->getDBDate($this->request->data["Transaction"]["transaction_date"]);
