@@ -20,7 +20,8 @@ App::uses('AppController', 'Controller');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
-class PagesController extends AppController {
+class PagesController extends AppController
+{
 
     /**
      * This controller does not use a model
@@ -36,7 +37,8 @@ class PagesController extends AppController {
      * @throws NotFoundException When the view file could not be found
      *   or MissingViewException in debug mode.
      */
-    public function display() {
+    public function display()
+    {
         $path = func_get_args();
 
         $count = count($path);
@@ -66,8 +68,15 @@ class PagesController extends AppController {
         }
     }
 
-    public function ledger() {
-        $users = $this->User->find('all', array("conditions" => array("User.user_group_id <>" => 1)));
+    public function ledger()
+    {
+        $users = $this->User->find('all', array(
+            "conditions" => array(
+                "User.user_group_id <>" => 1,
+//                "PendingTransaction.0.transaction_date >=" => "2015-09-25 00:00:00"//
+            ),
+
+        ));
 //        pr($users);
         $data = array();
         if (!empty($users)) {
@@ -82,7 +91,7 @@ class PagesController extends AppController {
                 $arr["total_receipt"] = $total_receipt;
                 $balance = $total_receipt - $total_payment;
                 $arr["balance"] = abs($balance);
-                if($balance < 0)
+                if ($balance < 0)
                     $arr["transaction_type"] = "Payment";
                 else
                     $arr["transaction_type"] = "Receipt";
@@ -93,28 +102,31 @@ class PagesController extends AppController {
         $this->set(compact("data"));
     }
 
-    private function prepareUserName($user = array()) {
+    private function prepareUserName($user = array())
+    {
         $fullname = null;
         if (!empty($user["first_name"]))
             $fullname = $user["first_name"];
         if (!empty($user["middle_name"]))
-            $fullname .=" " . $user["middle_name"];
+            $fullname .= " " . $user["middle_name"];
         if (!empty($user["last_name"]))
-            $fullname .=" " . $user["last_name"];
+            $fullname .= " " . $user["last_name"];
         return $fullname;
     }
 
-    private function getTotalAmountTransaction($transactions = array()) {
+    private function getTotalAmountTransaction($transactions = array())
+    {
         $total = 0;
         if (!empty($transactions)) {
             foreach ($transactions as $key => $value) {
-                $total+=$value["amount"];
+                $total += $value["amount"];
             }
         }
         return $total;
     }
 
-    public function typeaheadSearch() {
+    public function typeaheadSearch()
+    {
 
         $this->autoRender = false;
         $this->RequestHandler->respondAs('json');

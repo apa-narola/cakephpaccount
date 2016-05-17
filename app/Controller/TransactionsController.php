@@ -62,6 +62,9 @@ class TransactionsController extends AppController
             }
             if (isset($this->data["exportToexcel"]))
                 $filter_url["exportToexcel"] = urlencode(1);
+
+            if (isset($this->data["generatePDF"]))
+                $filter_url["generatePDF"] = urlencode(1);
             // now that we have generated an url with GET parameters, 
             // we'll redirect to that page
             return $this->redirect($filter_url);
@@ -76,7 +79,7 @@ class TransactionsController extends AppController
                     $conditions["Transaction.transaction_date <= "] = $this->getDBDate($this->params['named']["transaction_to"]);
                 }
             }
-            $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel", "type");
+            $ignoreFields = array("transaction_from", "transaction_to", "exportToexcel", "type","generatePDF");
             // Inspect all the named parameters to apply the filters
             foreach ($this->params['named'] as $param_name => $value) {
                 // Don't apply the default named parameters used for pagination
@@ -114,6 +117,8 @@ class TransactionsController extends AppController
                 $this->exportToExcel($searchedTransactions, $filename);
             }
         }
+
+
         /*
           $this->Transaction->recursive = 0;
           $this->paginate = array(
@@ -483,8 +488,22 @@ class TransactionsController extends AppController
     public function transactionsPdf()
     {
         $this->layout = 'pdf';
-        $transactions = $this->Transaction->find('all');
-        $this->set(compact('transactions'));
+        $conditions = array();
+        //$conditions["Transaction.is_hidden"] = 0;
+       /* $type = !empty($this->params["named"]["type"]) ? $this->params["named"]["type"] : "T";
+        if ($type == "I") {
+            $conditions["Transaction.is_interest"] = 1;
+            $typeStr = "Interests";
+        }
+        else {
+            $conditions["Transaction.is_interest"] = 0;
+            $typeStr = "Transactions";
+        }*/
+
+        //pr($conditions);
+        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.transaction_date'));
+        $this->set(compact('transactions','pdf_filename'));
+
     }
 
     public function exportToExcel($data = array(), $filename = null)

@@ -58,4 +58,13 @@ class AppController extends Controller {
         return $thecash; // writes the final format where $currency is the currency symbol.
     }
 
+    public function getDBDate($date = null)
+    {
+        if (empty($date))
+            return;
+        $t_date_arr = explode("-", $date);
+        $db_date = date("Y-m-d", mktime(0, 0, 0, $t_date_arr[1], $t_date_arr[0], $t_date_arr[2]));
+        return $db_date;
+    }
+
 }

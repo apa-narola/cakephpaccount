@@ -97,7 +97,7 @@
                         echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
                         ?>
                         <?php
-                        // echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
+                         echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
                         ?>
                         <?php
                         echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name" => "exportToexcel", "value" => 1));

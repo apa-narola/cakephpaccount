@@ -24,6 +24,82 @@
                        spellcheck="false" placeholder="Type user name">
             </div>
         </div>
+<br/>
+        <div class="panel panel-default">
+            <div class="panel-heading">Search</div>
+            <div class="panel-body">
+                <div class="row">
+                    <!--            <h3 style="padding-left: 15px;">Search Transaction</h3>-->
+                    <?php
+                    // The base url is the url where we'll pass the filter parameters
+                    $base_url = array('controller' => 'pages', 'action' => 'ledger');
+                    echo $this->Form->create("Transaction", array('url' => $base_url, 'class' => 'filter', 'novalidate'));
+                    // add a select input for each filter. It's a good idea to add a empty value and set
+                    // the default option to that.
+                    ?>
+
+                    <!--<div class="col-lg-2">
+                        <div class="form-group">
+                            <label>Search </label>
+                            <?php
+/*                            // Add a basic search
+                            echo $this->Form->input("search", array('label' => false, "class" => "form-control", 'placeholder' => "Type Party name or remarks..."));
+                            */?>
+                        </div>
+                    </div>-->
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label>From</label>
+
+                            <div class="input-group date">
+                                <?php
+                                $selected_transaction_from = null;
+                                if (isset($this->params['named']["transaction_from"]))
+                                    $selected_transaction_from = $this->params['named']["transaction_from"];
+
+                                echo $this->Form->input('transaction_from', array("id" => "transaction_from", "type" => "text", "class" => "form-control",
+                                    "value" => $selected_transaction_from, "label" => false, "div" => false));
+                                ?>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label>To</label>
+
+                            <div class="input-group date">
+                                <?php
+                                $selected_transaction_to = null;
+                                if (isset($this->params['named']["transaction_to"]))
+                                    $selected_transaction_to = $this->params['named']["transaction_to"];
+
+                                echo $this->Form->input('transaction_to', array("id" => "transaction_to", "type" => "text", "class" => "form-control",
+                                    "value" => $selected_transaction_to, "label" => false, "div" => false));
+                                ?>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: 20px;">
+                        <?php
+                        echo $this->Form->button("Search", array("type" => "submit", "class" => "btn btn-primary"));
+                        ?>
+                        &nbsp;&nbsp;
+                        <?php
+                        //                    echo $this->Form->button("Reset", array("type" => "reset", "class" => "btn btn-default"));
+                        echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
+                        ?>
+
+
+                        <?php
+                        echo $this->Form->end();
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-6" style="min-height: 600px;">

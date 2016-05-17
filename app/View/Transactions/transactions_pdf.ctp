@@ -1,10 +1,10 @@
-<?php echo $this->Html->css('style'); ?>
+<?php //echo $this->Html->css('style'); ?>
 <!-- Bootstrap Core CSS -->
-<?php echo $this->Html->css('/sb-admin/css/bootstrap.min'); ?>
+<?php //echo $this->Html->css('/sb-admin/css/bootstrap.min'); ?>
 <!-- Custom CSS -->    
-<?php echo $this->Html->css('/sb-admin/css/sb-admin-2'); ?>
+<?php //echo $this->Html->css('/sb-admin/css/sb-admin-2'); ?>
 <!-- Custom Fonts -->
-<?php echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min'); ?>
+<?php //echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min'); ?>
 <?php
 //tcpdf integration with php
 // http://www.startutorial.com/articles/view/how-to-create-pdf-helper-with-tcpdf
@@ -55,58 +55,22 @@ $this->pdf->core->AddPage();
  * *********************************************************
  */
 
-$html = '<div class="row">
-            <div class="col-lg-6">
-                <div class="col-lg-10"> <h2>Payment</h2></div>
-                <div class="col-lg-2">
-				</div>
-
-                <table class="table-responsive table-hover table-striped" width="100%">
-                <thead></thead><tbody>
-                    ';
-foreach ($transactions as $transaction):
-    if ($transaction['Transaction']['transaction_type'] != "Payment")
-        continue;
-    $html .='<tr>
-                            <td class="col-lg-3 bdr-left">
-                                <div class="text-left"><i class="fa fa-rupee"></i>
-                                 ' . h($transaction['Transaction']['amount']) . '
-                            </div>
-                            </td>
-                            <td class="col-lg-9 bdr-left">
-                                <p><strong>
-                                ' . h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']) . '</strong>,&nbsp';
-    if (!empty($transaction['Transaction']['remarks']))
-        $html .= h($transaction['Transaction']['remarks']) . ", ";
-    $html .= $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA";
-    $html .='</td>';
-    $html .='</tr>';
-endforeach;
-$html .='</tbody>
-</table>
-</div>
-
-<div class="col-lg-6">
-                <div class="col-lg-10"> <h2>Receipt</h2></div>
-                <div class="col-lg-2">
-					<!--<h2 class="pull-right">Amount</h2>-->
-				</div>
-
-                <table class="table-responsive table-hover table-striped" width="100%">
-                <thead></thead><tbody>
-                    ';
+$html = '<table width="100%" border="1">
+<tr><td><h3>Receipt</h3></td><td><h3>Payment</h3></td></tr>
+<tr>
+<td valign="top">
+<table width="100%" cellspacing="0" cellpadding="2">
+                <thead></thead><tbody>';
 foreach ($transactions as $transaction):
     if ($transaction['Transaction']['transaction_type'] != "Receipt")
         continue;
     $html .='<tr>
-                            <td class="col-lg-3 bdr-left">
-                                <div class="text-left"><i class="fa fa-rupee"></i>
+                            <td style="border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">
                                  ' . h($transaction['Transaction']['amount']) . '
-                            </div>
                             </td>
-                            <td class="col-lg-9 bdr-left">
+                            <td style="text-align: left;border-bottom: 1px solid #333;">
                                 <p><strong>
-                                ' . h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']) . '</strong>,&nbsp';
+                                ' . h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']) . '</strong>,&nbsp;';
     if (!empty($transaction['Transaction']['remarks']))
         $html .= h($transaction['Transaction']['remarks']) . ", ";
     $html .= $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA";
@@ -116,13 +80,41 @@ endforeach;
 $html .='
     <tbody>
 </table>
-</div>
-</div>';
+</td>
+<td valign="top">
+<table width="100%" cellspacing="0" cellpadding="2">
+                <thead></thead><tbody>';
+foreach ($transactions as $transaction):
+    if ($transaction['Transaction']['transaction_type'] != "Payment")
+        continue;
+    $html .='<tr>
+                            <td style="border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">
+
+                                 ' . h($transaction['Transaction']['amount']) . '
+
+                            </td>
+                            <td style="text-align: left;border-bottom: 1px solid #333;">
+                                <p><strong>
+                                ' . h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']) . '</strong> &nbsp;';
+    if (!empty($transaction['Transaction']['remarks']))
+        $html .= h($transaction['Transaction']['remarks']) . ", ";
+    $html .= $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA";
+    $html .='</td>';
+    $html .='</tr>';
+endforeach;
+$html .='</tbody>
+</table>
+</td>
+</tr>
+</table>';
+
+//echo $html;exit;
 // output the HTML content
 $this->pdf->core->writeHTML($html, true, false, true, false, '');
-ob_end_clean();
+//ob_end_clean();
 // ---------------------------------------------------------
 //Close and output PDF document
+ob_clean();
 $this->pdf->core->Output('example_061.pdf', 'D');
 
 //============================================================+
