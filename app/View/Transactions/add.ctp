@@ -117,6 +117,7 @@
 <!--Bootstrap datetime picker js - ref : http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox -->
 <?php echo $this->Html->script('jquery.mask'); ?>
 <?php echo $this->Html->script('Easy-Numbers-Currency-Formatting-Plugin-autoNumeric/autoNumeric'); ?>
+<?php echo $this->Html->script('ckeditor/ckeditor'); ?>
 <?php //echo $this->Html->script('bootstrap-datepicker.min.js'); ?>
 <?php echo $this->Html->script('add_transaction.js'); ?>
 <script type="text/javascript">

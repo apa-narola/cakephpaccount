@@ -182,7 +182,7 @@
 </script>
 <?php echo $this->Html->script('jquery.mask'); ?>
 <?php echo $this->Html->script('Easy-Numbers-Currency-Formatting-Plugin-autoNumeric/autoNumeric'); ?>
-
+<?php echo $this->Html->script('ckeditor/ckeditor'); ?>
 <?php echo $this->Html->script('add_transaction.js'); ?>
 <script type="text/javascript">
     $(document).ready(function () {

@@ -1,6 +1,8 @@
 // disable enter key on input
 // ref link : http://stackoverflow.com/questions/585396/how-to-prevent-enter-keypress-to-submit-a-web-form
 	$(function(){
+		CKEDITOR.replace( 'TransactionRemarks' );
+
 		 var keyStop = {
 		   8: ":not(input:text, textarea, input:file, input:password)", // stop backspace = back
 		   13: "input:text, input:password", // stop enter = submit 

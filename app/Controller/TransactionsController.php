@@ -129,13 +129,30 @@ class TransactionsController extends AppController
           $this->set('transactions', $this->paginate()); */
 //pr($conditions);exit;
         $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.transaction_date'));
+        $this->Session->delete('transactions');
+        $this->Session->write('transactions', $transactions);
+
+        $receiptTransactionCount = $this->getTransactionCount($transactions,"Receipt");
+        $paymentTransactionCount = $this->getTransactionCount($transactions,"Payment");
+
         $conditions['Transaction.transaction_type'] = "Payment";
         $conditions['Transaction.is_hidden'] = 0;
         $payment_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
         $conditions['Transaction.transaction_type'] = "Receipt";
 		$conditions['Transaction.is_hidden'] = 0;
         $receipt_total = $this->Transaction->find('first', array('fields' => array('sum(Transaction.amount) as total'), 'conditions' => $conditions));
-        $this->set(compact('transactions', "payment_total", "receipt_total","type",'typeStr'));
+
+        $this->Session->delete('payment_total');
+        $this->Session->write('payment_total', $payment_total);
+
+        $this->Session->delete('receipt_total');
+        $this->Session->write('receipt_total', $receipt_total);
+
+        $this->set(compact('transactions', "payment_total",
+            "receipt_total","type",'typeStr',
+            "receiptTransactionCount",
+            "paymentTransactionCount"
+        ));
         // Pass the search parameter to highlight the text
         $this->set('search', isset($this->params['named']['search']) ? $this->params['named']['search'] : "");
 
@@ -241,18 +258,19 @@ class TransactionsController extends AppController
             $fullname = $transactionUser["User"]["first_name"] . " " . $transactionUser["User"]["last_name"];
 			$fullname .= $type == 'T' ? "" : " - Interests";
 			}
-			
-			$paymentTransactionCount = 0;
-			$receiptTransactionCount = 0;
-			if(!empty($transactions)){
-			 foreach ($transactions as $transaction):
-              if ($transaction['Transaction']['transaction_type'] == "Receipt")
-                                    $receiptTransactionCount++;
-									else
-									$paymentTransactionCount++;
-									
-			endforeach;
-			}
+
+        $receiptTransactionCount = $this->getTransactionCount($transactions,"Receipt");
+        $paymentTransactionCount = $this->getTransactionCount($transactions,"Payment");
+
+        $this->Session->delete('transactions');
+        $this->Session->write('transactions', $transactions);
+
+        $this->Session->delete('payment_total');
+        $this->Session->write('payment_total', $payment_total);
+
+        $this->Session->delete('receipt_total');
+        $this->Session->write('receipt_total', $receipt_total);
+
         $this->set(compact(
             'fullname',
             'transactions',
@@ -487,22 +505,13 @@ class TransactionsController extends AppController
 
     public function transactionsPdf()
     {
+//        pr($this->params);exit;
         $this->layout = 'pdf';
-        $conditions = array();
-        //$conditions["Transaction.is_hidden"] = 0;
-       /* $type = !empty($this->params["named"]["type"]) ? $this->params["named"]["type"] : "T";
-        if ($type == "I") {
-            $conditions["Transaction.is_interest"] = 1;
-            $typeStr = "Interests";
-        }
-        else {
-            $conditions["Transaction.is_interest"] = 0;
-            $typeStr = "Transactions";
-        }*/
-
-        //pr($conditions);
-        $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.transaction_date'));
-        $this->set(compact('transactions','pdf_filename'));
+        $transactions = $this->Session->read('transactions');
+        $payment_total = $this->Session->read('payment_total');
+        $receipt_total = $this->Session->read('receipt_total');
+//        pr($transactions);
+        $this->set(compact('transactions','pdf_filename','payment_total','receipt_total'));
 
     }
 
@@ -632,6 +641,18 @@ class TransactionsController extends AppController
         $this->layout = null;
         $this->autoLayout = false;
         Configure::write('debug', '0');
+    }
+    private function getTransactionCount($transactions=array(),$transaction_type="Payment"){
+
+        $transactionCount = 0;
+        if(!empty($transactions)){
+            foreach ($transactions as $transaction):
+                if ($transaction['Transaction']['transaction_type'] == $transaction_type)
+                    $transactionCount++;
+
+            endforeach;
+        }
+        return $transactionCount;
     }
 
 }

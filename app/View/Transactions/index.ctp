@@ -114,7 +114,16 @@
             <div class="panel-heading">Transactions</div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-6" style="min-height: 600px;">
+                    <?php
+                    $receipt_border_cls = "";
+                    $payment_border_cls = "";
+                    if($receiptTransactionCount>$paymentTransactionCount)
+                        $receipt_border_cls = " bdr-right-double";
+                    else
+                        $payment_border_cls = " bdr-left-double";
+
+                    ?>
+                    <div class="col-lg-6  <?php echo $receipt_border_cls;?>">
                         <div class="col-lg-10"><h2>Receipt</h2></div>
                         <div class="col-lg-2">
                             <!--<h2 class="pull-right">Amount</h2>-->
@@ -149,14 +158,20 @@
                                                     <strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
                                                 </td>
                                                 <td valign="top" align="left" class="remark">
-                                                    &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>
+                                                    &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
                                                     , &nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td  colspan="2" align="right">
+                                                    <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id']));
+                                                    ?>
+                                                    <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
+                                                    <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
+                                                    <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+                                                </td>
+                                            </tr>
                                         </table>
-                                        <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id']));
-                                        ?>
-                                        <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
-                                        <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                                        <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+
                                     </td>
                                     <td width="12%" class="bdr-left" valign="top">
                                         <div class="text-right">
@@ -167,7 +182,7 @@
                             <?php endforeach; ?>
                         </table>
                     </div>
-                    <div class="col-lg-6" style="min-height: 600px;">
+                    <div class="col-lg-6 <?php echo $payment_border_cls;?>">
                         <div class="col-lg-10" ><h2>Payment</h2></div>
                         <div class="col-lg-2">
                             <!--<h2 class="pull-right">Amount</h2>-->
@@ -205,14 +220,20 @@
                                                     <strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
                                                 </td>
                                                 <td valign="top" align="left" class="remark">
-                                                    &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>
+                                                    &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
                                                     , &nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" align="right">
+                                                    <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id']));
+                                                    ?>
+                                                    <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
+                                                    <?php // echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
+                                                    <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+                                                </td>
+                                            </tr>
                                         </table>
-                                        <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id']));
-                                        ?>
-                                        <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
-                                        <?php // echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id']))); ?>
-                                        <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
+
                                     </td>
                                     <td width="12%" class="bdr-left" valign="top">
                                         <div class="text-right">
