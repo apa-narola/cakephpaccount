@@ -139,13 +139,15 @@ class PagesController extends AppController
                     array('User.first_name LIKE' => '' . $term . '%'),
                     array('User.last_name LIKE' => '' . $term . '%'),
                     array('User.middle_name LIKE' => '' . $term . '%'),
+                    array('UserGroup.name LIKE' => '' . $term . '%'),
+
                 )
             )
         ));
         // Format the result for select2
         $result = array();
         foreach ($users as $key => $user) {
-            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name']);
+            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name']." (".$user['UserGroup']['name'].") ");
             array_push($result, $tmp);
         }
         $users = $result;

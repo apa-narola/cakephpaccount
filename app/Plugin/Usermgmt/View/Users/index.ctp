@@ -74,15 +74,15 @@
                     <tr>
                         <th><?php echo __('SL'); ?></th>
                         <th><?php echo __('Name'); ?></th>
+                            <th><?php echo __('Group'); ?></th>
                         <?php if ($this->UserAuth->isAdmin()) { ?>
                             <th><?php echo __('Username'); ?></th>
                             <th><?php echo __('Email'); ?></th>
-                            <th><?php echo __('Group'); ?></th>
                             <th><?php echo __('Email Verified'); ?></th>
                             <th><?php echo __('Status'); ?></th>
                             <th><?php echo __('Created'); ?></th>
                         <?php } ?>
-                        <th><?php echo __('Action'); ?></th>
+                        <th width="15%"><?php echo __('Action');?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -94,11 +94,10 @@
                             echo "<tr>";
                             echo "<td width='3%'>" . $sl . "</td>";
                             echo "<td><a href='" . $this->Html->url('/Transactions/userTransactions/' . $row['User']['id']) . "/T'>" . h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name']) . "</a></td>";
-
+                            echo "<td>" . h($row['UserGroup']['name']) . "</td>";
                             if ($this->UserAuth->isAdmin()) {
                                 echo "<td>" . h($row['User']['username']) . "</td>";
                                 echo "<td>" . h($row['User']['email']) . "</td>";
-                                echo "<td>" . h($row['UserGroup']['name']) . "</td>";
                                 echo "<td>";
                                 if ($row['User']['email_verified'] == 1) {
                                     echo "Yes";

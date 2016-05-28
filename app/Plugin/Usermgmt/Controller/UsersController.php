@@ -49,14 +49,16 @@ class UsersController extends UserMgmtAppController {
      */
     public function index() {
         $conditions = array();
-        if(!empty($this->request->data["User"]["search_text"]))
+        if(!empty($this->request->data["User"]["search_text"])) {
             $conditions[] = array(
-                "OR"=>array(
-                    "User.first_name LIKE '%".$this->request->data["User"]["search_text"]."%'",
-                    "User.middle_name LIKE '%".$this->request->data["User"]["search_text"]."%'",
-                    "User.last_name LIKE '%".$this->request->data["User"]["search_text"]."%'",
+                "OR" => array(
+                    "User.first_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "User.middle_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "User.last_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "UserGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
                 )
             );
+        }
 
         if(!$this->UserAuth->isAdmin())
             $conditions[] =  array("user_group_id NOT IN" => array(1,4));
@@ -305,10 +307,11 @@ class UsersController extends UserMgmtAppController {
         if ($this->UserAuth->isAdmin()) {
             $userGroups = $this->UserGroup->getGroups();
         } elseif ($this->UserAuth->getGroupId() == 4) {
-            $userGroups[2] = "User";
-            $this->UserGroup->getGroups();
+            //$userGroups[2] = "User";
+            //$this->UserGroup->getGroups();
+            $userGroups = $this->UserGroup->getMoneyLenderGroups();
         }
-        $userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
+        //$userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
 
         $this->set('userGroups', $userGroups);
         if ($this->request->isPost()) {
@@ -347,10 +350,11 @@ class UsersController extends UserMgmtAppController {
             if ($this->UserAuth->isAdmin()) {
                 $userGroups = $this->UserGroup->getGroups();
             } elseif ($this->UserAuth->getGroupId() == 4) {
-                $userGroups[2] = "User";
-                $this->UserGroup->getGroups();
+                //$userGroups[2] = "User";
+//                $this->UserGroup->getGroups();
+                $userGroups = $this->UserGroup->getMoneyLenderGroups();
             }
-            $userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
+//            $userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
 
             $this->set('userGroups', $userGroups);
             if ($this->request->isPut()) {

@@ -234,13 +234,14 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <li <?php echo $cls_list_users; ?>>
                                 <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
                             </li>
+                            <li <?php echo $cls_list_groups; ?>>
+                                    <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                                </li>
                             <?php if ($this->UserAuth->isAdmin()) { ?>
 <!--                                <li <?php echo $cls_add_group; ?>>
                                     <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
                                 </li>-->
-                                <li <?php echo $cls_list_groups; ?>>
-                                    <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
-                                </li>
+
                                 <li <?php echo $cls_list_permissions; ?>>
                                     <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
                                 </li>

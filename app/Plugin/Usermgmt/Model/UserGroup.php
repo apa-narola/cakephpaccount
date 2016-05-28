@@ -210,4 +210,15 @@ class UserGroup extends UserMgmtAppModel {
 		}
 		return false;
 	}
+
+	public function getMoneyLenderGroups() {
+		$this->unbindModel(array('hasMany' => array('UserGroupPermission')));
+		$result=$this->find("all", array("order"=>"id", "conditions"=>array('id >'=>4)));
+		$user_groups=array();
+		$user_groups[0]='Select';
+		foreach ($result as $row) {
+			$user_groups[$row['UserGroup']['id']]=$row['UserGroup']['name'];
+		}
+		return $user_groups;
+	}
 }

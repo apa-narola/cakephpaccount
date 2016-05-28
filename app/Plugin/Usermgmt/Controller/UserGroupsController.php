@@ -27,8 +27,28 @@ class UserGroupsController extends UserMgmtAppController {
 	 * @return array
 	 */
 	public function index() {
-		$this->UserGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
+		/*$this->UserGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
 		$userGroups=$this->UserGroup->find('all', array('order'=>'UserGroup.id'));
+		$this->set('userGroups', $userGroups);*/
+
+		$conditions = array();
+		if(!empty($this->request->data["UserGroup"]["search_text"])) {
+			$conditions[] = array(
+				"OR" => array(
+					"UserGroup.name LIKE '%" . $this->request->data["UserGroup"]["search_text"] . "%'",
+//					"UserGroup.middle_name LIKE '%".$this->request->data["UserGroup"]["search_text"]."%'",
+//					"UserGroup.last_name LIKE '%".$this->request->data["UserGroup"]["search_text"]."%'",
+				)
+			);
+		}
+		if(!$this->UserAuth->isAdmin())
+			$conditions[] =  array("id >" => 4);
+
+
+		$this->UserGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
+		//$userGroups=$this->UserGroup->find('all', array('order'=>'UserGroup.id'));
+		$userGroups = $this->UserGroup->find('all', array("conditions" => $conditions, 'order' => 'UserGroup.name asc'));
+
 		$this->set('userGroups', $userGroups);
 	}
 	/**
@@ -39,6 +59,12 @@ class UserGroupsController extends UserMgmtAppController {
 	 */
 	public function addGroup() {
 		if ($this->request -> isPost()) {
+
+			if(!$this->UserAuth->isAdmin()) {
+				$this->request->data['UserGroup']['alias_name'] = "group_alias_" . time();
+				$this->request->data['UserGroup']['allowRegistration']=false;
+			}
+
 			$this->UserGroup->set($this->data);
 			if ($this->UserGroup->addValidate()) {
 				$this->UserGroup->save($this->request->data,false);
