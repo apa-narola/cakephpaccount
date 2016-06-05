@@ -142,43 +142,9 @@
 </script>-->
 
 <?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
+<?php echo $this->Html->script('typeahead_helper.js'); ?>
 <script type="text/javascript">
-    $("input.typeahead").typeahead({
-        onSelect: function (item) {
-            var user_id = item.value;
-            if (!user_id) {
-                alert("Could not find userID.");
-                return false;
-            }
-            $("#TransactionUserId").val(user_id);
-            //console.log(item.text);
-            //window.location = site_url + "/transactions/userTransactions/" + user_id;
-        },
-        ajax: {
-            url: site_url + "/typeaheadSearch",
-            timeout: 500,
-            displayField: "username",
-            triggerLength: 1,
-            method: "get",
-            loadingClass: "loading-circle",
-            preDispatch: function (query) {
-                //showLoadingMask(true);
-                return {
-                    search: query
-                }
-            },
-            preProcess: function (data) {
-                //console.log(data);
-                //showLoadingMask(false);
-                if (data.success === false) {
-                    // Hide the list, there was some error
-                    return false;
-                }
-                // We good!
-                return data;
-            }
-        }
-    });
+    sarvasvaInitTypeAhead("TransactionUserId");
 </script>
 <?php echo $this->Html->script('jquery.mask'); ?>
 <?php echo $this->Html->script('Easy-Numbers-Currency-Formatting-Plugin-autoNumeric/autoNumeric'); ?>

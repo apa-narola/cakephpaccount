@@ -318,6 +318,7 @@ class UsersController extends UserMgmtAppController {
             $this->User->set($this->data);
             if ($this->User->RegisterValidate()) {
                 /* added by ashish - start*/
+                $this->request->data['User']['reference_id'] = $this->request->data["User"]["reference_id"];
                 $this->request->data['User']['username'] = "ashish-".time();
                 $this->request->data['User']['email'] = "ashish-".time()."@gmail.com";
                 $this->request->data['User']['password'] = "ashish123";

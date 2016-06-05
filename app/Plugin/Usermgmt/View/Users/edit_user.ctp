@@ -52,6 +52,18 @@
             <?php //} else { ?>
                 <?php //echo $this->Form->input("user_group_id", array('type' => 'hidden', 'label' => false, 'div' => false, 'value' => 2)) ?>
             <?php //} ?>
+            <div class="form-group" style="margin-top:-9px;">
+                <label>Select reference party name</label>
+                <!-- Button trigger modal -->
+                <!-- &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
+                                                                     data-toggle="modal"
+                                                                     data-target="#addNewPartyModal"></i></a>-->
+                <input id="partyName" type="text" class="typeahead tt-query form-control" autocomplete="off"
+                       spellcheck="false" placeholder="Type reference party name" required>
+                <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
+                <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>
+                <p class="help-block">Choose reference party name.</p>
+            </div>
             <?php if ($this->UserAuth->isAdmin()) { ?>
             <div class="form-group">
                 <label><?php echo __('Username'); ?><font color='red'>*</font></label>
@@ -90,6 +102,11 @@
         </div>
     </div>
 </div>
+<?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
+<?php echo $this->Html->script('typeahead_helper.js'); ?>
+
 <script>
     document.getElementById("UserUserGroupId").focus();
+    sarvasvaInitTypeAhead("UserReferenceId");
+
 </script>

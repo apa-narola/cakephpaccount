@@ -2,3 +2,7 @@
 ALTER TABLE `transactions` CHANGE `amount` `amount` BIGINT(20) NULL DEFAULT NULL;
 ALTER TABLE `transactions` ADD `short_notes` VARCHAR(255) NULL DEFAULT NULL AFTER `remarks`;
 ALTER TABLE `transactions` ADD `is_hidden` TINYINT(1) NOT NULL DEFAULT '0' AFTER `transaction_date`;
+
+# Changes done by ashish - 5th June 2016
+ALTER TABLE `users`
+ADD COLUMN `reference_id`  int NULL AFTER `user_group_id`;
