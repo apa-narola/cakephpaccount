@@ -38,7 +38,7 @@
 			</li>
 		</ol>
 		<?php echo $this->Session->flash(); ?>
-		<div class="col-lg-6">
+		<div class="col-lg-3">
 			<?php echo $this->Form->create('UserGroup', array('action' => 'addGroup', 'role' => 'form')); ?>
 			<?php echo $this->Form->hidden('id')?>
 			<div class="form-group">

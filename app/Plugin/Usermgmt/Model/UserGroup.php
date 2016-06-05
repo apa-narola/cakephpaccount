@@ -26,7 +26,7 @@ class UserGroup extends UserMgmtAppModel {
 	 *
 	 * @var array
 	 */
-	var $hasMany = array('Usermgmt.UserGroupPermission');
+	var $hasMany = array('Usermgmt.UserGroupPermission','Usermgmt.User');
 	/**
 	 * model validation array
 	 *

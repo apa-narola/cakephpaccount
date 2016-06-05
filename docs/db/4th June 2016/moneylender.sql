@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2016 at 11:24 AM
+-- Generation Time: Jun 04, 2016 at 01:36 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `testdata`
+-- Database: `moneylender`
 --
 
 -- --------------------------------------------------------
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `login_tokens` (
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=77 ;
 
 --
 -- Dumping data for table `login_tokens`
@@ -104,7 +104,20 @@ INSERT INTO `login_tokens` (`id`, `user_id`, `token`, `duration`, `used`, `creat
 (60, 2, '4f73d88957f487c3b7926930983c42f5', '2 weeks', 0, '2015-12-28 07:48:59', '2016-01-11 07:48:59'),
 (61, 2, '1c79452b6ae3a9c6cf555ae1ca561370', '2 weeks', 1, '2015-12-29 06:59:23', '2016-01-12 06:59:23'),
 (62, 2, '46deca57d98b3dace684eb44799cd975', '2 weeks', 0, '2015-12-30 04:56:07', '2016-01-13 04:56:07'),
-(63, 2, 'e2574699c0ee390ee63a67dc8181f20c', '2 weeks', 0, '2015-12-30 07:08:08', '2016-01-13 07:08:08');
+(63, 2, 'e2574699c0ee390ee63a67dc8181f20c', '2 weeks', 0, '2015-12-30 07:08:08', '2016-01-13 07:08:08'),
+(64, 2, 'a09ae7852d3e66d812daa848d75bbe61', '2 weeks', 0, '2016-04-03 13:34:56', '2016-04-17 13:34:56'),
+(65, 1, '15c934544a0a0140969c4cd35868c447', '2 weeks', 0, '2016-04-03 13:46:54', '2016-04-17 13:46:54'),
+(66, 2, '9368b4206524e9e061667e2b1e72f8b6', '2 weeks', 0, '2016-04-03 13:49:33', '2016-04-17 13:49:33'),
+(67, 1, 'beed1efc55859712f2daba43ec0cc756', '2 weeks', 0, '2016-04-03 15:43:13', '2016-04-17 15:43:13'),
+(68, 2, '161284419966700d2b9bb24ca0eb2e55', '2 weeks', 1, '2016-04-03 15:43:42', '2016-04-17 15:43:42'),
+(69, 2, 'f43d88761b18242ed57cd1f89dfcbbb4', '2 weeks', 0, '2016-04-10 09:01:19', '2016-04-24 09:01:19'),
+(70, 2, '54e6308fc0fd8ae406666e5d13cd9f99', '2 weeks', 0, '2016-05-04 11:38:51', '2016-05-18 11:38:51'),
+(71, 1, '1e1009a7b929f5a418a75aca49e08219', '2 weeks', 0, '2016-05-04 11:39:28', '2016-05-18 11:39:28'),
+(72, 3, '74afa5f7a1d6691080fbe229ba69481f', '2 weeks', 0, '2016-05-04 11:45:27', '2016-05-18 11:45:27'),
+(73, 2, '91a93166d614be2025829135aa00a9b6', '2 weeks', 1, '2016-05-14 23:58:53', '2016-05-28 23:58:53'),
+(74, 2, '1d90fa18a6370371687703b83f2e8fa7', '2 weeks', 0, '2016-05-28 12:14:51', '2016-06-11 12:14:51'),
+(75, 1, '776d275dd113126a117155a0d759f54b', '2 weeks', 0, '2016-05-28 12:25:49', '2016-06-11 12:25:49'),
+(76, 2, '0402e0a8823d794c5874e0554685a3b6', '2 weeks', 0, '2016-05-28 12:28:44', '2016-06-11 12:28:44');
 
 -- --------------------------------------------------------
 
@@ -115,37 +128,42 @@ INSERT INTO `login_tokens` (`id`, `user_id`, `token`, `duration`, `used`, `creat
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  `amount` double(10,2) DEFAULT NULL,
+  `amount` bigint(20) DEFAULT NULL,
   `transaction_type` enum('Receipt','Payment') DEFAULT NULL,
   `is_interest` tinyint(1) NOT NULL DEFAULT '0',
   `remarks` text NOT NULL,
+  `short_notes` varchar(255) DEFAULT NULL,
   `transaction_date` datetime DEFAULT NULL,
+  `is_hidden` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `amount`, `transaction_type`, `is_interest`, `remarks`, `transaction_date`, `created`, `modified`) VALUES
-(1, 2, 4.00, 'Receipt', 0, 'this is remark', '2015-09-20 10:30:00', '2015-09-15 11:03:40', '2015-09-17 09:23:41'),
-(2, 3, 10000.00, 'Receipt', 0, '', '2015-10-21 00:00:00', '2015-09-15 13:45:42', '2015-10-12 07:37:56'),
-(4, 2, 100000.00, 'Payment', 0, 'This is remarks', '2015-09-10 09:30:00', '2015-09-15 15:23:11', '2015-09-17 09:23:29'),
-(5, 3, 500.00, 'Receipt', 1, 'received interest from vikas', NULL, '2015-09-15 15:27:25', '2015-09-15 15:27:25'),
-(6, 2, 6500.00, 'Payment', 1, 'given interesnt', '2015-09-09 09:30:00', '2015-09-15 15:31:51', '2015-09-17 09:23:18'),
-(7, 4, 2300.00, 'Receipt', 1, 'interest received from akshar', NULL, '2015-09-15 15:41:26', '2015-09-17 08:40:01'),
-(8, 2, 50.00, 'Receipt', 0, '', NULL, '2015-09-16 04:05:21', '2015-09-17 08:30:31'),
-(9, 3, 2500.00, 'Receipt', 1, 'received', '2015-10-14 00:00:00', '2015-09-17 07:18:01', '2015-10-26 09:11:31'),
-(10, 3, 2500.00, 'Receipt', 1, 'given interest', '2015-09-25 00:00:00', '2015-09-17 08:42:47', '2015-10-26 08:35:42'),
-(11, 2, 232.00, 'Receipt', 1, 'sdf', '2015-10-21 00:00:00', '2015-10-05 07:46:15', '2015-10-12 07:49:27'),
-(12, 2, 232.00, 'Receipt', 0, '', '2015-09-17 00:00:00', '2015-10-05 07:47:48', '2015-10-26 09:12:10'),
-(13, 2, 23.00, 'Receipt', 0, '', '2015-10-27 00:00:00', '2015-10-05 09:25:56', '2015-10-26 09:17:15'),
-(14, 2, 111.00, 'Receipt', 1, 'received interest', '2015-06-10 00:00:00', '2015-10-05 09:27:30', '2015-12-30 06:43:47'),
-(15, 2, 200.00, 'Receipt', 0, '', '2015-10-31 00:00:00', '2015-10-12 08:28:04', '2015-10-12 08:28:04'),
-(16, 3, 255.00, 'Receipt', 0, 'this is remark', '2015-10-27 00:00:00', '2015-10-27 07:48:44', '2015-10-27 09:22:16'),
-(17, 5, 12000.00, 'Payment', 0, 'given to sanjay', '2015-12-30 00:00:00', '2015-12-30 07:37:12', '2015-12-30 07:37:12');
+INSERT INTO `transactions` (`id`, `user_id`, `amount`, `transaction_type`, `is_interest`, `remarks`, `short_notes`, `transaction_date`, `is_hidden`, `created`, `modified`) VALUES
+(1, 2, 4, 'Receipt', 0, 'this is remark', 'sdfsd', '2020-09-20 00:00:00', 1, '2015-09-15 11:03:40', '2016-04-03 16:23:38'),
+(2, 3, 10000, 'Receipt', 0, '', NULL, '2015-10-21 00:00:00', 0, '2015-09-15 13:45:42', '2016-04-10 09:02:26'),
+(4, 2, 100000, 'Payment', 0, 'This is remarks', '', '2015-09-10 00:00:00', 0, '2015-09-15 15:23:11', '2016-05-15 03:42:43'),
+(5, 3, 500, 'Receipt', 1, 'received interest from vikas', NULL, NULL, 0, '2015-09-15 15:27:25', '2015-09-15 15:27:25'),
+(6, 2, 6500, 'Payment', 1, 'given interesnt', NULL, '2015-09-09 09:30:00', 0, '2015-09-15 15:31:51', '2015-09-17 09:23:18'),
+(7, 4, 2300, 'Receipt', 1, 'interest received from akshar', NULL, NULL, 0, '2015-09-15 15:41:26', '2015-09-17 08:40:01'),
+(8, 2, 50, 'Receipt', 0, '', '', '2031-12-19 00:00:00', 0, '2015-09-16 04:05:21', '2016-04-03 16:28:20'),
+(9, 3, 2500, 'Receipt', 1, 'received', NULL, '2015-10-14 00:00:00', 0, '2015-09-17 07:18:01', '2015-10-26 09:11:31'),
+(10, 3, 2500, 'Receipt', 1, 'given interest', NULL, '2015-09-25 00:00:00', 0, '2015-09-17 08:42:47', '2015-10-26 08:35:42'),
+(11, 2, 232, 'Receipt', 1, 'sdf', NULL, '2015-10-21 00:00:00', 0, '2015-10-05 07:46:15', '2015-10-12 07:49:27'),
+(12, 2, 232, 'Receipt', 0, '', '', '2015-09-17 00:00:00', 0, '2015-10-05 07:47:48', '2016-05-15 00:48:37'),
+(13, 2, 23, 'Receipt', 0, '', NULL, '2015-10-27 00:00:00', 0, '2015-10-05 09:25:56', '2015-10-26 09:17:15'),
+(14, 2, 111, 'Receipt', 1, 'received interest', NULL, '2015-06-10 00:00:00', 0, '2015-10-05 09:27:30', '2015-12-30 06:43:47'),
+(15, 2, 200, 'Receipt', 0, '', NULL, '2015-10-31 00:00:00', 0, '2015-10-12 08:28:04', '2015-10-12 08:28:04'),
+(16, 3, 1234512345123, 'Receipt', 0, 'this is remark', NULL, '2020-10-20 00:00:00', 0, '2015-10-27 07:48:44', '2016-04-03 13:44:39'),
+(17, 5, 12000, 'Payment', 0, 'given to sanjay', NULL, '2015-12-30 00:00:00', 1, '2015-12-30 07:37:12', '2016-04-03 16:16:08'),
+(18, 6, 100, 'Receipt', 0, 'test', 'abc', '2016-05-15 00:00:00', 0, '2016-05-15 00:39:33', '2016-05-15 00:39:33'),
+(19, 2, 250, 'Receipt', 0, 'ssdf', 'dsf', '2016-05-15 00:00:00', 0, '2016-05-15 00:44:11', '2016-05-15 00:44:11'),
+(20, 6, 100000, 'Receipt', 0, '', '', '2016-05-15 00:00:00', 0, '2016-05-15 03:37:58', '2016-05-15 03:37:58');
 
 -- --------------------------------------------------------
 
@@ -161,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `salt` text,
   `email` varchar(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `email_verified` int(1) DEFAULT '0',
   `active` int(1) NOT NULL DEFAULT '0',
@@ -177,21 +196,21 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `user_group_id`, `username`, `password`, `salt`, `email`, `first_name`, `last_name`, `email_verified`, `active`, `ip_address`, `created`, `modified`) VALUES
-(1, 1, 'admin', '365caef7fccbdb1ee711f084be9317a7', '1e6d99570a4d37cc29b18c4a6b06e6ed', 'admin@admin.com', 'Admin First Name', 'Admin Last Name', 1, 1, '', '2015-09-16 12:08:00', '2015-09-17 08:02:14'),
-(2, 4, 'ashish', '67f268b37978a97ee43fc6d311f3fb06', '582a1dff56a6ce4fce8d3b8ebc9ba7ba', 'narola.ashish@gmail.com', 'Ashish', 'Narola', 1, 1, NULL, '2015-09-16 03:07:46', '2015-09-16 09:53:11'),
-(3, 2, 'dipak', '570051138677c5510d454effbe4e4ab3', 'dc7d61f907a7e056ea88a6fc36509328', 'dipak.narola@gmail.com', 'Dipak', 'Narola', 1, 1, NULL, '2015-09-16 04:01:06', '2015-12-23 08:27:15'),
-(4, 2, 'vikram', 'fa4ba85310c2e6c7c9935f3c7f5457fc', 'e46b31d67ca72876688146491c06cb96', 'viks.patel@gmail.com', 'vikram', 'patel', 1, 1, NULL, '2015-09-16 09:54:24', '2015-09-16 10:10:07'),
-(5, 2, 'sanjay', '5404a7718e99d35072e095e6be8b3491', '823ed269847e314d7cfd80aa782ea8c9', 'sanjayn@gmail.com', 'Sanjay', 'Narola', 1, 1, NULL, '2015-09-19 03:23:50', '2015-09-19 03:24:22'),
-(6, 2, 'ashok', '4b21b58089fdbdcb49f9c8d87e86ee78', '27ab292a5314abe40115c253a0dc49af', 'ashok.narola@gmail.com', 'Ashok', 'Narola', 1, 1, NULL, '2015-10-27 09:26:01', '2015-10-27 09:26:01'),
-(7, NULL, 'ashishn', '7942bf4303fbd587b202b3dc7b5bec14', 'cc1d6cbdc3fe570f363c0ebb5b630fdc', NULL, 'narolan', 'damnagarn', 1, 1, NULL, '2015-12-23 08:12:10', '2015-12-23 08:12:10'),
-(8, 2, 'abcd', '91a74cf5e53f40dcc7078e7f47469d4b', '7c23ccdb75739dd656a0f9fa131d307a', NULL, 'efghi', 'jklmn', 1, 1, NULL, '2015-12-23 08:14:13', '2015-12-23 08:14:13'),
-(9, 2, 'abcde', '4fb0e6d7d38cfff9f49c1bec6d7fdb2a', 'b3e1f9662ac9e289a6d20dea8310d360', NULL, 'test', 'df', 1, 1, NULL, '2015-12-23 08:17:13', '2015-12-23 08:17:13'),
-(10, 2, 'abcdef', '8e937f83f0b22125ec8b9ed14c300887', '1861410aae718ba29e058472d3f71b25', NULL, 'aa', 'test', 1, 1, NULL, '2015-12-23 08:18:21', '2015-12-23 08:18:21'),
-(11, 2, 'nayan', 'b60ae52d4a13af957e423e75ba2ea24b', 'a58e56c34832d0085b9fd4e7c3d53f3d', NULL, 'Nayan', 'Jobanputra', 1, 1, NULL, '2015-12-23 08:19:24', '2015-12-23 08:19:24'),
-(12, 2, 'nayan1', 'fea2d7228068a52acb82dfa6f732716c', 'a377869a63c6dd790fc8dc2a440489c7', NULL, 'Nayan', 'Jobanputra', 1, 1, NULL, '2015-12-23 08:19:48', '2015-12-23 08:19:48'),
-(13, 2, 'nayan2', 'c7bab90985405926a091312693f8f8f9', '450202dc6915361e0533022185996b1c', NULL, 'abc', 'test', 1, 1, NULL, '2015-12-23 08:22:36', '2015-12-23 08:22:36'),
-(14, 2, 'nayan3', '3e2fdeb11014d769be659670cc357849', 'dc589f2a59bbd18f49a5348dbc9c1fc0', NULL, 'abc', 'test', 1, 1, NULL, '2015-12-23 08:23:16', '2015-12-23 08:23:16');
+INSERT INTO `users` (`id`, `user_group_id`, `username`, `password`, `salt`, `email`, `first_name`, `middle_name`, `last_name`, `email_verified`, `active`, `ip_address`, `created`, `modified`) VALUES
+(1, 1, 'admin', '365caef7fccbdb1ee711f084be9317a7', '1e6d99570a4d37cc29b18c4a6b06e6ed', 'admin@admin.com', 'Admin First Name', NULL, 'Admin Last Name', 1, 1, '', '2015-09-16 12:08:00', '2015-09-17 08:02:14'),
+(2, 4, 'ashish', '67f268b37978a97ee43fc6d311f3fb06', '582a1dff56a6ce4fce8d3b8ebc9ba7ba', 'narola.ashish@gmail.com', 'Ashish', NULL, 'Narola', 1, 1, NULL, '2015-09-16 03:07:46', '2015-09-16 09:53:11'),
+(3, 2, 'peter', '570051138677c5510d454effbe4e4ab3', 'dc7d61f907a7e056ea88a6fc36509328', 'peter.wander@gmail.com', 'peter', '', 'wander', 1, 1, NULL, '2015-09-16 04:01:06', '2016-05-04 11:44:56'),
+(4, 2, 'vikram', 'fa4ba85310c2e6c7c9935f3c7f5457fc', 'e46b31d67ca72876688146491c06cb96', 'viks.patel@gmail.com', 'vikram', NULL, 'patel', 1, 1, NULL, '2015-09-16 09:54:24', '2015-09-16 10:10:07'),
+(5, 2, 'sanjay', '5404a7718e99d35072e095e6be8b3491', '823ed269847e314d7cfd80aa782ea8c9', 'sanjayn@gmail.com', 'Sanjay', NULL, 'Narola', 1, 1, NULL, '2015-09-19 03:23:50', '2015-09-19 03:24:22'),
+(6, 2, 'ashok', '4b21b58089fdbdcb49f9c8d87e86ee78', '27ab292a5314abe40115c253a0dc49af', 'ashok.narola@gmail.com', 'Ashok', NULL, 'Narola', 1, 1, NULL, '2015-10-27 09:26:01', '2015-10-27 09:26:01'),
+(7, NULL, 'ashishn', '7942bf4303fbd587b202b3dc7b5bec14', 'cc1d6cbdc3fe570f363c0ebb5b630fdc', NULL, 'narolan', NULL, 'damnagarn', 1, 1, NULL, '2015-12-23 08:12:10', '2015-12-23 08:12:10'),
+(8, 2, 'abcd', '91a74cf5e53f40dcc7078e7f47469d4b', '7c23ccdb75739dd656a0f9fa131d307a', NULL, 'efghi', NULL, 'jklmn', 1, 1, NULL, '2015-12-23 08:14:13', '2015-12-23 08:14:13'),
+(9, 2, 'abcde', '4fb0e6d7d38cfff9f49c1bec6d7fdb2a', 'b3e1f9662ac9e289a6d20dea8310d360', NULL, 'test', NULL, 'df', 1, 1, NULL, '2015-12-23 08:17:13', '2015-12-23 08:17:13'),
+(10, 7, 'abcdef', '8e937f83f0b22125ec8b9ed14c300887', '1861410aae718ba29e058472d3f71b25', NULL, 'aa', '', 'test', 1, 1, NULL, '2015-12-23 08:18:21', '2016-05-28 13:49:38'),
+(11, 2, 'nayan', 'b60ae52d4a13af957e423e75ba2ea24b', 'a58e56c34832d0085b9fd4e7c3d53f3d', NULL, 'Nayan', NULL, 'Jobanputra', 1, 1, NULL, '2015-12-23 08:19:24', '2015-12-23 08:19:24'),
+(12, 2, 'nayan1', 'fea2d7228068a52acb82dfa6f732716c', 'a377869a63c6dd790fc8dc2a440489c7', NULL, 'Nayan', NULL, 'Jobanputra', 1, 1, NULL, '2015-12-23 08:19:48', '2015-12-23 08:19:48'),
+(13, 7, 'nayan2', 'c7bab90985405926a091312693f8f8f9', '450202dc6915361e0533022185996b1c', NULL, 'abc', '', 'test', 1, 1, NULL, '2015-12-23 08:22:36', '2016-05-28 13:50:58'),
+(14, 2, 'nayan3', '3e2fdeb11014d769be659670cc357849', 'dc589f2a59bbd18f49a5348dbc9c1fc0', NULL, 'abc', NULL, 'test', 1, 1, NULL, '2015-12-23 08:23:16', '2015-12-23 08:23:16');
 
 -- --------------------------------------------------------
 
@@ -207,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `user_groups` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `user_groups`
@@ -217,7 +236,10 @@ INSERT INTO `user_groups` (`id`, `name`, `alias_name`, `allowRegistration`, `cre
 (1, 'Admin', 'Admin', 0, '2015-09-16 12:08:00', '2015-09-16 12:08:00'),
 (2, 'User', 'User', 1, '2015-09-16 12:08:00', '2015-09-16 12:08:00'),
 (3, 'Guest', 'Guest', 0, '2015-09-16 12:08:00', '2015-09-16 12:08:00'),
-(4, 'Money Lender', 'Money_Lender', 0, '2015-09-16 02:45:20', '2015-09-16 02:45:20');
+(4, 'Money Lender', 'Money_Lender', 0, '2015-09-16 02:45:20', '2015-09-16 02:45:20'),
+(7, 'Land Lord', 'group_alias_1464456776', 1, '2016-05-28 13:32:56', '2016-05-28 13:32:56'),
+(8, 'Plot', 'group_alias_1464456855', 0, '2016-05-28 13:34:15', '2016-05-28 13:34:15'),
+(9, 'Interest', 'group_alias_1464457649', 0, '2016-05-28 13:47:29', '2016-05-28 13:47:29');
 
 -- --------------------------------------------------------
 
@@ -232,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `user_group_permissions` (
   `action` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `allowed` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=145 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=153 ;
 
 --
 -- Dumping data for table `user_group_permissions`
@@ -355,7 +377,7 @@ INSERT INTO `user_group_permissions` (`id`, `user_group_id`, `controller`, `acti
 (114, 3, 'Transactions', 'index', 0),
 (115, 4, 'Transactions', 'index', 1),
 (116, 1, 'Transactions', 'userTransactions', 1),
-(117, 2, 'Transactions', 'userTransactions', 0),
+(117, 2, 'Transactions', 'userTransactions', 1),
 (118, 3, 'Transactions', 'userTransactions', 0),
 (119, 4, 'Transactions', 'userTransactions', 1),
 (120, 1, 'Pages', 'ledger', 1),
@@ -382,7 +404,15 @@ INSERT INTO `user_group_permissions` (`id`, `user_group_id`, `controller`, `acti
 (141, 1, 'Ajax', 'addNewParty', 1),
 (142, 2, 'Ajax', 'addNewParty', 1),
 (143, 3, 'Ajax', 'addNewParty', 0),
-(144, 4, 'Ajax', 'addNewParty', 1);
+(144, 4, 'Ajax', 'addNewParty', 1),
+(145, 1, 'Transactions', 'hide', 1),
+(146, 2, 'Transactions', 'hide', 1),
+(147, 3, 'Transactions', 'hide', 0),
+(148, 4, 'Transactions', 'hide', 1),
+(149, 4, 'UserGroups', 'index', 1),
+(150, 4, 'UserGroups', 'addGroup', 1),
+(151, 4, 'UserGroups', 'editGroup', 1),
+(152, 4, 'UserGroups', 'deleteGroup', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

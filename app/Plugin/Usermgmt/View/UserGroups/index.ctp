@@ -101,6 +101,7 @@
 							echo "<td>" . h($row['UserGroup']['name']) . "</td>";
 							echo "<td>";
 							echo "<span class='icon'><a href='".$this->Html->url('/editGroup/'.$row['UserGroup']['id'])."'><i class='fa fa-pencil-square-o' title='Edit'></i></a></span>";
+							echo "&nbsp;<span class='icon'><a href='".$this->Html->url('/groupUsers/'.$row['UserGroup']['id'])."'><i class='fa fa-users' title='Group Parties'></i></a></span>";
 							if ($row['UserGroup']['id']!=1) {
 								echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteGroup', $row['UserGroup']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this group? Delete it your own risk')));
 							}

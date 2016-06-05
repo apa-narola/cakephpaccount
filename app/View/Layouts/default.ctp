@@ -213,55 +213,70 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                         <a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>
                     </div>
                     <ul class="nav navbar-nav">
-                    <li <?php echo $cls_dashboard_users; ?>>
+                    <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home"></i>
+                            Home
+                             <b class="caret"></b>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                 <li <?php echo $cls_dashboard_users; ?>>
                                 <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
                             <li <?php echo $cls_ledger;?>>
-                                <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
+                                <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-align-justify"></i> Ledger</a>
                             </li>
-               <li <?php echo $cls_add_trans; ?>>
+                            </ul>
+                    </li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money"></i>
+                            Transaction
+                             <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li <?php echo $cls_add_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Data Entry</a>
                             </li>
+                                                                                        <li class="divider"></li>
+
                             <li <?php echo $cls_list_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/index/type:T"><i class="fa fa-fw fa-money"></i> Transactions</a>
                             </li>
+
                             <li <?php echo $cls_list_interest; ?>>
-                                <a href="<?php echo $this->webroot ?>transactions/index/type:I"><i class="fa fa-fw fa-money"></i> Interests</a>
+                                <a href="<?php echo $this->webroot ?>transactions/index/type:I"><i class="fa fa-fw fa-percent"></i> Interests</a>
                             </li>
+                            </ul>
+                    </li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                            Party
+                             <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
                             <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-users"></i> Add Party</a>
+                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-plus-circle"></i> Add Party</a>
                             </li>
                             <li <?php echo $cls_list_users; ?>>
                                 <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
                             </li>
-                            <li <?php echo $cls_list_groups; ?>>
+                                                                                        <li class="divider"></li>
+                                <li <?php echo $cls_add_group; ?>>
+                                    <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-plus"></i> Add Group</a>
+                                </li>
+<li <?php echo $cls_list_groups; ?>>
                                     <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
                                 </li>
-                            <?php if ($this->UserAuth->isAdmin()) { ?>
-<!--                                <li <?php echo $cls_add_group; ?>>
-                                    <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
-                                </li>-->
+<?php if ($this->UserAuth->isAdmin()) { ?>
+<li class="divider"></li>
+ <li <?php echo $cls_list_permissions; ?>>
+<a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+</li>
+<?php } ?>
 
-                                <li <?php echo $cls_list_permissions; ?>>
-                                    <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
-                                </li>
-                            <?php } ?>
-<!--                            <li>-->
-<!--                                <a href="--><?php //echo $this->webroot ?><!--logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>-->
-<!--                            </li>-->
+                            </ul>
+                            </li>
 
-             <!-- <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>-->
             </ul>
                     <!-- Top Menu Items -->
                     <ul class="nav navbar-right top-nav">
