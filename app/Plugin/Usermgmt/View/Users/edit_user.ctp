@@ -43,7 +43,32 @@
         <div class="col-lg-12">
             <?php echo $this->Form->create('User', array('role' => 'form')); ?>
             <?php echo $this->Form->input("id", array('type' => 'hidden', 'label' => false, 'div' => false)) ?>
-        <div class="row">
+        
+            <div class="row">
+			<div class="col-lg-4">
+            <div class="form-group">
+                <label><?php echo __('First Name'); ?><font color='red'>*</font></label>
+                <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+			</div>
+			<div class="col-lg-4">
+             <div class="form-group">
+                <label><?php echo __('Middle Name'); ?>
+                    <!--<font color='red'>*</font>-->
+                </label>
+                <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+			</div>
+			<div class="col-lg-4">
+            <div class="form-group">
+                <label><?php echo __('Last Name'); ?>
+                    <!--<font color='red'>*</font>-->
+                </label>
+                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+			</div>
+			</div>
+			<div class="row">
 		<div class="col-lg-4">
                     <div class="form-group">
                         <label><?php echo __('Group'); ?><font color='red'>*</font></label>                
@@ -67,30 +92,6 @@
             <div class="form-group">
                 <label><?php echo __('Sub Group'); ?></label>
                 <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			</div>
-            <div class="row">
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('First Name'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			<div class="col-lg-4">
-             <div class="form-group">
-                <label><?php echo __('Middle Name'); ?>
-                    <!--<font color='red'>*</font>-->
-                </label>
-                <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Last Name'); ?>
-                    <!--<font color='red'>*</font>-->
-                </label>
-                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>
 			</div>
 			</div>

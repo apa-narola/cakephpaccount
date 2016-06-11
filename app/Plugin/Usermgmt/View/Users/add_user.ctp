@@ -42,6 +42,33 @@
         <div class="col-lg-12">
             <?php echo $this->Form->create('User', array('action' => 'addUser', 'role' => 'form')); ?>
          
+			
+<div class="row">
+<div class="col-lg-4">
+            <div class="form-group">
+                <label><?php echo __('First Name'); ?>
+                    <font color='red'>*</font>
+                </label>
+                <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+			</div>
+			<div class="col-lg-4">
+            <div class="form-group">
+                <label><?php echo __('Middle Name'); ?>
+                    <!--<font color='red'>*</font>-->
+                </label>
+                <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+			</div>
+			<div class="col-lg-4">
+            <div class="form-group">
+                <label><?php echo __('Last Name'); ?>
+                    <!--<font color='red'>*</font>-->
+                </label>
+                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
+			</div>
+			</div>
 			<div class="row">
 			<div class="col-lg-4">
             <div class="form-group">
@@ -70,44 +97,7 @@
             </div>
 			</div>
 			</div>
-<div class="row">
-<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('First Name'); ?>
-                    <font color='red'>*</font>
-                </label>
-                <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Middle Name'); ?>
-                    <!--<font color='red'>*</font>-->
-                </label>
-                <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Last Name'); ?>
-                    <!--<font color='red'>*</font>-->
-                </label>
-                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			</div>
-            <!--            <div class="form-group">
-                <label><?php echo __('Email'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("email", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>                             
-            <div class="form-group">
-                <label><?php echo __('Password'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("password", array('type' => 'password', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-            <div class="form-group">
-                <label><?php echo __('Confirm Password'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("cpassword", array('type' => 'password', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>-->
+
             <?php
             $options = array(
                 'label' => __('Add Party'),

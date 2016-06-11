@@ -121,22 +121,22 @@
                             }
                             echo "<td>";
                             echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
-                            echo "&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";
-                            echo "&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
-                            echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
-                            echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/I') . "'><i class='fa fa-percent' title='Interests'></i></a>";
+                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";
+                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
+                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
+                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/I') . "'><i class='fa fa-percent' title='Interests'></i></a>";
                             if ($row['User']['email_verified'] == 0) {
-                                echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/verifyEmail/' . $row['User']['id']) . "'><i class='fa fa-envelope' title='Verify email'></i></a>";
+                                echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/verifyEmail/' . $row['User']['id']) . "'><i class='fa fa-envelope' title='Verify email'></i></a>";
                             }
                             if ($row['User']['active'] == 0) {
-                                echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/1') . "'> <i class='fa fa-check' title='Make Active'></i></span>";
+                                echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/1') . "'> <i class='fa fa-check' title='Make Active'></i></span>";
                             } else {
-                                echo "&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
+                                echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
                             }
                             if ($row['User']['id'] != 1 && $row['User']['username'] != 'Admin') {
                                 echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteUser', $row['User']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this user?')));
                             }
-                            echo "&nbsp;<a href='" . $this->Html->url('/userReferences/' . $row['User']['id'] . '/I') . "'><i class='fa fa-search' title='References'></i></a>";
+                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/userReferences/' . $row['User']['id'] . '/I') . "'><i class='fa fa-search' title='References'></i></a>";
 
                             echo "</td>";
                             echo "</tr>";
