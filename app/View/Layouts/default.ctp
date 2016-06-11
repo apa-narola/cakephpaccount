@@ -242,16 +242,9 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             </li>
                             </ul>
                     </li>
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money"></i>
-                            Transaction
-                             <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li <?php echo $cls_add_trans; ?>>
+                    <li <?php echo $cls_add_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Data Entry</a>
-                            </li>
-                                                                                        <li class="divider"></li>
+                            </li>                                                                                       
 
                             <li <?php echo $cls_list_trans; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/index/type:T"><i class="fa fa-fw fa-money"></i> Transactions</a>
@@ -260,8 +253,6 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <li <?php echo $cls_list_interest; ?>>
                                 <a href="<?php echo $this->webroot ?>transactions/index/type:I"><i class="fa fa-fw fa-percent"></i> Interests</a>
                             </li>
-                            </ul>
-                    </li>
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
                             Party

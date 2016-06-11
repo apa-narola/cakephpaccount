@@ -10,4 +10,4 @@ ADD COLUMN `reference_id`  int NULL AFTER `user_group_id`;
 # Changes done by ashish - 10th June 2016
 ALTER TABLE `users`
 ADD `user_sub_group_id` int(11) NULL AFTER `user_group_id`,
-ADD FOREIGN KEY (`user_sub_group_id`) REFERENCES `user_sub_groups` (`id`);n
+ADD FOREIGN KEY (`user_sub_group_id`) REFERENCES `user_sub_groups` (`id`);
