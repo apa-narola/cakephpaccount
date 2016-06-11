@@ -67,6 +67,10 @@
                 <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>
                 <p class="help-block">Choose reference party name.</p>
             </div>
+            <div class="form-group">
+                <label><?php echo __('Sub Group'); ?></label>
+                <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
+            </div>
 
             <div class="form-group">
                 <label><?php echo __('First Name'); ?>

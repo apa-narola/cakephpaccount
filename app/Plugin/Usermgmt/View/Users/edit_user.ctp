@@ -1,3 +1,4 @@
+
 <?php
 /*
   This file is part of UserMgmt.
@@ -59,10 +60,14 @@
                                                                      data-toggle="modal"
                                                                      data-target="#addNewPartyModal"></i></a>-->
                 <input id="partyName" type="text" class="typeahead tt-query form-control" autocomplete="off"
-                       spellcheck="false" placeholder="Type reference party name" required>
+                       spellcheck="false" placeholder="Type reference party name" >
                 <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
                 <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>
                 <p class="help-block">Choose reference party name.</p>
+            </div>
+            <div class="form-group">
+                <label><?php echo __('Sub Group'); ?></label>
+                <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
             </div>
             <?php if ($this->UserAuth->isAdmin()) { ?>
             <div class="form-group">
@@ -105,8 +110,7 @@
 <?php echo $this->Html->script('bootstrap-typeahead.js'); ?>
 <?php echo $this->Html->script('typeahead_helper.js'); ?>
 
-<script>
+<script type="text/javascript">
     document.getElementById("UserUserGroupId").focus();
     sarvasvaInitTypeAhead("UserReferenceId");
-
 </script>

@@ -28,7 +28,11 @@ class User extends UserMgmtAppModel {
      *
      * @var array
      */
-    var $belongsTo = array('Usermgmt.UserGroup');
+    var $belongsTo = array('Usermgmt.UserGroup','Usermgmt.UserSubGroup','Reference'=>array(
+        'className'=>'Usermgmt.User',
+        'foreignKey'=>'reference_id'
+    ));
+
 
     /**
      * This model has following models
@@ -44,8 +48,7 @@ class User extends UserMgmtAppModel {
         "ReceiptTransaction" => array(
             'className' => 'Transaction',
             'conditions' => array('transaction_type'=>"Receipt","is_interest"=>0)
-            )
-        
+            ),
         );
 
     /**

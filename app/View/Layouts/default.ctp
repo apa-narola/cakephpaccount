@@ -124,6 +124,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
         $cls_list_users = null;
         $cls_add_group = null;
         $cls_list_groups = null;
+        $cls_add_sub_group = null;
+        $cls_list_sub_groups = null;
         $cls_list_permissions = null;
         $cls_ledger = null;
         $cls_list_interest = null;
@@ -185,6 +187,18 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                 switch ($action) {
                     case "ledger":
                         $cls_ledger = "class='active'";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "user_sub_groups":
+                switch ($action) {
+                    case "addSubGroup":
+                        $cls_add_sub_group = "class='active'";
+                        break;
+                    case "index":
+                        $cls_list_sub_groups = "class='active'";
                         break;
                     default:
                         break;
@@ -260,24 +274,38 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <li <?php echo $cls_list_users; ?>>
                                 <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
                             </li>
-                                                                                        <li class="divider"></li>
+                            </ul>
+                            </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>
+                                Group
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li <?php echo $cls_add_group; ?>>
                                     <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-plus"></i> Add Group</a>
                                 </li>
-<li <?php echo $cls_list_groups; ?>>
+                                <li <?php echo $cls_list_groups; ?>>
                                     <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
                                 </li>
-<?php if ($this->UserAuth->isAdmin()) { ?>
-<li class="divider"></li>
- <li <?php echo $cls_list_permissions; ?>>
-<a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
-</li>
-<?php } ?>
+                                <li class="divider"></li>
+                                <li <?php echo $cls_add_sub_group; ?>>
+                                    <a href="<?php echo $this->webroot ?>addSubGroup"><i class="fa fa-fw fa-plus"></i> Add Sub Group</a>
+                                </li>
+                                <li <?php echo $cls_list_sub_groups; ?>>
+                                    <a href="<?php echo $this->webroot ?>allSubGroups"><i class="fa fa-fw fa-futbol-o"></i> Sub Groups</a>
+                                </li>
 
                             </ul>
+                        </li>
+                        <?php if ($this->UserAuth->isAdmin()) { ?>
+                            <li <?php echo $cls_list_permissions; ?>>
+                                <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
                             </li>
+                        <?php } ?>
 
-            </ul>
+
+                    </ul>
                     <!-- Top Menu Items -->
                     <ul class="nav navbar-right top-nav">
                         <!--                    <li class="dropdown">

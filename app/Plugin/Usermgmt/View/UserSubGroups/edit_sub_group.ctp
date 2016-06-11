@@ -22,7 +22,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">
-			<?php echo __('Edit Group'); ?>
+			<?php echo __('Edit Sub Group'); ?>
 			<!--<small>Subheading</small>-->
 		</h1>
 		<ol class="breadcrumb">
@@ -31,19 +31,19 @@
 				<?php echo $this->Html->link(__("Home", true), "/") ?>
 			</li>
 			<li>
-				<i class="fa fa-edit fa-fw"></i>  <a href="<?php echo $this->webroot ?>allGroups">Groups</a>
+				<i class="fa fa-edit fa-fw"></i>  <a href="<?php echo $this->webroot ?>allSubGroups">Sub Groups</a>
 			</li>
 			<li class="active">
-				<i class="fa fa-user"></i> <?php echo __('Edit Group'); ?>
+				<i class="fa fa-user"></i> <?php echo __('Edit Sub Group'); ?>
 			</li>
 		</ol>
 		<?php echo $this->Session->flash(); ?>
 		<div class="col-lg-3">
-			<?php echo $this->Form->create('UserGroup', array('role' => 'form')); ?>
+			<?php echo $this->Form->create('UserSubGroup', array('role' => 'form')); ?>
 			<?php echo $this->Form->hidden('id')?>
 			<div class="form-group">
 				<label>
-					<?php echo __('Group Name');?><font color='red'>*</font>
+					<?php echo __('Sub Group Name');?><font color='red'>*</font>
 				</label>
 				<?php echo $this->Form->input("name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
 				<div>for ex. Business User</div>
@@ -57,8 +57,8 @@
 					<div>for ex. Business_User (Must not contain space) (Recomond: do not edit)</div>
 				</div>
 				<div class="checkbox">
-					<?php   if (!isset($this->request->data['UserGroup']['allowRegistration'])) {
-						$this->request->data['UserGroup']['allowRegistration']=true;
+					<?php   if (!isset($this->request->data['UserSubGroup']['allowRegistration'])) {
+						$this->request->data['UserSubGroup']['allowRegistration']=true;
 					}   ?>
 					<label>
 						<?php echo $this->Form->input("allowRegistration" ,array("type"=>"checkbox",'label' => false))?>
@@ -69,7 +69,7 @@
 			<?php
 
 			$options = array(
-				'label' => __('Update Group'),
+				'label' => __('Update Sub Group'),
 				'class' => "btn btn-default"
 			);
 			echo $this->Form->end($options);
@@ -82,5 +82,5 @@
 	</div>
 </div>
 <script>
-	document.getElementById("UserUserGroupId").focus();
+	document.getElementById("UserUserSubGroupId").focus();
 </script>

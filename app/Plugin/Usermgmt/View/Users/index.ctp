@@ -75,6 +75,8 @@
                         <th><?php echo __('SL'); ?></th>
                         <th><?php echo __('Name'); ?></th>
                             <th><?php echo __('Group'); ?></th>
+                            <th><?php echo __('Reference'); ?></th>
+                            <th><?php echo __('Sub Group'); ?></th>
                         <?php if ($this->UserAuth->isAdmin()) { ?>
                             <th><?php echo __('Username'); ?></th>
                             <th><?php echo __('Email'); ?></th>
@@ -87,6 +89,7 @@
                     </thead>
                     <tbody>
                     <?php
+//                    pr($users);
                     if (!empty($users)) {
                         $sl = 0;
                         foreach ($users as $row) {
@@ -95,6 +98,8 @@
                             echo "<td width='3%'>" . $sl . "</td>";
                             echo "<td><a href='" . $this->Html->url('/Transactions/userTransactions/' . $row['User']['id']) . "/T'>" . h($row['User']['first_name']) . " " . h($row['User']['middle_name']) . " " . h($row['User']['last_name']) . "</a></td>";
                             echo "<td>" . h($row['UserGroup']['name']) . "</td>";
+                            echo "<td><a href='" . $this->Html->url('/Transactions/userTransactions/' . $row['Reference']['id']) . "/T'>" . h($row['Reference']['first_name']) . " " . h($row['Reference']['middle_name']) . " " . h($row['Reference']['last_name']) . "</a></td>";
+                            echo "<td>" . h($row['UserSubGroup']['name']) . "</td>";
                             if ($this->UserAuth->isAdmin()) {
                                 echo "<td>" . h($row['User']['username']) . "</td>";
                                 echo "<td>" . h($row['User']['email']) . "</td>";
@@ -131,6 +136,8 @@
                             if ($row['User']['id'] != 1 && $row['User']['username'] != 'Admin') {
                                 echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteUser', $row['User']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this user?')));
                             }
+                            echo "&nbsp;<a href='" . $this->Html->url('/userReferences/' . $row['User']['id'] . '/I') . "'><i class='fa fa-search' title='References'></i></a>";
+
                             echo "</td>";
                             echo "</tr>";
                         }
