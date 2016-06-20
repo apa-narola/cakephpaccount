@@ -123,6 +123,13 @@ function UsermgmtInIt(&$controller) {
 	if(!defined("GUEST_GROUP_ID")) {
 		define("GUEST_GROUP_ID", 3);
 	}
+        
+        /*
+		set Reference group id here
+	*/
+	if(!defined("REFERENCE_GROUP_ID")) {
+		define("REFERENCE_GROUP_ID", 10);
+	}
 	/*
 		set true if you want captcha support on register form
 	*/

@@ -24,6 +24,7 @@ Router::connect('/', array('plugin' => 'usermgmt', 'controller' => 'users', 'act
 Router::connect('/pages/', array('controller' => 'pages', 'action' => 'display'));
 Router::connect('/ledger', array('controller' => 'pages', 'action' => 'ledger'));
 Router::connect('/typeaheadSearch', array('controller' => 'pages', 'action' => 'typeaheadSearch'));
+Router::connect('/typeaheadReferenceSearch', array('controller' => 'pages', 'action' => 'typeaheadReferenceSearch'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

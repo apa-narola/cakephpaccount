@@ -1,4 +1,5 @@
 <?php
+
 /*
   This file is part of UserMgmt.
 
@@ -20,44 +21,44 @@
 ?>
 <!-- Page Heading -->
 <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">
+    <div class="col-lg-12">
+        <h1 class="page-header">
 			<?php echo $user["User"]["first_name"]." ". $user["User"]["last_name"];?> - Parties
-			<!--<small>Subheading</small>-->
-		</h1>
-		<ol class="breadcrumb">
-			<li>
-				<i class="fa fa-home"></i>
+                <!--<small>Subheading</small>-->
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
 				<?php echo $this->Html->link(__("Home", true), "/") ?>
-			</li>
-			<li>
-				<i class="fa fa-user"></i>
-				<a href="<?php echo $this->webroot;?>allUsers">Parties</a>
-			</li>
-			<li class="active">
-				<i class="fa fa-users"></i> <?php echo $user["User"]["first_name"]." ". $user["User"]["last_name"];?> - Parties
-			</li>
-			<!--<li class="pull-right">
-				<i class="fa fa-plus-circle"></i> <a href="<?php /*echo $this->webroot */?>addUser">Add Party</a>
-			</li>-->
-		</ol>
+            </li>
+<!--            <li>
+                <i class="fa fa-user"></i>
+                <a href="<?php echo $this->webroot;?>userReferences">Reference</a>
+            </li>-->
+            <li class="active">
+                <i class="fa fa-users"></i> <?php echo $user["User"]["first_name"]." ". $user["User"]["last_name"];?> - Parties
+            </li>
+            <!--<li class="pull-right">
+                    <i class="fa fa-plus-circle"></i> <a href="<?php /*echo $this->webroot */?>addUser">Add Party</a>
+            </li>-->
+        </ol>
 		<?php echo $this->Session->flash(); ?>
-		<!--        <div class="row">-->
-		<!--<div class="panel panel-default">
-            <div class="panel-heading">Employee Search</div>
-            <div class="panel-body">
+        <!--        <div class="row">-->
+        <!--<div class="panel panel-default">
+    <div class="panel-heading">Employee Search</div>
+    <div class="panel-body">
 
-            </div>
-        </div>-->
+    </div>
+</div>-->
 
 		<?php echo $this->Form->create('User', array('action' => 'userReferences', 'role' => 'form')); ?>
 		<?php echo $this->Form->input("id", array('type' => 'hidden', 'label' => false, 'div' => false)) ?>
 
-		<div class="col-lg-2">
-			<div class="form-group">
+        <div class="col-lg-2">
+            <div class="form-group">
 				<?php echo $this->Form->input("search_text", array('label' => false, 'div' => false, 'class' => "form-control","placeholder"=>"Enter party name")) ?>
-			</div>
-		</div>
+            </div>
+        </div>
 		<?php
 		$options = array(
 			'div' => array("class" => 'col-lg-1'),
@@ -67,24 +68,24 @@
 		echo $this->Form->end($options);
 
 		?>
-		<div class="col-lg-1">
-			<div class="form-group">
+        <div class="col-lg-1">
+            <div class="form-group">
 				<?php echo $this->Form->button('Reset', array('type' => 'button', 'class' => "btn btn-default","onclick"=>"window.location='".$this->webroot."userReferences/".$userId."'"));?>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="col-lg-12">
-			<div class="table-responsive">
-				<table class="table table-hover table-striped">
-					<thead>
-					<tr>
-						<th><?php echo __('SL'); ?></th>
-						<th><?php echo __('Name'); ?></th>
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th><?php echo __('SL'); ?></th>
+                            <th><?php echo __('Name'); ?></th>
 <!--						<th>--><?php //echo __('Group'); ?><!--</th>-->
-						<th width="15%"><?php echo __('Action');?></th>
-					</tr>
-					</thead>
-					<tbody>
+                            <th width="15%"><?php echo __('Action');?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 					<?php
 
 					if (!empty($users)) {
@@ -98,7 +99,9 @@
 							echo "<td>";
 							echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' .  $row['User']['id'] . '/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
 							echo "&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' .  $row['User']['id'] . '/I') . "'><i class='fa fa-percent' title='Interests'></i></a>";
-
+                                                    if ($row['User']['id'] != 1 && $row['User']['username'] != 'Admin') {
+                                                        echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteParty', $row['User']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this Partie?')));
+                                                        }           
 							echo "</td>";
 							echo "</tr>";
 						}
@@ -106,9 +109,9 @@
 						echo "<tr><td colspan=10><br/><br/>No Data</td></tr>";
 					}
 					?>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

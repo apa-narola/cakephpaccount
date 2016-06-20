@@ -20,8 +20,7 @@ App::uses('AppController', 'Controller');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
-class PagesController extends AppController
-{
+class PagesController extends AppController {
 
     /**
      * This controller does not use a model
@@ -37,8 +36,7 @@ class PagesController extends AppController
      * @throws NotFoundException When the view file could not be found
      *   or MissingViewException in debug mode.
      */
-    public function display()
-    {
+    public function display() {
         $path = func_get_args();
 
         $count = count($path);
@@ -68,14 +66,12 @@ class PagesController extends AppController
         }
     }
 
-    public function ledger()
-    {
+    public function ledger() {
         $users = $this->User->find('all', array(
             "conditions" => array(
                 "User.user_group_id <>" => 1,
 //                "PendingTransaction.0.transaction_date >=" => "2015-09-25 00:00:00"//
             ),
-
         ));
 //        pr($users);
         $data = array();
@@ -102,8 +98,7 @@ class PagesController extends AppController
         $this->set(compact("data"));
     }
 
-    private function prepareUserName($user = array())
-    {
+    private function prepareUserName($user = array()) {
         $fullname = null;
         if (!empty($user["first_name"]))
             $fullname = $user["first_name"];
@@ -114,8 +109,7 @@ class PagesController extends AppController
         return $fullname;
     }
 
-    private function getTotalAmountTransaction($transactions = array())
-    {
+    private function getTotalAmountTransaction($transactions = array()) {
         $total = 0;
         if (!empty($transactions)) {
             foreach ($transactions as $key => $value) {
@@ -125,8 +119,7 @@ class PagesController extends AppController
         return $total;
     }
 
-    public function typeaheadSearch()
-    {
+    public function typeaheadSearch() {
 
         $this->autoRender = false;
         $this->RequestHandler->respondAs('json');
@@ -140,14 +133,43 @@ class PagesController extends AppController
                     array('User.last_name LIKE' => '' . $term . '%'),
                     array('User.middle_name LIKE' => '' . $term . '%'),
                     array('UserGroup.name LIKE' => '' . $term . '%'),
-
                 )
             )
         ));
         // Format the result for select2
         $result = array();
         foreach ($users as $key => $user) {
-            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name']." (".$user['UserGroup']['name'].") ");
+            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name'] . " (" . $user['UserGroup']['name'] . ") ");
+            array_push($result, $tmp);
+        }
+        $users = $result;
+
+        echo json_encode($users);
+        exit;
+    }
+
+    public function typeaheadReferenceSearch() {
+
+        $this->autoRender = false;
+        $this->RequestHandler->respondAs('json');
+        // get the search term from URL
+        $term = $this->request->query['search'];
+
+        $users = $this->User->find('all', array(
+            'conditions' => array(
+                array("User.user_group_id" => REFERENCE_GROUP_ID),
+                'OR' => array(
+                    array('User.first_name LIKE' => '' . $term . '%'),
+                    array('User.last_name LIKE' => '' . $term . '%'),
+                    array('User.middle_name LIKE' => '' . $term . '%'),
+                    array('UserGroup.name LIKE' => '' . $term . '%'),
+                )
+            )
+        ));
+        // Format the result for select2
+        $result = array();
+        foreach ($users as $key => $user) {
+            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name'] . " (" . $user['UserGroup']['name'] . ") ");
             array_push($result, $tmp);
         }
         $users = $result;

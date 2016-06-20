@@ -1,4 +1,5 @@
 <?php
+
 /*
   This file is part of UserMgmt.
 
@@ -41,62 +42,62 @@
         <?php echo $this->Session->flash(); ?>
         <div class="col-lg-12">
             <?php echo $this->Form->create('User', array('action' => 'addUser', 'role' => 'form')); ?>
-         
-			
-<div class="row">
-<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('First Name'); ?>
-                    <font color='red'>*</font>
-                </label>
+
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label><?php echo __('First Name'); ?>
+                            <font color='red'>*</font>
+                        </label>
                 <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Middle Name'); ?>
-                    <!--<font color='red'>*</font>-->
-                </label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label><?php echo __('Middle Name'); ?>
+                            <!--<font color='red'>*</font>-->
+                        </label>
                 <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Last Name'); ?>
-                    <!--<font color='red'>*</font>-->
-                </label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label><?php echo __('Last Name'); ?>
+                            <!--<font color='red'>*</font>-->
+                        </label>
                 <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+                    </div>
+                </div>
             </div>
-			</div>
-			</div>
-			<div class="row">
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Group'); ?><font color='red'>*</font></label>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label><?php echo __('Group'); ?><font color='red'>*</font></label>
                 <?php echo $this->Form->input("user_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-            </div>
-			</div>
-            
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label>Reference</label>
-                <!-- Button trigger modal -->
-               <!-- &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
-                                                                    data-toggle="modal"
-                                                                    data-target="#addNewPartyModal"></i></a>-->
-                <input id="partyName" type="text" class="typeahead tt-query form-control" autocomplete="off"
-                       spellcheck="false" placeholder="Type reference party name" required>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Reference</label>
+                        <!-- Button trigger modal -->
+                       <!-- &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
+                                                                            data-toggle="modal"
+                                                                            data-target="#addNewPartyModal"></i></a>-->
+                        <input id="referenceName" type="text" class="typeahead tt-query form-control" autocomplete="off"
+                               spellcheck="false" placeholder="Type reference party name" required>
                 <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
                 <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>               
-            </div>
-			</div>
-			<div class="col-lg-4">
-            <div class="form-group">
-                <label><?php echo __('Sub Group'); ?></label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label><?php echo __('Sub Group'); ?></label>
                 <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
+                    </div>
+                </div>
             </div>
-			</div>
-			</div>
 
             <?php
             $options = array(
@@ -113,6 +114,6 @@
 
 <script>
     document.getElementById("UserUserGroupId").focus();
-    sarvasvaInitTypeAhead("UserReferenceId");
+    sarvasvaReferenceInitTypeAhead("UserReferenceId");
 
 </script>

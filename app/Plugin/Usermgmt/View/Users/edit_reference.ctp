@@ -24,7 +24,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Edit Party
+            Edit Reference
             <!--<small>Subheading</small>-->
         </h1>
         <ol class="breadcrumb">
@@ -33,10 +33,10 @@
                 <?php echo $this->Html->link(__("Home", true), "/") ?>                
             </li>
             <li>
-                <i class="fa fa-edit fa-fw"></i>  <a href="<?php echo $this->webroot ?>allUsers">Parties</a>
+                <i class="fa fa-edit fa-fw"></i>  <a href="<?php echo $this->webroot ?>allReferences">Parties</a>
             </li>
             <li class="active">
-                <i class="fa fa-user"></i> Edit Party
+                <i class="fa fa-user"></i> Edit Reference
             </li>
         </ol>
         <?php echo $this->Session->flash(); ?>
@@ -68,37 +68,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label><?php echo __('Group'); ?><font color='red'>*</font></label>                
-                        <?php echo $this->Form->input("user_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Reference</label>
-                        <!-- Button trigger modal -->
-                        <!-- &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
-                                                                             data-toggle="modal"
-                                                                             data-target="#addNewPartyModal"></i></a>-->
-                        <input id="partyName" type="text" class="typeahead tt-query form-control" autocomplete="off"
-                               spellcheck="false" placeholder="Type reference party name" >
-                <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
-                <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>                
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label><?php echo __('Sub Group'); ?></label>
-                <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
-                    </div>
-                </div>
-            </div>
 
             <?php
             $options = array(
-                'label' => __('Update Party'),
+                'label' => __('Update Reference'),
                 'class' => "btn btn-default"
             );
             echo $this->Form->end($options);
@@ -111,5 +84,5 @@
 
 <script type="text/javascript">
     document.getElementById("UserUserGroupId").focus();
-    sarvasvaReferenceInitTypeAhead("UserReferenceId");
+    sarvasvaInitTypeAhead("UserReferenceId");
 </script>

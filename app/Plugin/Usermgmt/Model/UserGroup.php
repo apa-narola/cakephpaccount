@@ -213,7 +213,7 @@ class UserGroup extends UserMgmtAppModel {
 
 	public function getMoneyLenderGroups() {
 		$this->unbindModel(array('hasMany' => array('UserGroupPermission')));
-		$result=$this->find("all", array("order"=>"id", "conditions"=>array('id >'=>4)));
+		$result=$this->find("all", array("order"=>"id", "conditions"=>array('id not in'=>[1,2,3,4,REFERENCE_GROUP_ID])));
 		$user_groups=array();
 		$user_groups[0]='Select';
 		foreach ($result as $row) {

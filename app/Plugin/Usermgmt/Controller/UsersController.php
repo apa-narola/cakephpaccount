@@ -21,15 +21,14 @@
 
 App::uses('UserMgmtAppController', 'Usermgmt.Controller');
 
-class UsersController extends UserMgmtAppController
-{
+class UsersController extends UserMgmtAppController {
 
     /**
      * This controller uses following models
      *
      * @var array
      */
-    public $uses = array('Usermgmt.User', 'Usermgmt.UserGroup', 'Usermgmt.LoginToken','Usermgmt.UserSubGroup');
+    public $uses = array('Usermgmt.User', 'Usermgmt.UserGroup', 'Usermgmt.LoginToken', 'Usermgmt.UserSubGroup');
 
     /**
      * Called before the controller action.  You can use this method to configure and customize components
@@ -37,8 +36,7 @@ class UsersController extends UserMgmtAppController
      *
      * @return void
      */
-    public function beforeFilter()
-    {
+    public function beforeFilter() {
         parent::beforeFilter();
         $this->User->userAuth = $this->UserAuth;
     }
@@ -49,9 +47,40 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return array
      */
-    public function index()
-    {
+    public function index() {
         $conditions = array();
+        if (!empty($this->request->data["User"]["search_text"])) {
+            $conditions[] = array(
+                "OR" => array(
+                    "User.first_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "User.middle_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "User.last_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "UserGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "Reference.first_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "Reference.middle_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "Reference.last_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    "UserSubGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                )
+            );
+        }
+
+        if (!$this->UserAuth->isAdmin())
+            $conditions[] = array("User.user_group_id NOT IN" => array(1, 4, REFERENCE_GROUP_ID));
+
+
+        $this->User->unbindModel(array('hasMany' => array('LoginToken')));
+        $users = $this->User->find('all', array("conditions" => $conditions, 'order' => 'User.first_name asc'));
+
+        /* if ($this->UserAuth->isAdmin())
+          $users = $this->User->find('all', array('order' => 'User.first_name asc'));
+          else
+          $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.first_name asc')); */
+
+        $this->set('users', $users);
+    }
+
+    public function indexReference() {
+        $conditions = array("User.user_group_id" => REFERENCE_GROUP_ID);
         if (!empty($this->request->data["User"]["search_text"])) {
             $conditions[] = array(
                 "OR" => array(
@@ -75,9 +104,9 @@ class UsersController extends UserMgmtAppController
         $users = $this->User->find('all', array("conditions" => $conditions, 'order' => 'User.first_name asc'));
 
         /* if ($this->UserAuth->isAdmin())
-             $users = $this->User->find('all', array('order' => 'User.first_name asc'));
-         else
-             $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.first_name asc'));*/
+          $users = $this->User->find('all', array('order' => 'User.first_name asc'));
+          else
+          $users = $this->User->find('all', array("conditions" => array("user_group_id <>" => 1), 'order' => 'User.first_name asc')); */
 
         $this->set('users', $users);
     }
@@ -89,8 +118,7 @@ class UsersController extends UserMgmtAppController
      * @param integer $userId user id of user
      * @return array
      */
-    public function viewUser($userId = null)
-    {
+    public function viewUser($userId = null) {
         if (!empty($userId)) {
             $user = $this->User->read(null, $userId);
             $this->set('user', $user);
@@ -105,8 +133,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return array
      */
-    public function myprofile()
-    {
+    public function myprofile() {
         $userId = $this->UserAuth->getUserId();
         $user = $this->User->read(null, $userId);
         $this->set('user', $user);
@@ -118,8 +145,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function login()
-    {
+    public function login() {
         $userId = $this->UserAuth->getUserId();
         if ($userId) {
             $this->redirect("/dashboard");
@@ -183,8 +209,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function logout()
-    {
+    public function logout() {
         $this->UserAuth->logout();
         $this->Session->setFlash(__('You are successfully signed out'));
         $this->redirect(LOGOUT_REDIRECT_URL);
@@ -196,8 +221,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         $userId = $this->UserAuth->getUserId();
         if ($userId) {
             $this->redirect("/dashboard");
@@ -259,8 +283,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function changePassword()
-    {
+    public function changePassword() {
         $userId = $this->UserAuth->getUserId();
         if ($this->request->isPost()) {
             $this->User->set($this->data);
@@ -285,8 +308,7 @@ class UsersController extends UserMgmtAppController
      * @param integer $userId user id of user
      * @return void
      */
-    public function changeUserPassword($userId = null)
-    {
+    public function changeUserPassword($userId = null) {
         if (!empty($userId)) {
             $name = $this->User->getNameById($userId);
             $this->set('name', $name);
@@ -315,8 +337,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function addUser()
-    {
+    public function addUser() {
         $userGroups = array();
         $userGroups[0] = "Select";
         if ($this->UserAuth->isAdmin()) {
@@ -332,19 +353,19 @@ class UsersController extends UserMgmtAppController
 
         //$userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
 
-        $this->set(compact('userGroups','userSubGroups'));
+        $this->set(compact('userGroups', 'userSubGroups'));
 
         if ($this->request->isPost()) {
             $this->User->set($this->data);
             if ($this->User->RegisterValidate()) {
-                /* added by ashish - start*/
+                /* added by ashish - start */
                 $this->request->data['User']['user_sub_group_id'] = $this->request->data["User"]["user_sub_group_id"];
                 $this->request->data['User']['reference_id'] = $this->request->data["User"]["reference_id"];
                 $this->request->data['User']['username'] = "ashish-" . time();
                 $this->request->data['User']['email'] = "ashish-" . time() . "@gmail.com";
                 $this->request->data['User']['password'] = "ashish123";
                 $this->request->data['User']['cpassword'] = "ashish123";
-                /* added by ashish - end*/
+                /* added by ashish - end */
                 $this->request->data['User']['email_verified'] = 1;
                 $this->request->data['User']['active'] = 1;
                 $salt = $this->UserAuth->makeSalt();
@@ -358,6 +379,48 @@ class UsersController extends UserMgmtAppController
         }
     }
 
+    public function addReference() {
+        $userGroups = array();
+        $userGroups[0] = "Select";
+        if ($this->UserAuth->isAdmin()) {
+            $userGroups = $this->UserGroup->getGroups();
+        } elseif ($this->UserAuth->getGroupId() == 4) {
+            //$userGroups[2] = "User";
+            //$this->UserGroup->getGroups();
+            $userGroups = $this->UserGroup->getMoneyLenderGroups();
+        }
+        $userSubGroups = array();
+        $userSubGroups[0] = "Select";
+        $userSubGroups = $this->UserSubGroup->getSubGroups();
+
+        //$userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
+
+        $this->set(compact('userGroups', 'userSubGroups'));
+
+        if ($this->request->isPost()) {
+            $this->User->set($this->data);
+            if ($this->User->RegisterValidate()) {
+                /* added by ashish - start */
+                $this->request->data['User']['user_group_id'] = REFERENCE_GROUP_ID;
+                $this->request->data['User']['reference_id'] = $this->request->data["User"]["reference_id"];
+                $this->request->data['User']['username'] = "ashish-" . time();
+                $this->request->data['User']['email'] = "ashish-" . time() . "@gmail.com";
+                $this->request->data['User']['password'] = "ashish123";
+                $this->request->data['User']['cpassword'] = "ashish123";
+                /* added by ashish - end */
+                $this->request->data['User']['email_verified'] = 1;
+                $this->request->data['User']['active'] = 1;
+                $salt = $this->UserAuth->makeSalt();
+                $this->request->data['User']['salt'] = $salt;
+                $this->request->data['User']['password'] = $this->UserAuth->makePassword($this->request->data['User']['password'], $salt);
+                $this->User->save($this->request->data, false);
+                $this->Session->setFlash(__('The reference is successfully added'));
+                //$this->Flash->success(__('The user is successfully added'));
+                $this->redirect('/allReferences');
+            }
+        }
+    }
+
     /**
      * Used to edit user on the site by Admin
      *
@@ -365,8 +428,7 @@ class UsersController extends UserMgmtAppController
      * @param integer $userId user id of user
      * @return void
      */
-    public function editUser($userId = null)
-    {
+    public function editUser($userId = null) {
         if (!empty($userId)) {
             $userGroups = array();
             $userGroups[0] = "Select";
@@ -384,7 +446,7 @@ class UsersController extends UserMgmtAppController
 
 //            $userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
 
-            $this->set(compact('userGroups','userSubGroups'));
+            $this->set(compact('userGroups', 'userSubGroups'));
 
             if ($this->request->isPut()) {
                 $this->User->set($this->data);
@@ -407,6 +469,62 @@ class UsersController extends UserMgmtAppController
         }
     }
 
+    public function editReference($userId = null) {
+        if (!empty($userId)) {
+            $userGroups = array();
+            $userGroups[0] = "Select";
+            if ($this->UserAuth->isAdmin()) {
+                $userGroups = $this->UserGroup->getGroups();
+            } elseif ($this->UserAuth->getGroupId() == 4) {
+                //$userGroups[2] = "User";
+//                $this->UserGroup->getGroups();
+                $userGroups = $this->UserGroup->getMoneyLenderGroups();
+            }
+
+            $userSubGroups = array();
+            $userSubGroups[0] = "Select";
+            $userSubGroups = $this->UserSubGroup->getSubGroups();
+
+//            $userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
+
+            $this->set(compact('userGroups', 'userSubGroups'));
+
+            if ($this->request->isPut()) {
+                $this->User->set($this->data);
+                if ($this->User->RegisterValidate()) {
+                    $this->User->save($this->request->data, false);
+                    $this->Session->setFlash(__('The Reference is successfully updated'));
+                    //$this->Flash->success(__('The user is successfully updated'));
+                    $this->redirect('/allReferences');
+                }
+            } else {
+                $user = $this->User->read(null, $userId);
+                $this->request->data = null;
+                if (!empty($user)) {
+                    $user['User']['password'] = '';
+                    $this->request->data = $user;
+                }
+            }
+        } else {
+            $this->redirect('/allReferences');
+        }
+    }
+
+    public function deleteParty($userId = null) {
+        if (!empty($userId)) {
+            $user = $this->User->read(null, $userId);
+            if (!empty($user)) {
+                $referenceId = $user['User']['reference_id'];
+                $this->request->data['User']['reference_id'] = 0;
+                $this->User->save($this->request->data, false);
+                $this->Session->setFlash(__('Party has been deleted successfully.'));
+            }
+        } else {
+            $this->Session->setFlash(__('Sorry something went wrong, party has been delete successfully.'));
+        }
+        $this->redirect('/userReferences/' . $referenceId);
+    }
+
     /**
      * Used to delete the user by Admin
      *
@@ -414,19 +532,42 @@ class UsersController extends UserMgmtAppController
      * @param integer $userId user id of user
      * @return void
      */
-    public function deleteUser($userId = null)
-    {
+    public function deleteUser($userId = null) {
         if (!empty($userId)) {
             if ($this->request->isPost()) {
                 if ($this->User->delete($userId, false)) {
                     $this->LoginToken->deleteAll(array('LoginToken.user_id' => $userId), false);
 //                    $this->Session->setFlash(__('User is successfully deleted'));
-                    $this->Session->setFlash(__('User is successfully deleted'));
+                    $this->Session->setFlash(__('User is successfully deleted.'));
                 }
             }
             $this->redirect('/allUsers');
         } else {
             $this->redirect('/allUsers');
+        }
+    }
+
+    public function deleteRefrence($userId = null) {
+        if (!empty($userId)) {
+
+            $this->autoRender = false;
+            $conditions = array("User.reference_id" => $userId);
+            $this->User->unbindModel(array('hasMany' => array('LoginToken')));
+            $users = $this->User->find('count', array("conditions" => $conditions));
+            if ($users > 0) {
+                $this->Session->setFlash(__('This reference can not be deleted because it contains parties.'));
+                $this->redirect('/allReferences');
+            } else {
+                if ($this->request->isPost()) {
+                    if ($this->User->delete($userId, false)) {
+                        $this->LoginToken->deleteAll(array('LoginToken.user_id' => $userId), false);
+                        $this->Session->setFlash(__('Reference has been deleted  successfully.'));
+                    }
+                }
+                $this->redirect('/allReferences');
+            }
+        } else {
+            $this->redirect('/allReferences');
         }
     }
 
@@ -436,8 +577,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return array
      */
-    public function dashboard()
-    {
+    public function dashboard() {
         $userId = $this->UserAuth->getUserId();
         $user = $this->User->findById($userId);
         $this->set('user', $user);
@@ -451,8 +591,7 @@ class UsersController extends UserMgmtAppController
      * @param integer $active active or inactive
      * @return void
      */
-    public function makeActiveInactive($userId = null, $active = 0)
-    {
+    public function makeActiveInactive($userId = null, $active = 0) {
         if (!empty($userId)) {
             $user = array();
             $user['User']['id'] = $userId;
@@ -474,8 +613,7 @@ class UsersController extends UserMgmtAppController
      * @param integer $userId user id of user
      * @return void
      */
-    public function verifyEmail($userId = null)
-    {
+    public function verifyEmail($userId = null) {
         if (!empty($userId)) {
             $user = array();
             $user['User']['id'] = $userId;
@@ -492,9 +630,8 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function accessDenied()
-    {
-
+    public function accessDenied() {
+        
     }
 
     /**
@@ -503,8 +640,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function userVerification()
-    {
+    public function userVerification() {
         if (isset($_GET['ident']) && isset($_GET['activate'])) {
             $userId = $_GET['ident'];
             $activateKey = $_GET['activate'];
@@ -539,8 +675,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function forgotPassword()
-    {
+    public function forgotPassword() {
         if ($this->request->isPost()) {
             $this->User->set($this->data);
             if ($this->User->LoginValidate()) {
@@ -571,8 +706,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function activatePassword()
-    {
+    public function activatePassword() {
         if ($this->request->isPost()) {
             if (!empty($this->data['User']['ident']) && !empty($this->data['User']['activate'])) {
                 $this->set('ident', $this->data['User']['ident']);
@@ -617,8 +751,7 @@ class UsersController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function emailVerification()
-    {
+    public function emailVerification() {
         if ($this->request->isPost()) {
             $this->User->set($this->data);
             if ($this->User->LoginValidate()) {
@@ -642,25 +775,24 @@ class UsersController extends UserMgmtAppController
         }
     }
 
-    public function userReferences($userId = null)
-    {
+    public function userReferences($userId = null) {
         if (!empty($userId)) {
 
-            $conditions = array("User.reference_id"=>$userId);
+            $conditions = array("User.reference_id" => $userId);
             $search_text = null;
-            if(!empty($this->request->data["User"]["search_text"])) {
+            if (!empty($this->request->data["User"]["search_text"])) {
                 $search_text = $this->request->data["User"]["search_text"];
                 $conditions[] = array(
                     "OR" => array(
                         "User.first_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
                         "User.middle_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
                         "User.last_name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
-                        //"UserSubGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    //"UserSubGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
                     )
                 );
             }
 
-            if(!$this->UserAuth->isAdmin()) {
+            if (!$this->UserAuth->isAdmin()) {
                 // $conditions[] = array("User.user_group_id NOT IN" => array(1, 4));
                 //    $conditions[] = array("User.user_group_id " => $groupId);
             }
@@ -674,9 +806,9 @@ class UsersController extends UserMgmtAppController
             }
             $this->request->data["User"]["search_text"] = $search_text;
 
-            $users = $this->User->find("all",array("conditions" => $conditions));
+            $users = $this->User->find("all", array("conditions" => $conditions));
 
-            $this->set(compact("user","userId","users"));
+            $this->set(compact("user", "userId", "users"));
         } else {
             $this->redirect('/allUsers');
         }
