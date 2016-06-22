@@ -139,7 +139,7 @@ class PagesController extends AppController {
         // Format the result for select2
         $result = array();
         foreach ($users as $key => $user) {
-            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name'] . " (" . $user['UserGroup']['name'] . ") ");
+            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name'] . " ");
             array_push($result, $tmp);
         }
         $users = $result;
@@ -169,7 +169,7 @@ class PagesController extends AppController {
         // Format the result for select2
         $result = array();
         foreach ($users as $key => $user) {
-            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name'] . " (" . $user['UserGroup']['name'] . ") ");
+            $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name']);
             array_push($result, $tmp);
         }
         $users = $result;
