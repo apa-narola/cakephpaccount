@@ -1,4 +1,5 @@
 <?php
+
 /*
   This file is part of UserMgmt.
 
@@ -38,20 +39,20 @@
             </li>
         </ol>
         <?php echo $this->Session->flash(); ?>
-<!--        <div class="row">-->
-            <!--<div class="panel panel-default">
-                <div class="panel-heading">Employee Search</div>
-                <div class="panel-body">
+        <!--        <div class="row">-->
+        <!--<div class="panel panel-default">
+            <div class="panel-heading">Employee Search</div>
+            <div class="panel-body">
 
-                </div>
-            </div>-->
+            </div>
+        </div>-->
 
             <?php echo $this->Form->create('User', array('action' => 'index', 'role' => 'form')); ?>
-            <div class="col-lg-2">
-                <div class="form-group">
+        <div class="col-lg-2">
+            <div class="form-group">
                     <?php echo $this->Form->input("search_text", array('label' => false, 'div' => false, 'class' => "form-control","placeholder"=>"Enter party name")) ?>
-                </div>
             </div>
+        </div>
             <?php
             $options = array(
                 'div' => array("class" => 'col-lg-1'),
@@ -71,9 +72,9 @@
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
-                    <tr>
-                        <th><?php echo __('SL'); ?></th>
-                        <th><?php echo __('Name'); ?></th>
+                        <tr>
+                            <th><?php echo __('SL'); ?></th>
+                            <th><?php echo __('Name'); ?></th>
                             <th><?php echo __('Group'); ?></th>
                             <th><?php echo __('Reference'); ?></th>
                             <th><?php echo __('Sub Group'); ?></th>
@@ -84,8 +85,8 @@
                             <th><?php echo __('Status'); ?></th>
                             <th><?php echo __('Created'); ?></th>
                         <?php } ?>
-                        <th width="15%"><?php echo __('Action');?></th>
-                    </tr>
+                            <th width="15%"><?php echo __('Action');?></th>
+                        </tr>
                     </thead>
                     <tbody>
                     <?php
@@ -120,9 +121,14 @@
                                 echo "<td>" . date('d-M-Y', strtotime($row['User']['created'])) . "</td>";
                             }
                             echo "<td>";
-                            echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
+                            if ($this->UserAuth->isAdmin()){
+                                 echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
+                                 echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
+                                 if ($row['User']['active'] != 0) {
+                                     echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
+                                 }
+                            }
                             echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";
-                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
                             echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/T') . "'><i class='fa fa-money' title='Transactions'></i></a>";
                             echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/transactions/userTransactions/' . $row['User']['id'] . '/I') . "'><i class='fa fa-percent' title='Interests'></i></a>";
                             if ($row['User']['email_verified'] == 0) {
@@ -130,13 +136,11 @@
                             }
                             if ($row['User']['active'] == 0) {
                                 echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/1') . "'> <i class='fa fa-check' title='Make Active'></i></span>";
-                            } else {
-                                echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
-                            }
+                            } 
                             if ($row['User']['id'] != 1 && $row['User']['username'] != 'Admin') {
                                 echo $this->Form->postLink("&nbsp;<i class='fa fa-trash' title='Delete'></i>", array('action' => 'deleteUser', $row['User']['id']), array('escape' => false, 'confirm' => __('Are you sure you want to delete this user?')));
                             }
-                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/userReferences/' . $row['User']['id'] . '/I') . "'><i class='fa fa-search' title='References'></i></a>";
+//                            echo "&nbsp;&nbsp;<a href='" . $this->Html->url('/userReferences/' . $row['User']['id'] . '/I') . "'><i class='fa fa-search' title='References'></i></a>";
 
                             echo "</td>";
                             echo "</tr>";

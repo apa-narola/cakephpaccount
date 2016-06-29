@@ -66,7 +66,7 @@
 			</div>
 			<div class="row">           
             
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label>Remarks</label>
                     <?php echo $this->Form->input('remarks', array("label" => false, "class" => "form-control","rows"=>3)); ?>
@@ -80,7 +80,7 @@
                     <p class="help-block">Type short note for this transaction here.</p>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="form-group">
                     <label>Transaction date</label>
 
@@ -96,7 +96,7 @@
             </div>
             
          
-            <div class="col-sm-3">
+            <div class="col-sm-1">
                 <div class="form-group" style="margin-top:25px;">
             <?php
             $options = array(

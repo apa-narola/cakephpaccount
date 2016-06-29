@@ -1,13 +1,13 @@
 <!-- Page Heading -->
 <div class="row">
     <div class="col-lg-12">
-       <!-- <h1 class="page-header">
+        <!-- <h1 class="page-header">
             <?php
             //echo __('Transactions for ');
             echo h($fullname." - ".$typeStr);
             ?>
-            
-        </h1>-->
+             
+         </h1>-->
         <ol class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
@@ -135,20 +135,20 @@
         <?php echo $this->Session->flash(); ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-			<div class="row">
-			<div class="col-lg-5">
-			Transactions
-			</div>
-			<div class="col-lg-7">
-			<h3>
+                <div class="row">
+                    <div class="col-lg-5">
+                        Transactions
+                    </div>
+                    <div class="col-lg-7">
+                        <h3>
 			<?php
             //echo __('Transactions for ');
             echo h($fullname);
             ?>
-			</h3>
-			</div>
-			</div>
-			</div >
+                        </h3>
+                    </div>
+                </div>
+            </div >
             <div class="panel-body">
                 <div class="col-lg-12">
                     <div class="row">
@@ -179,41 +179,40 @@
                                     }
 
                                     ?>
-                                    <tr <?php echo $hidden_style; ?> >
-                                        <td width="10%" class="bdr-left" valign="top">
-                                            <div class="text-right">
+                                <tr <?php echo $hidden_style; ?> >
+                                    <td width="10%" class="bdr-left" valign="top">
+                                        <div class="text-right">
                                                 <?php echo $this->requestAction('App/moneyFormatIndia/' . h($transaction['Transaction']['amount'])); ?>
-                                            </div>
-                                        </td>
-                                        <td width="5%" class="bdr-left" valign="top">
-                                            <div
-                                                class="text-right short_note"> <?php echo h($transaction['Transaction']['short_notes']); ?></div>
-                                        </td>
-                                        <td class="bdr-left trans_action" valign="top">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td valign="top" align="left" class="remark">
-                                                        &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>
-                                                        , &nbsp;</td>
-														</tr>
-														<tr>
-														<td align="right">
+                                        </div>
+                                    </td>
+                                    <td width="5%" class="bdr-left" valign="top">
+                                        <div
+                                            class="text-right short_note"> <?php echo h($transaction['Transaction']['short_notes']); ?></div>
+                                    </td>
+                                    <td class="bdr-left trans_action" valign="top">
+                                        <table width="100%">
+                                            <tr>
+                                                <td valign="top" align="left" class="remark">
+                                                    &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">
 														<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $type, "user_id" => $user_id)); ?>
                                             <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],"type"=> $this->request->params["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id'])));
                                             ?>
                                             <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type, "user_id" => $user_id), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
-														</td>
-														</tr>
-                                            </table>
-                                            
+                                                </td>
+                                            </tr>
+                                        </table>
 
-                                        </td>
-                                        <td width="12%" class="bdr-left" valign="top"
-                                            <div class="text-left">
+
+                                    </td>
+                                    <td width="12%" class="bdr-left" valign="top"
+                                        <div class="text-left">
                                                 <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <?php endforeach; ?>
                             </table>
                         </div>
@@ -235,41 +234,41 @@
                                         $hidden_style = "style='opacity:0.2'";
                                     }
                                     ?>
-                                    <tr <?php echo $hidden_style; ?> >
-                                        <td width="10%" class="bdr-left" valign="top">
-                                            <div class="text-right">
+                                <tr <?php echo $hidden_style; ?> >
+                                    <td width="10%" class="bdr-left" valign="top">
+                                        <div class="text-right">
                                                 <?php echo $this->requestAction('App/moneyFormatIndia/' . h($transaction['Transaction']['amount'])); ?>
-                                            </div>
-                                        </td>
-                                        <td width="5%" class="bdr-left" valign="top">
-                                            <div
-                                                class="text-right short_note"> <?php echo h($transaction['Transaction']['short_notes']); ?></div>
-                                        </td>
-                                        <td class="bdr-left trans_action">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td valign="top" align="left" class="remark">
-                                                        &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo h(($transaction['Transaction']['remarks'])); ?>
-                                                        , &nbsp;</td>
-														</tr>
-														<tr>
-														<td align="right">
+                                        </div>
+                                    </td>
+                                    <td width="5%" class="bdr-left" valign="top">
+                                        <div
+                                            class="text-right short_note"> <?php echo h($transaction['Transaction']['short_notes']); ?></div>
+                                    </td>
+                                    <td class="bdr-left trans_action">
+                                        <table width="100%">
+                                            <tr>
+                                                <td valign="top" align="left" class="remark">
+                                                    &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">
 														<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $type, "user_id" => $user_id)); ?>
                                             <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],$this->request->param["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id'])));
                                             ?>
                                             <?php echo $this->Form->postLink(__($hidden_text), array('action' => 'hide', $transaction['Transaction']['id'], "is_hidden" => $transaction['Transaction']['is_hidden'], "type" => $type, "user_id" => $user_id), array('confirm' => __('Are you sure you want to hide # %s?', $transaction['Transaction']['id']))); ?>
-														</td>
-														</tr>
-                                            </table>
-                                            
-                                        </td>
-                                        <td width="12%" class="bdr-left" valign="top">
-                                            <div class="text-left">
-                                                <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?>
-                                            </div>
-                                        </td>
+                                                </td>
+                                            </tr>
+                                        </table>
 
-                                    </tr>
+                                    </td>
+                                    <td width="12%" class="bdr-left" valign="top">
+                                        <div class="text-left">
+                                                <?php echo $transaction['Transaction']['transaction_date'] ? date(Configure::read('App.DATE_FORMAT'), strtotime($transaction['Transaction']['transaction_date'])) : "NA"; ?>
+                                        </div>
+                                    </td>
+
+                                </tr>
                                 <?php endforeach; ?>
 
                             </table>
@@ -281,24 +280,24 @@
                             <table class="table-responsive table-hover table-striped" width="100%">
 
                                 <?php if (!empty($transactions)) { ?>
-                                    <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
-                                        <th width="10%" class=" bdr-left text-right" valign="top">
+                                <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
+                                    <th width="10%" class=" bdr-left text-right" valign="top">
                                             <?php echo $this->requestAction('App/moneyFormatIndia/' . $receipt_total[0]["total"]); ?>
-                                        </th>
-                                        <th class="bdr-left cr-dr" valign="top"> Cr. Total Receipt</th>
-                                    </tr>
+                                    </th>
+                                    <th class="bdr-left cr-dr" valign="top"> Cr. Total Receipt</th>
+                                </tr>
                                     <?php 
 									if ($receipt_total[0]["total"] > $payment_total[0]["total"]) { 
 									?>
-                                        <tr class="amount-green"
-                                            style="border-top:5px double #333;border-bottom:5px double #333;">
-                                            <th width="10%" class="bdr-left text-right" valign="top">
+                                <tr class="amount-green"
+                                    style="border-top:5px double #333;border-bottom:5px double #333;">
+                                    <th width="10%" class="bdr-left text-right" valign="top">
                                                 <?php $rt = $receipt_total[0]["total"] - $payment_total[0]["total"];
                                                 if (!empty($rt))
                                                     echo $this->requestAction('App/moneyFormatIndia/' . $rt);
                                                 ?></th>
-                                            <th class="bdr-left cr-dr" valign="top">Cr. Net Receipt</th>
-                                        </tr>
+                                    <th class="bdr-left cr-dr" valign="top">Cr. Net Receipt</th>
+                                </tr>
                                     <?php } ?>
                                 <?php } ?>
                             </table>
@@ -307,20 +306,20 @@
                             <table class="table-responsive table-hover table-striped" width="100%">
                                 <?php if (!empty($transactions)) { ?>
 
-                                    <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
-                                        <th width="10%" class="bdr-left text-right" valign="top">
+                                <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
+                                    <th width="10%" class="bdr-left text-right" valign="top">
                                             <?php
                                             if (!empty($payment_total[0]["total"]))
                                                 echo $this->requestAction('App/moneyFormatIndia/' . $payment_total[0]["total"]);
                                             ?>
-                                        </th>
-                                        <th class="bdr-left cr-dr" valign="top"> Dr. Total Payment</th>
-                                    </tr>
+                                    </th>
+                                    <th class="bdr-left cr-dr" valign="top"> Dr. Total Payment</th>
+                                </tr>
                                     <?php if ($payment_total[0]["total"] > $receipt_total[0]["total"]) { ?>
 
-                                        <tr class="amount-red"
-                                            style="border-bottom:5px double #333;">
-                                            <th width="10%" class="bdr-left text-right" valign="top">
+                                <tr class="amount-red"
+                                    style="border-bottom:5px double #333;">
+                                    <th width="10%" class="bdr-left text-right" valign="top">
                                                 <?php
                                                 $t = $payment_total[0]["total"] - $receipt_total[0]["total"];
 
@@ -329,9 +328,9 @@
                                                     //echo $t;
                                                 }
                                                 ?>
-                                            </th>
-                                            <th class="bdr-left cr-dr" valign="top"> Dr. Net Payment</th>
-                                        </tr>
+                                    </th>
+                                    <th class="bdr-left cr-dr" valign="top"> Dr. Net Payment</th>
+                                </tr>
                                     <?php } ?>
                                 <?php } ?>
                             </table>

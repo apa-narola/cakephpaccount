@@ -159,7 +159,7 @@
                                                 </td>
                                                 <td valign="top" align="left" class="remark">
                                                     &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
-                                                    , &nbsp;</td>
+                                                   </td>
                                             </tr>
                                             <tr>
                                                 <td  colspan="2" align="right">
@@ -221,7 +221,7 @@
                                                 </td>
                                                 <td valign="top" align="left" class="remark">
                                                     &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
-                                                    , &nbsp;</td>
+                                                    </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" align="right">
