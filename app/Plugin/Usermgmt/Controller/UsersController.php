@@ -446,7 +446,6 @@ class UsersController extends UserMgmtAppController {
 
 //            $userGroups[$this->UserAuth->getGroupId()] = $this->UserAuth->getGroupName();
 
-            $this->set(compact('userGroups', 'userSubGroups'));
 
             if ($this->request->isPut()) {
                 $this->User->set($this->data);
@@ -464,6 +463,13 @@ class UsersController extends UserMgmtAppController {
                     $this->request->data = $user;
                 }
             }
+
+            if ($this->UserAuth->isAdmin())
+                $users = $this->User->find('list', array("fields" => array("id", "first_name")));
+            else
+                $users = $this->User->find('list', array("fields" => array("id", "first_name"), "conditions" => array("user_group_id" => REFERENCE_GROUP_ID)));
+            $users[0] = "No Reference";
+            $this->set(compact('userGroups', 'userSubGroups', "users"));
         } else {
             $this->redirect('/allUsers');
         }
@@ -806,7 +812,7 @@ class UsersController extends UserMgmtAppController {
             }
             $this->request->data["User"]["search_text"] = $search_text;
 
-            $users = $this->User->find("all", array("conditions" => $conditions));
+            $users = $this->User->find("all", array("conditions" => $conditions,'order' => 'User.first_name asc'));
 
             $this->set(compact("user", "userId", "users"));
         } else {

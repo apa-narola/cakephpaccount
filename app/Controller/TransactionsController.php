@@ -255,7 +255,7 @@ class TransactionsController extends AppController
         $this->set(compact('transactions', "payment_total", "receipt_total"));
         $fullname = "NA";
         if (isset($transactionUser["User"]["first_name"])){
-            $fullname = $transactionUser["User"]["first_name"] . " " . $transactionUser["User"]["last_name"];
+            $fullname = $transactionUser["User"]["first_name"]." " .$transactionUser["User"]["middle_name"] ." " . $transactionUser["User"]["last_name"];
 			$fullname .= $type == 'T' ? "" : " - Interests";
 			}
 
@@ -520,6 +520,8 @@ class TransactionsController extends AppController
         /*
          * Export to excel - php
          */
+        //http://w3lessons.info/2015/07/13/export-html-table-to-excel-csv-json-pdf-png-using-jquery/ 
+        //html contain export in excel(upper link)
         // http://www.codexworld.com/export-data-to-excel-in-php/
         $preparedArray = array();
         if (!empty($data)) {
@@ -625,7 +627,7 @@ class TransactionsController extends AppController
 
 
         if (!empty($signleTransaction["Transaction"]["remarks"]))
-            $string .= ", " . $signleTransaction["Transaction"]["remarks"];
+            $string .= ", " . strip_tags($signleTransaction["Transaction"]["remarks"]);
 
         if (!empty($signleTransaction["Transaction"]["transaction_date"]))
             $string .= ", " . date("d-m-Y", strtotime($signleTransaction["Transaction"]["transaction_date"]));

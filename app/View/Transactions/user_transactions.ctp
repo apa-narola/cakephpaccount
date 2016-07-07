@@ -137,7 +137,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-lg-5">
-                        Transactions
+                        Transactions 
                     </div>
                     <div class="col-lg-7">
                         <h3>

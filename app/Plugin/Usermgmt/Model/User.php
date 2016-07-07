@@ -22,6 +22,7 @@ App::uses('UserMgmtAppModel', 'Usermgmt.Model');
 App::uses('CakeEmail', 'Network/Email');
 
 class User extends UserMgmtAppModel {
+    public $actsAs = array('Containable');
 
     /**
      * This model belongs to following models
@@ -41,7 +42,7 @@ class User extends UserMgmtAppModel {
      */
     var $hasMany = array('LoginToken' => array('className' => 'Usermgmt.LoginToken', 'limit' => 1), 
         "Transaction" => array('className' => 'Transaction'),
-        "PendingTransaction" => array(
+        "PaymentTransaction" => array(
             'className' => 'Transaction',
             'conditions' => array('transaction_type'=>"Payment","is_interest"=>0)
             ),

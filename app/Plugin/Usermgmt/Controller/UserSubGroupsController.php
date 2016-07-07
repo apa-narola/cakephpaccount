@@ -1,26 +1,27 @@
 <?php
+
 /*
-	This file is part of UserMgmt.
+  This file is part of UserMgmt.
 
-	Author: Chetan Varshney (http://ektasoftwares.com)
+  Author: Chetan Varshney (http://ektasoftwares.com)
 
-	UserMgmt is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
+  UserMgmt is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-	UserMgmt is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+  UserMgmt is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-*/
+  You should have received a copy of the GNU General Public License
+  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
 App::uses('UserMgmtAppController', 'Usermgmt.Controller');
 
-class UserSubGroupsController extends UserMgmtAppController
-{
+class UserSubGroupsController extends UserMgmtAppController {
+
     public $uses = array('Usermgmt.UserSubGroup', 'Usermgmt.User');
 
     /**
@@ -29,11 +30,10 @@ class UserSubGroupsController extends UserMgmtAppController
      * @access public
      * @return array
      */
-    public function index()
-    {
-        /*$this->UserSubGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
-        $userGroups=$this->UserSubGroup->find('all', array('order'=>'UserSubGroup.id'));
-        $this->set('userGroups', $userGroups);*/
+    public function index() {
+        /* $this->UserSubGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
+          $userGroups=$this->UserSubGroup->find('all', array('order'=>'UserSubGroup.id'));
+          $this->set('userGroups', $userGroups); */
 
         $conditions = array();
         if (!empty($this->request->data["UserSubGroup"]["search_text"])) {
@@ -60,8 +60,7 @@ class UserSubGroupsController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function addSubGroup()
-    {
+    public function addSubGroup() {
         if ($this->request->isPost()) {
 
             if (!$this->UserAuth->isAdmin()) {
@@ -85,8 +84,7 @@ class UserSubGroupsController extends UserMgmtAppController
      * @param integer $groupId group id
      * @return void
      */
-    public function editSubGroup($groupId = null)
-    {
+    public function editSubGroup($groupId = null) {
         if (!empty($groupId)) {
             if ($this->request->isPut()) {
                 $this->UserSubGroup->set($this->data);
@@ -110,8 +108,7 @@ class UserSubGroupsController extends UserMgmtAppController
      * @param integer $userId group id
      * @return void
      */
-    public function deleteSubGroup($groupId = null)
-    {
+    public function deleteSubGroup($groupId = null) {
         if (!empty($groupId)) {
             if ($this->request->isPost()) {
                 $users = $this->User->isUserAssociatedWithGroup($groupId);
@@ -129,27 +126,26 @@ class UserSubGroupsController extends UserMgmtAppController
         }
     }
 
-    public function subGroupUsers($subGroupId = null)
-    {
+    public function subGroupUsers($subGroupId = null) {
         if (!empty($subGroupId)) {
 
-            $conditions = array("User.user_sub_group_id"=>$subGroupId);
+            $conditions = array("User.user_sub_group_id" => $subGroupId);
             $search_text = null;
-            if(!empty($this->request->data["UserSubGroup"]["search_text"])) {
+            if (!empty($this->request->data["UserSubGroup"]["search_text"])) {
                 $search_text = $this->request->data["UserSubGroup"]["search_text"];
                 $conditions[] = array(
                     "OR" => array(
                         "User.first_name LIKE '%" . $this->request->data["UserSubGroup"]["search_text"] . "%'",
                         "User.middle_name LIKE '%" . $this->request->data["UserSubGroup"]["search_text"] . "%'",
                         "User.last_name LIKE '%" . $this->request->data["UserSubGroup"]["search_text"] . "%'",
-                        //"UserSubGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    //"UserSubGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
                     )
                 );
             }
 
-            if(!$this->UserAuth->isAdmin()) {
-               // $conditions[] = array("User.user_group_id NOT IN" => array(1, 4));
-            //    $conditions[] = array("User.user_group_id " => $groupId);
+            if (!$this->UserAuth->isAdmin()) {
+                // $conditions[] = array("User.user_group_id NOT IN" => array(1, 4));
+                //    $conditions[] = array("User.user_group_id " => $groupId);
             }
 //            echo $this->request->data["UserSubGroup"]["search_text"];exit;
             //$this->UserSubGroup->unbindModel(array('hasMany' => array('UserGroupPermission','User')));
@@ -161,15 +157,15 @@ class UserSubGroupsController extends UserMgmtAppController
             }
             $this->request->data["UserSubGroup"]["search_text"] = $search_text;
             //$this->UserSubGroup->unbindModel(array('hasMany' => array('UserGroupPermission')));
-
             //$group = $this->UserSubGroup->findById($groupId);
-            $users = $this->User->find("all",array("conditions" => $conditions));
+            $users = $this->User->find("all", array("conditions" => $conditions, 'order' => 'User.first_name asc'));
             //pr($users,1);
 
-            $this->set(compact("subGroup","subGroupId","users"));
+            $this->set(compact("subGroup", "subGroupId", "users"));
             //$this->redirect('/allSubGroups');
         } else {
             $this->redirect('/allSubGroups');
         }
     }
+
 }

@@ -86,7 +86,7 @@
                                                                             data-toggle="modal"
                                                                             data-target="#addNewPartyModal"></i></a>-->
                         <input id="referenceName" type="text" class="typeahead tt-query form-control" autocomplete="off"
-                               spellcheck="false" placeholder="Type reference party name" required>
+                               spellcheck="false" placeholder="Type reference party name">
                 <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
                 <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>               
                     </div>

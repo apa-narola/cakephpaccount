@@ -67,18 +67,35 @@ class PagesController extends AppController {
     }
 
     public function ledger() {
-        $users = $this->User->find('all', array(
-            "conditions" => array(
-                "User.user_group_id <>" => 1,
-//                "PendingTransaction.0.transaction_date >=" => "2015-09-25 00:00:00"//
-            ),
-        ));
-//        pr($users);
-        $data = array();
+        $conditions = [];
+        $conditions["User.user_group_id <>"] = 1;
+       // $conditions["User.id"] = 2;
+        if (!empty($this->request->data["Transaction"]["transaction_from"]) ||
+                !empty($this->request->data["Transaction"]["transaction_to"])) {
+            $conditionsFilter = [];
+            $conditionsFilter["transaction_date >="] = $this->getDBDate($this->request->data["Transaction"]["transaction_from"]);
+            $conditionsFilter["transaction_date <="] = $this->getDBDate($this->request->data["Transaction"]["transaction_to"]);
+            $paymentArr = array('transaction_type' => "Payment", "is_interest" => 0);
+            $receiptArr = array('transaction_type' => "Receipt", "is_interest" => 0);
+
+
+            $users = $this->User->find('all', array("conditions" => $conditions,
+                'contain' => array(
+                    'PaymentTransaction' => array(
+                        'conditions' => array_merge($conditionsFilter, $paymentArr),
+                    ),
+                    'ReceiptTransaction' => array(
+                        'conditions' => array_merge($conditionsFilter, $receiptArr),
+                    )
+                )
+                    )
+            );
+        } else {
+            $users = $this->User->find('all', array("conditions" => $conditions));
+        }
         if (!empty($users)) {
-//            pr($users);
             foreach ($users as $u_key => $u_value) {
-                $total_payment = $this->getTotalAmountTransaction($u_value["PendingTransaction"]);
+                $total_payment = $this->getTotalAmountTransaction($u_value["PaymentTransaction"]);
                 $total_receipt = $this->getTotalAmountTransaction($u_value["ReceiptTransaction"]);
                 $arr = array();
                 $arr["id"] = $u_value["User"]["id"];
@@ -94,7 +111,6 @@ class PagesController extends AppController {
                 $data[] = $arr;
             }
         }
-        //pr($data);
         $this->set(compact("data"));
     }
 
@@ -167,12 +183,18 @@ class PagesController extends AppController {
             )
         ));
         // Format the result for select2
-        $result = array();
+        $result = array(
+            array("id" => 0,
+                "username" => "No Reference"
+            )
+        );
         foreach ($users as $key => $user) {
             $tmp = array("id" => $user['User']['id'], "username" => $user['User']['first_name'] . " " . $user['User']['middle_name'] . " " . $user['User']['last_name']);
             array_push($result, $tmp);
         }
+
         $users = $result;
+        // pr($users);
 
         echo json_encode($users);
         exit;

@@ -165,7 +165,7 @@ class UserGroupsController extends UserMgmtAppController
             //$this->UserGroup->unbindModel(array('hasMany' => array('UserGroupPermission')));
 
             //$group = $this->UserGroup->findById($groupId);
-            $users = $this->User->find("all",array("conditions" => $conditions));
+            $users = $this->User->find("all",array("conditions" => $conditions,'order' => 'User.first_name asc'));
             //pr($users,1);
 
             $this->set(compact("group","groupId","users"));
