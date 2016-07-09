@@ -116,14 +116,14 @@
                                         echo "Inactive";
                                     }
                                     echo "</td>";
-                                    echo "<td>" . date('d-M-Y', strtotime($row['User']['created'])) . "</td>";
+                                    echo "<td >" . date('d-M-Y', strtotime($row['User']['created'])) . "</td>";
                                 }
                                 echo "<td>";
                                 if ($this->UserAuth->isAdmin()) {
                                     echo "<a href='" . $this->Html->url('/viewUser/' . $row['User']['id']) . "'><i class='fa fa-eye' title='View'></i></a>";
                                     echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='" . $this->Html->url('/changeUserPassword/' . $row['User']['id']) . "'><i class='fa fa-unlock' title='Change password'></i></a>";
                                     if ($row['User']['active'] != 0) {
-                                        echo "&nbsp;&nbsp;&nbsp;&nbsp;;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
+                                        echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='" . $this->Html->url('/usermgmt/users/makeActiveInactive/' . $row['User']['id'] . '/0') . "'><i class='fa fa-times' title='Make Inactive'></i></a>";
                                     }
                                 }
                                 echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='" . $this->Html->url('/editUser/' . $row['User']['id']) . "'><i class='fa fa-pencil-square-o' title='Edit'></i></a>";

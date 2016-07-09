@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       app.View.Layouts
@@ -10,68 +9,68 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
 
 <?php if (!$this->UserAuth->isLogged()) { ?>
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-    <head>
+        <head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
 
-        <title>Login</title>
+            <title>Login</title>
 
             <?php echo $this->Html->css('style'); ?>
-        <!-- Bootstrap Core CSS -->
+            <!-- Bootstrap Core CSS -->
             <?php echo $this->Html->css('/sb-admin/css/bootstrap.min'); ?>
-        <!-- Custom CSS -->    
+            <!-- Custom CSS -->    
             <?php echo $this->Html->css('/sb-admin/css/sb-admin-2'); ?>
-        <!-- Custom Fonts -->
-            <?php //echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min'); ?>
+            <!-- Custom Fonts -->
+            <?php //echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min');  ?>
             <?php echo $this->Html->css('/sb-admin/font-awesome-4.6.2/css/font-awesome.min.css'); ?>
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-<!--                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
-            <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
-        <![endif]-->
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+    <!--                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+                <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+            <![endif]-->
 
-    </head>
+        </head>
 
-    <body>
+        <body>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
                         <?php echo $this->Session->flash(); ?>
                         <?php echo $this->fetch('content'); ?>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- jQuery -->
+            <!-- jQuery -->
             <?php echo $this->Html->script('/sb-admin/js/jquery.js'); ?>
-        <!-- Bootstrap Core JavaScript -->
+            <!-- Bootstrap Core JavaScript -->
             <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
 
             <?php echo $this->Html->script('/js/common.js'); ?>
 
-    </body>
+        </body>
 
-</html>
+    </html>
 
 <?php } else { ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
             <?php echo $this->Html->charset(); ?>
-        <title>
+            <title>
                 <?php echo $cakeDescription ?>:
                 <?php echo $this->fetch('title'); ?>
-        </title>
+            </title>
             <?php
             echo $this->Html->meta('icon');
             //echo $this->Html->css('cake.generic');
@@ -81,39 +80,39 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
             echo $this->fetch('css');
             echo $this->fetch('script');
             ?>
-        <script type="text/javascript">
-            var site_url = "<?php echo $this->Html->url('/', true);?>";
-        </script>
+            <script type="text/javascript">
+                var site_url = "<?php echo $this->Html->url('/', true); ?>";
+            </script>
             <?php
             // below jquery1.11 is required for bootstrap datepicker
             echo $this->Html->script('jquery-1.11.3.min.js');
             ?>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <!-- Bootstrap Core CSS -->
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
+            <!-- Bootstrap Core CSS -->
             <?php echo $this->Html->css('/sb-admin/css/bootstrap.min'); ?>
-        <!-- Custom CSS -->    
+            <!-- Custom CSS -->    
             <?php echo $this->Html->css('/sb-admin/css/sb-admin'); ?>
-        <!-- Custom Fonts -->
-            <?php // echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min'); ?>
+            <!-- Custom Fonts -->
+            <?php // echo $this->Html->css('/sb-admin/font-awesome/css/font-awesome.min');  ?>
             <?php echo $this->Html->css('/sb-admin/font-awesome-4.6.2/css/font-awesome.min.css'); ?>
-        <!-- Bootstrap datepicker -->
+            <!-- Bootstrap datepicker -->
             <?php echo $this->Html->css('bootstrap-datepicker3.css'); ?>
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
-<!--                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
-        <![endif]-->
-        <script type="text/javascript">
-            var DATE_FORMAT = '<?php echo Configure::read('App.DATE_FORMAT');?>'
-            var DATE_FORMAT_JS = '<?php echo Configure::read('App.DATE_FORMAT_JS');?>'
-            var DATE_FORMAT_MASK = '<?php echo Configure::read('App.DATE_FORMAT_MASK');?>'
-        </script>
-    </head>
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+                <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+    <!--                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+            <![endif]-->
+            <script type="text/javascript">
+                var DATE_FORMAT = '<?php echo Configure::read('App.DATE_FORMAT'); ?>'
+                var DATE_FORMAT_JS = '<?php echo Configure::read('App.DATE_FORMAT_JS'); ?>'
+                var DATE_FORMAT_MASK = '<?php echo Configure::read('App.DATE_FORMAT_MASK'); ?>'
+            </script>
+        </head>
         <?php
         $controller = $this->params["controller"];
         $action = $this->params["action"];
@@ -132,6 +131,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
         $cls_list_permissions = null;
         $cls_ledger = null;
         $cls_list_interest = null;
+        $cls_list_allTrans = null;
+        $type=null;
         switch ($controller) {
             case "transactions":
                 switch ($action) {
@@ -139,11 +140,13 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                         $cls_add_trans = "class='active'";
                         break;
                     case "index":
-                    $type = $this->params["named"]["type"];
-                        if($type == "T")
-                        $cls_list_trans = "class='active'";
-                        else
-                        $cls_list_interest = "class='active'";
+                        $type = $this->params["named"]["type"] ? $this->params["named"]["type"] : NULL;
+                        if ($type == "T")
+                            $cls_list_trans = "class='active'";
+                        else if ($type == "I")
+                            $cls_list_interest = "class='active'";
+                        else if ($type == "A")
+                            $cls_list_allTrans = "class='active'";
                         break;
 
                     default:
@@ -219,194 +222,197 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                 break;
         }
         ?>
-    <body>
+        <body>
 
-        <div id="wrapper">
+            <div id="wrapper">
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home"></i>
-                            Home
-                            <b class="caret"></b>
-                        </a>
+                <!-- Navigation -->
+                <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home"></i>
+                                Home
+                                <b class="caret"></b>
+                            </a>
 
-                        <ul class="dropdown-menu">
-                            <li <?php echo $cls_dashboard_users; ?>>
-                                <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                            </li>
-                            <li <?php echo $cls_ledger;?>>
-                                <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-align-justify"></i> Ledger</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li <?php echo $cls_add_trans; ?>>
-                        <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Data Entry</a>
-                    </li>                                                                                       
+                            <ul class="dropdown-menu">
+                                <li <?php echo $cls_dashboard_users; ?>>
+                                    <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                                </li>
+                                <li <?php echo $cls_ledger; ?>>
+                                    <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-align-justify"></i> Ledger</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li <?php echo $cls_add_trans; ?>>
+                            <a href="<?php echo $this->webroot ?>transactions/add"><i class="fa fa-fw fa-file"></i> Data Entry</a>
+                        </li>                                                                                       
 
-                    <li <?php echo $cls_list_trans; ?>>
-                        <a href="<?php echo $this->webroot ?>transactions/index/type:T"><i class="fa fa-fw fa-money"></i> Transactions</a>
-                    </li>
+                        <li <?php echo $cls_list_trans; ?>>
+                            <a href="<?php echo $this->webroot ?>transactions/index/type:T"><i class="fa fa-fw fa-money"></i> Transactions</a>
+                        </li>
 
-                    <li <?php echo $cls_list_interest; ?>>
-                        <a href="<?php echo $this->webroot ?>transactions/index/type:I"><i class="fa fa-fw fa-percent"></i> Interests</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
-                            Party
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li <?php echo $cls_add_user; ?>>
-                                <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-plus-circle"></i> Add Party</a>
-                            </li>
-                            <li <?php echo $cls_list_users; ?>>
-                                <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>
-                            Group
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li <?php echo $cls_add_group; ?>>
-                                <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-plus"></i> Add Group</a>
-                            </li>
-                            <li <?php echo $cls_list_groups; ?>>
-                                <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li <?php echo $cls_add_sub_group; ?>>
-                                <a href="<?php echo $this->webroot ?>addSubGroup"><i class="fa fa-fw fa-plus"></i> Add Sub Group</a>
-                            </li>
-                            <li <?php echo $cls_list_sub_groups; ?>>
-                                <a href="<?php echo $this->webroot ?>allSubGroups"><i class="fa fa-fw fa-futbol-o"></i> Sub Groups</a>
-                            </li>
+                        <li <?php echo $cls_list_interest; ?>>
+                            <a href="<?php echo $this->webroot ?>transactions/index/type:I"><i class="fa fa-fw fa-percent"></i> Interests</a>
+                        </li>
+                        <li <?php echo $cls_list_allTrans; ?>>
+                            <a href="<?php echo $this->webroot ?>transactions/index/type:A"><i class="fa fa-fw fa-money"></i> All Transactions </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                                Party
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li <?php echo $cls_add_user; ?>>
+                                    <a href="<?php echo $this->webroot ?>addUser"><i class="fa fa-plus-circle"></i> Add Party</a>
+                                </li>
+                                <li <?php echo $cls_list_users; ?>>
+                                    <a href="<?php echo $this->webroot ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>
+                                Group
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li <?php echo $cls_add_group; ?>>
+                                    <a href="<?php echo $this->webroot ?>addGroup"><i class="fa fa-fw fa-plus"></i> Add Group</a>
+                                </li>
+                                <li <?php echo $cls_list_groups; ?>>
+                                    <a href="<?php echo $this->webroot ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li <?php echo $cls_add_sub_group; ?>>
+                                    <a href="<?php echo $this->webroot ?>addSubGroup"><i class="fa fa-fw fa-plus"></i> Add Sub Group</a>
+                                </li>
+                                <li <?php echo $cls_list_sub_groups; ?>>
+                                    <a href="<?php echo $this->webroot ?>allSubGroups"><i class="fa fa-fw fa-futbol-o"></i> Sub Groups</a>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
-                            Reference
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li <?php echo $cls_add_reference; ?>>
-                                <a href="<?php echo $this->webroot ?>addReference"><i class="fa fa-plus-circle"></i> Add Reference</a>
-                            </li>
-                            <li <?php echo $cls_list_references; ?>>
-                                <a href="<?php echo $this->webroot ?>allReferences"><i class="fa fa-fw fa-users"></i> References</a>
-                            </li>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                                Reference
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li <?php echo $cls_add_reference; ?>>
+                                    <a href="<?php echo $this->webroot ?>addReference"><i class="fa fa-plus-circle"></i> Add Reference</a>
+                                </li>
+                                <li <?php echo $cls_list_references; ?>>
+                                    <a href="<?php echo $this->webroot ?>allReferences"><i class="fa fa-fw fa-users"></i> References</a>
+                                </li>
+                            </ul>
+                        </li>
                         <?php if ($this->UserAuth->isAdmin()) { ?>
-                    <li <?php echo $cls_list_permissions; ?>>
-                        <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
-                    </li>
+                            <li <?php echo $cls_list_permissions; ?>>
+                                <a href="<?php echo $this->webroot ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                            </li>
                         <?php } ?>
 
 
-                </ul>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <!--                    <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                                            <ul class="dropdown-menu message-dropdown">
-                                                <li class="message-preview">
-                                                    <a href="#">
-                                                        <div class="media">
-                                                            <span class="pull-left">
-                                                                <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                                            </span>
-                                                            <div class="media-body">
-                                                                <h5 class="media-heading">
-                                                                    <strong>John Smith</strong>
-                                                                </h5>
-                                                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                    </ul>
+                    <!-- Top Menu Items -->
+                    <ul class="nav navbar-right top-nav">
+                        <!--                    <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                                                <ul class="dropdown-menu message-dropdown">
+                                                    <li class="message-preview">
+                                                        <a href="#">
+                                                            <div class="media">
+                                                                <span class="pull-left">
+                                                                    <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                                                </span>
+                                                                <div class="media-body">
+                                                                    <h5 class="media-heading">
+                                                                        <strong>John Smith</strong>
+                                                                    </h5>
+                                                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="message-preview">
-                                                    <a href="#">
-                                                        <div class="media">
-                                                            <span class="pull-left">
-                                                                <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                                            </span>
-                                                            <div class="media-body">
-                                                                <h5 class="media-heading">
-                                                                    <strong>John Smith</strong>
-                                                                </h5>
-                                                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                                        </a>
+                                                    </li>
+                                                    <li class="message-preview">
+                                                        <a href="#">
+                                                            <div class="media">
+                                                                <span class="pull-left">
+                                                                    <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                                                </span>
+                                                                <div class="media-body">
+                                                                    <h5 class="media-heading">
+                                                                        <strong>John Smith</strong>
+                                                                    </h5>
+                                                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="message-preview">
-                                                    <a href="#">
-                                                        <div class="media">
-                                                            <span class="pull-left">
-                                                                <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                                            </span>
-                                                            <div class="media-body">
-                                                                <h5 class="media-heading">
-                                                                    <strong>John Smith</strong>
-                                                                </h5>
-                                                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                                        </a>
+                                                    </li>
+                                                    <li class="message-preview">
+                                                        <a href="#">
+                                                            <div class="media">
+                                                                <span class="pull-left">
+                                                                    <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                                                </span>
+                                                                <div class="media-body">
+                                                                    <h5 class="media-heading">
+                                                                        <strong>John Smith</strong>
+                                                                    </h5>
+                                                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="message-footer">
-                                                    <a href="#">Read All New Messages</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                                            <ul class="dropdown-menu alert-dropdown">
-                                                <li>
-                                                    <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a href="#">View All</a>
-                                                </li>
-                                            </ul>
-                                        </li>-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
+                                                        </a>
+                                                    </li>
+                                                    <li class="message-footer">
+                                                        <a href="#">Read All New Messages</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                                                <ul class="dropdown-menu alert-dropdown">
+                                                    <li>
+                                                        <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li>
+                                                        <a href="#">View All</a>
+                                                    </li>
+                                                </ul>
+                                            </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
                                 <?php
                                 $loginUser = $this->UserAuth->getUser();
                                 if ($this->UserAuth->isLogged())
@@ -414,94 +420,94 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                                 else
                                     echo "Guest";
                                 ?>                            
-                            <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="<?php echo $this->webroot; ?>myprofile"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>                            
-                            <li>
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?php echo $this->webroot; ?>myprofile"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                </li>                            
+                                <li>
                                     <?php echo $this->Html->link(__("<i class=\"fa fa-fw fa-gear\"></i> Settings", true), "/editUser/" . $this->UserAuth->getUserId(), array('escape' => false)) ?>
-                                <!--<a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>-->
-                            </li>                            
-                            <li class="divider"></li>
-                            <li>
-                                <a href="<?php echo $this->webroot; ?>changePassword"><i class="fa fa-fw fa-envelope"></i> Change password</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $this->webroot; ?>logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <!-- <ul class="nav navbar-nav side-nav">
-                         <li <?php /*echo $cls_dashboard_users; */?>>
-                             <a href="<?php /*echo $this->webroot */?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                         </li>
-                         <li <?php /*echo $cls_ledger;*/?>>
-                             <a href="<?php /*echo $this->webroot */?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
-                         </li>
-            <li <?php /*echo $cls_add_trans; */?>>
-                             <a href="<?php /*echo $this->webroot */?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
-                         </li>
-                         <li <?php /*echo $cls_list_trans; */?>>
-                             <a href="<?php /*echo $this->webroot */?>transactions/index/T"><i class="fa fa-fw fa-money"></i> Transactions</a>
-                         </li>
-                         <li <?php /*echo $cls_list_interest; */?>>
-                             <a href="<?php /*echo $this->webroot */?>transactions/index/I"><i class="fa fa-fw fa-money"></i> Interests</a>
-                         </li>
-                         <li <?php /*echo $cls_add_user; */?>>
-                             <a href="<?php /*echo $this->webroot */?>addUser"><i class="fa fa-users"></i> Add Party</a>
-                         </li>
-                         <li <?php /*echo $cls_list_users; */?>>
-                             <a href="<?php /*echo $this->webroot */?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
-                         </li>
-                            <?php /*if ($this->UserAuth->isAdmin()) { */?>
-                             <li <?php /*echo $cls_add_group; */?>>
-                                 <a href="<?php /*echo $this->webroot */?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
+                                    <!--<a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>-->
+                                </li>                            
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="<?php echo $this->webroot; ?>changePassword"><i class="fa fa-fw fa-envelope"></i> Change password</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->webroot; ?>logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <!-- <ul class="nav navbar-nav side-nav">
+                             <li <?php /* echo $cls_dashboard_users; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                              </li>
-                             <li <?php /*echo $cls_list_groups; */?>>
-                                 <a href="<?php /*echo $this->webroot */?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                             <li <?php /* echo $cls_ledger; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>ledger"><i class="fa fa-fw fa-dashboard"></i> Ledger</a>
                              </li>
-                             <li <?php /*echo $cls_list_permissions; */?>>
-                                 <a href="<?php /*echo $this->webroot */?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                <li <?php /* echo $cls_add_trans; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>transactions/add"><i class="fa fa-fw fa-file"></i> Add Transaction</a>
                              </li>
-                            <?php /*} */?>
-                         <li>
-                             <a href="<?php /*echo $this->webroot */?>logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
-                         </li>
-                     </ul>-->
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
+                             <li <?php /* echo $cls_list_trans; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>transactions/index/T"><i class="fa fa-fw fa-money"></i> Transactions</a>
+                             </li>
+                             <li <?php /* echo $cls_list_interest; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>transactions/index/I"><i class="fa fa-fw fa-money"></i> Interests</a>
+                             </li>
+                             <li <?php /* echo $cls_add_user; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>addUser"><i class="fa fa-users"></i> Add Party</a>
+                             </li>
+                             <li <?php /* echo $cls_list_users; */ ?>>
+                                 <a href="<?php /* echo $this->webroot */ ?>allUsers"><i class="fa fa-fw fa-users"></i> Parties</a>
+                             </li>
+                        <?php /* if ($this->UserAuth->isAdmin()) { */ ?>
+                                 <li <?php /* echo $cls_add_group; */ ?>>
+                                     <a href="<?php /* echo $this->webroot */ ?>addGroup"><i class="fa fa-fw fa-group"></i> Add Group</a>
+                                 </li>
+                                 <li <?php /* echo $cls_list_groups; */ ?>>
+                                     <a href="<?php /* echo $this->webroot */ ?>allGroups"><i class="fa fa-fw fa-futbol-o"></i> Groups</a>
+                                 </li>
+                                 <li <?php /* echo $cls_list_permissions; */ ?>>
+                                     <a href="<?php /* echo $this->webroot */ ?>permissions"><i class="fa fa-fw fa-ban"></i> Permissions</a>
+                                 </li>
+                        <?php /* } */ ?>
+                             <li>
+                                 <a href="<?php /* echo $this->webroot */ ?>logout"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+                             </li>
+                         </ul>-->
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </nav>
 
-            <div id="page-wrapper">
+                <div id="page-wrapper">
 
-                <div class="container-fluid">
+                    <div class="container-fluid">
                         <?php echo $this->Session->flash(); ?>
 
                         <?php echo $this->fetch('content'); ?>
+                    </div>
+                    <!-- /.container-fluid -->
+
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /#page-wrapper -->
 
             </div>
-            <!-- /#page-wrapper -->
+            <!-- /#wrapper -->
 
-        </div>
-        <!-- /#wrapper -->
+            <!-- jQuery -->
 
-        <!-- jQuery -->
-
-            <?php //echo $this->Html->script('/sb-admin/js/jquery.js');  // it conflicts with mask input js?>
-        <!-- Bootstrap Core JavaScript -->
+            <?php //echo $this->Html->script('/sb-admin/js/jquery.js');  // it conflicts with mask input js ?>
+            <!-- Bootstrap Core JavaScript -->
             <?php echo $this->Html->script('/sb-admin/js/bootstrap.min.js'); ?>
 
             <?php echo $this->Html->script('/js/common.js'); ?>
 
-            <?php // echo $this->element('sql_dump'); ?>
-    </body>
+            <?php // echo $this->element('sql_dump');  ?>
+        </body>
 
-</html>
+    </html>
 
 <?php } ?>

@@ -54,7 +54,7 @@ $this->pdf->core->AddPage();
  */
 
 $html = '<table width="100%" border="1"  cellspacing="0" cellpadding="0">
-<tr><td style="width:50%"><h3>Receipt</h3></td><td style="width:50%"><h3>Payment</h3></td></tr>
+<tr><td style="width:50%"><h3>&nbsp;&nbsp;Receipt</h3></td><td style="width:50%"><h3>&nbsp;&nbsp;Payment</h3></td></tr>
 <tr>
 <td valign="top">
 <table width="100%" cellspacing="0" cellpadding="2">
@@ -133,12 +133,12 @@ if (!empty($transactions)) {
     </tr>';
     if ($receipt_total[0]["total"] > $payment_total[0]["total"]) {
         $html .= '<tr>
-        <th style="width:14%;border-top:5px double #333;border-bottom:4px double #333;border-right:1px solid #333;text-align: right;">';
+        <th style="width:14%;border-top:4px double #333;border-bottom:4px double #333;border-right:1px solid #333;text-align: right;">';
         $rt = $receipt_total[0]["total"] - $payment_total[0]["total"];
         if (!empty($rt))
             $html .= $this->requestAction('App/moneyFormatIndia/' . $rt);
         $html .= '</th>
-        <th style="width:86%;border-top:5px double #333;border-bottom:4px double #333;text-align: left;">
+        <th style="width:86%;border-top:4px double #333;border-bottom:4px double #333;text-align: left;">
         Cr. Net Receipt
         </th>
     </tr>';
@@ -150,10 +150,10 @@ $html .= '</table>
 <table width="100%" cellspacing="0" cellpadding="2">';
 if (!empty($transactions)) {
     $html .= '<tr>
-        <th style="width:14%;border-right:1px solid #333;text-align: right;">';
+        <th style="width:14%;border-right:1px solid #333;border-bottom:1px solid #333;text-align: right;">';
     $html .= $this->requestAction('App/moneyFormatIndia/' . $payment_total[0]["total"]);
     $html .= '</th>
-        <th style="width:86%;border-right:1px solid #333;text-align: left;">
+        <th style="width:86%;border-right:1px solid #333;text-align: left;border-bottom: 1px solid #333;">
         Dr. Total Payment
         </th>
       
@@ -171,6 +171,7 @@ if (!empty($transactions)) {
        
     </tr>';
     }
+    
 }
 $html .= '</table>
 </td>
