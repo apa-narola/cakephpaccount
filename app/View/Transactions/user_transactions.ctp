@@ -136,10 +136,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-4">
                         Transactions 
                     </div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-8">
                         <h3>
 			<?php
             //echo __('Transactions for ');
@@ -194,9 +194,8 @@
                                             <tr>
                                                 <td valign="top" align="left" class="remark">
                                                     &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td align="right">
+                                            
+                                                <td align="right" width="16%">
 														<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $type, "user_id" => $user_id)); ?>
                                             <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],"type"=> $this->request->params["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id'])));
                                             ?>
@@ -250,9 +249,8 @@
                                                 <td valign="top" align="left" class="remark">
                                                     &nbsp; <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
                                                     </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="right">
+                                            
+                                                <td align="right" width="16%">
 														<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $type, "user_id" => $user_id)); ?>
                                             <?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $transaction['Transaction']['id'],$this->request->param["pass"][1]), array('confirm' => __('Are you sure you want to delete # %s?', $transaction['Transaction']['id'])));
                                             ?>

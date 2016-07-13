@@ -159,7 +159,7 @@
                                                         <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
                                                     </span>
                                                 </td>
-                                                <td align="right">
+                                                <td align="right" width="16%">
                                                     <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id']));
                                                     ?>
                                                     <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
@@ -218,7 +218,7 @@
                                                     <strong><?php echo h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']); ?></strong>,
                                                     <?php if (!empty($transaction['Transaction']['remarks'])) echo htmlspecialchars_decode(htmlspecialchars_decode($transaction['Transaction']['remarks'])); ?>
                                                 </td>
-                                                <td colspan="2" align="right">
+                                                <td align="right" width="16%">
                                                     <?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id']));
                                                     ?>
                                                     <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'], "type" => $this->params["named"]["type"])); ?>
