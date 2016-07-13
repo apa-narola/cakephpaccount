@@ -1,4 +1,4 @@
-<?php //echo $this->Html->css('style');                     ?>
+<?php //echo $this->Html->css('style');                                       ?>
 <!-- Bootstrap Core CSS -->
 <?php //echo $this->Html->css('/sb-admin/css/bootstrap.min'); ?>
 <!-- Custom CSS -->
@@ -63,7 +63,11 @@ $html = '<table width="100%" border="1"  cellspacing="0" cellpadding="0">
 foreach ($transactions as $transaction):
     if ($transaction['Transaction']['transaction_type'] != "Receipt")
         continue;
-    $html .= '<tr><td style="width:15%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
+    if ($transaction['Transaction']['is_hidden'] == 1) {
+        $html .= '<tr style="color:#e3e0e0;"><td style="width:15%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
+    } else {
+        $html .= '<tr><td style="width:15%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
+    }
     if (!empty($transaction['Transaction']['amount']))
         $html .= $this->requestAction('App/moneyFormatIndia/' . h($transaction['Transaction']['amount']));
 
@@ -95,7 +99,12 @@ $html .= '
 foreach ($transactions as $transaction):
     if ($transaction['Transaction']['transaction_type'] != "Payment")
         continue;
-    $html .= '<tr><td style="width:15%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
+
+    if ($transaction['Transaction']['is_hidden'] == 1) {
+        $html .= '<tr style="color:#e3e0e0;"><td style="width:15%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
+    } else {
+        $html .= '<tr><td style="width:15%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
+    }
     if (!empty($transaction['Transaction']['amount']))
         $html .= $this->requestAction('App/moneyFormatIndia/' . h($transaction['Transaction']['amount']));
     $html .= ' </td><td style="width:5%;border-right:1px solid #333;text-align: right;border-bottom: 1px solid #333;">';
@@ -118,13 +127,13 @@ $html .= '</tbody>
 </table>
 </td>
 </tr>
-<tr><td></td><td></td></tr>
+
 <tr>
 <td valign="top">
     <table width="100%" cellspacing="0" cellpadding="2">';
 if (!empty($transactions)) {
     $html .= '<tr>
-        <th style="width:14%;border-right:1px solid #333;border-bottom:1px solid #333;text-align: right;">';
+        <th style="width:13.8%;border-right:1px solid #333;border-bottom:1px solid #333;text-align: right;">';
     $html .= $this->requestAction('App/moneyFormatIndia/' . $receipt_total[0]["total"]);
     $html .= '</th>
         <th style="width:86%;border-bottom:1px solid #333;text-align: left;">
@@ -133,7 +142,7 @@ if (!empty($transactions)) {
     </tr>';
     if ($receipt_total[0]["total"] > $payment_total[0]["total"]) {
         $html .= '<tr>
-        <th style="width:14%;border-top:4px double #333;border-bottom:4px double #333;border-right:1px solid #333;text-align: right;">';
+        <th style="width:13.8%;border-top:4px double #333;border-bottom:4px double #333;border-right:1px solid #333;text-align: right;">';
         $rt = $receipt_total[0]["total"] - $payment_total[0]["total"];
         if (!empty($rt))
             $html .= $this->requestAction('App/moneyFormatIndia/' . $rt);
@@ -150,7 +159,7 @@ $html .= '</table>
 <table width="100%" cellspacing="0" cellpadding="2">';
 if (!empty($transactions)) {
     $html .= '<tr>
-        <th style="width:14%;border-right:1px solid #333;border-bottom:1px solid #333;text-align: right;">';
+        <th style="width:13.8%;border-right:1px solid #333;border-bottom:1px solid #333;text-align: right;">';
     $html .= $this->requestAction('App/moneyFormatIndia/' . $payment_total[0]["total"]);
     $html .= '</th>
         <th style="width:86%;border-right:1px solid #333;text-align: left;border-bottom: 1px solid #333;">
@@ -160,7 +169,7 @@ if (!empty($transactions)) {
     </tr>';
     if ($payment_total[0]["total"] > $receipt_total[0]["total"]) {
         $html .= '<tr>
-        <th style="width:14%;border-top:4px double #333;border-bottom:4px double #333;border-right:1px solid #333;text-align: right;">';
+        <th style="width:13.8%;border-top:4px double #333;border-bottom:4px double #333;border-right:1px solid #333;text-align: right;">';
         $pt = $payment_total[0]["total"] - $receipt_total[0]["total"];
         if (!empty($pt))
             $html .= $this->requestAction('App/moneyFormatIndia/' . $pt);
@@ -171,13 +180,13 @@ if (!empty($transactions)) {
        
     </tr>';
     }
-    
 }
 $html .= '</table>
 </td>
 </tr>
 </table>';
-//echo $html;exit;
+//echo $html;
+//exit;
 // output the HTML content
 $this->pdf->core->writeHTML($html, true, false, true, false, '');
 //ob_end_clean();
