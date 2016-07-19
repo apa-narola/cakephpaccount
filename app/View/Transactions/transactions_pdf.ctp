@@ -1,4 +1,4 @@
-<?php //echo $this->Html->css('style');                                       ?>
+<?php //echo $this->Html->css('style');                                                              ?>
 <!-- Bootstrap Core CSS -->
 <?php //echo $this->Html->css('/sb-admin/css/bootstrap.min'); ?>
 <!-- Custom CSS -->
@@ -53,14 +53,22 @@ $this->pdf->core->AddPage();
  * *********************************************************
  */
 
-$html = '<table width="100%" border="1"  cellspacing="0" cellpadding="0">
-<tr><td style="width:50%"><h3>&nbsp;&nbsp;Receipt</h3></td><td style="width:50%"><h3>&nbsp;&nbsp;Payment</h3></td></tr>
+$html = '<table width="100%" border="1"  cellspacing="0" cellpadding="0">';
+if ($is_user == 1) {
+    // echo $transactions[0]['User']['first_name'];
+    $html.='<tr><td colspan="2" style="width:100%;text-align:center;"><h3>';
+    $html .= h($transactions[0]['User']['first_name'] . " " . $transactions[0]['User']['last_name']);
+    $html.='</h3></td></tr>';
+}
+$html .='<tr><td style="width:50%"><h3>&nbsp;&nbsp;Receipt</h3></td><td style="width:50%"><h3>&nbsp;&nbsp;Payment</h3></td></tr>
 <tr>
 <td valign="top">
 <table width="100%" cellspacing="0" cellpadding="2">
                 <thead></thead><tbody>';
 
+
 foreach ($transactions as $transaction):
+
     if ($transaction['Transaction']['transaction_type'] != "Receipt")
         continue;
     if ($transaction['Transaction']['is_hidden'] == 1) {
@@ -76,12 +84,16 @@ foreach ($transactions as $transaction):
         $html .= h($transaction['Transaction']['short_notes']);
 
     $html .= ' </td>
-        <td style="width:65%;text-align: left;border-right: 1px solid #333;border-bottom: 1px solid #333;">
-
-                                ' . h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']);
+        <td style="width:65%;text-align: left;border-right: 1px solid #333;border-bottom: 1px solid #333;">';
+    if ($is_user == 0) {
+        $html .= h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']);
+    }
+    if ($is_user == 0 && !empty($transaction['Transaction']['remarks'])) {
+        $html.=", ";
+    }
     if (!empty($transaction['Transaction']['remarks'])) {
-        $remark = ", " . htmlspecialchars_decode($transaction['Transaction']['remarks']);
-        $html .= $remark . ", ";
+        $remark = htmlspecialchars_decode($transaction['Transaction']['remarks']);
+        $html .= $remark;
     }
     $html .= ' </td>';
     $html .= '<td style="width:15%;text-align: right;margin-right:5px;border-bottom: 1px solid #333;">';
@@ -111,8 +123,13 @@ foreach ($transactions as $transaction):
     if (!empty($transaction['Transaction']['short_notes']))
         $html .= h($transaction['Transaction']['short_notes']);
     $html .= ' </td>
-        <td style="width:65%;text-align: left;border-right: 1px solid #333;border-bottom: 1px solid #333;" nowrap>
-                                ' . h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']) . ',';
+        <td style="width:65%;text-align: left;border-right: 1px solid #333;border-bottom: 1px solid #333;" nowrap>';
+    if ($is_user == 0) {
+        $html .= h($transaction['User']['first_name'] . " " . $transaction['User']['last_name']);
+    }
+    if ($is_user == 0 && !empty($transaction['Transaction']['remarks'])) {
+        $html.=", ";
+    }
     if (!empty($transaction['Transaction']['remarks'])) {
         $remark = htmlspecialchars_decode($transaction['Transaction']['remarks']);
         $html .= $remark;

@@ -101,6 +101,21 @@ class UserSubGroupsController extends UserMgmtAppController {
         }
     }
 
+    public function deletePartyFromSubgroup($userId = null) {
+        if (!empty($userId)) {
+            $user = $this->User->read(null, $userId);
+            if (!empty($user)) {
+                $userSubGroupId = $user['User']['user_sub_group_id'];
+                $this->request->data['User']['user_sub_group_id'] = 0;
+                $this->User->save($this->request->data, false);
+                $this->Session->setFlash(__('Party has been deleted successfully.'));
+            }
+        } else {
+            $this->Session->setFlash(__('Sorry something went wrong, party has been delete successfully.'));
+        }
+        $this->redirect('/subGroupUsers/' . $userSubGroupId);
+    }
+
     /**
      * Used to delete group on the site by Admin
      *
@@ -108,16 +123,17 @@ class UserSubGroupsController extends UserMgmtAppController {
      * @param integer $userId group id
      * @return void
      */
-    public function deleteSubGroup($groupId = null) {
-        if (!empty($groupId)) {
+    public function deleteSubGroup($subGroupId = null) {
+        if (!empty($subGroupId)) {
             if ($this->request->isPost()) {
-                $users = $this->User->isUserAssociatedWithGroup($groupId);
-                if ($users) {
+                $users = $this->User->isUserAssociatedWithSubGroup($subGroupId);
+                if ($users == 1) {
                     $this->Session->setFlash(__('Sorry some users are associated with this group, You cannot delete'));
                     $this->redirect('/allSubGroups');
-                }
-                if ($this->UserSubGroup->delete($groupId, false)) {
-                    $this->Session->setFlash(__('Sub Group is successfully deleted'));
+                } else {
+                    if ($this->UserSubGroup->delete($subGroupId, false)) {
+                        $this->Session->setFlash(__('Sub Group is successfully deleted'));
+                    }
                 }
             }
             $this->redirect('/allSubGroups');

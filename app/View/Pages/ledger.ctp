@@ -110,15 +110,21 @@
                     <?php
                     $grand_total_payment = 0;
                     $grand_total_receipt = 0;
+                    $grand_total_balance_receipt=0;
                     foreach ($data as $d_key => $d_val):
                         $grand_total_payment +=$d_val["total_payment"];
                         $grand_total_receipt +=$d_val["total_receipt"];
                         if ($d_val['transaction_type'] != "Receipt")
                             continue;
+                        else {
+                          $grand_total_balance_receipt +=$d_val["balance"];   
+                        }
                         ?>
                         <tr>
                             <td class="col-lg-3 bdr-left" valign="top">
-                                <div class="text-right"> <?php echo h($d_val['balance']); ?></div>
+                                <!--<div class="text-right"> <?php echo h($d_val['balance']); ?></div>-->
+                                <div class="text-right"> <?php echo $this->requestAction('App/moneyFormatIndia/' . $d_val['balance']); ?></div>
+                                
                             </td>
                             <td class="col-lg-9 bdr-left">
                                 <?php echo h($d_val['party_name']); ?>
@@ -137,15 +143,20 @@
                     <?php
                     $grand_total_payment = 0;
                     $grand_total_receipt = 0;
+                    $grand_total_balance_payment=0;
                     foreach ($data as $d_key => $d_val):
                         $grand_total_payment +=$d_val["total_payment"];
                         $grand_total_receipt +=$d_val["total_receipt"];
                         if ($d_val['transaction_type'] != "Payment")
                             continue;
+                        else {
+                          $grand_total_balance_payment +=$d_val["balance"];   
+                        }
                         ?>
                         <tr>
                             <td class="col-lg-3 bdr-left" valign="top">
-                                <div class="text-right"> <?php echo h($d_val['balance']); ?></div>
+                                <!--<div class="text-right"> <?php // echo h($d_val['balance']); ?></div>-->
+                                <div class="text-right"> <?php echo $this->requestAction('App/moneyFormatIndia/' . $d_val['balance']); ?></div>
                             </td>
                             <td class="col-lg-9 bdr-left">
                                 <?php echo h($d_val['party_name']); ?>
@@ -163,7 +174,7 @@
                         <?php if (!empty($data)) { ?>
                             <tr  style="border-top:2px solid #333;border-bottom:5px double #333;">
                                 <th style="width: 26.7%;" class="col-lg-3 bdr-left text-right" valign="top">
-                                    <?php echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_receipt); ?>
+                                    <?php echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_balance_receipt); ?>
                                 </th>
                                 <th class="col-lg-9 bdr-left" valign="top"> Cr. Total Receipt</th>
                             </tr>
@@ -191,7 +202,7 @@
                                 <th style="width: 26.7%;" class="col-lg-3 bdr-left text-right" valign="top">
                                     <?php
                                     if (!empty($grand_total_payment))
-                                        echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_payment);
+                                        echo $this->requestAction('App/moneyFormatIndia/' . $grand_total_balance_payment);
                                     ?>
                                 </th>
                                 <th class="col-lg-9 bdr-left" valign="top"> Dr. Total Payment</th>

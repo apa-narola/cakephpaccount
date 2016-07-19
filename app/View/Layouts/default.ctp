@@ -236,7 +236,8 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>
+                        <!--<a class="navbar-brand" href="<?php echo $this->webroot; ?>">SimpleMoneyLend</a>-->
+                      <a class="navbar-brand"> SimpleMoneyLend</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
@@ -246,9 +247,9 @@ $cakeDescription = __d('cake_dev', 'Money Lender: Transaction management');
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li <?php echo $cls_dashboard_users; ?>>
+<!--                                <li <?php echo $cls_dashboard_users; ?>>
                                     <a href="<?php echo $this->webroot ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                                </li>
+                                </li>-->
                                 <li <?php echo $cls_ledger; ?>>
                                     <a href="<?php echo $this->webroot ?>ledger"><i class="fa fa-fw fa-align-justify"></i> Ledger</a>
                                 </li>

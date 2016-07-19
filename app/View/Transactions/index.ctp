@@ -19,7 +19,16 @@
             </li>
         </ol>
         <div class="panel panel-default">
-            <div class="panel-heading">Search</div>
+            <div class="panel-heading"><div class="">Search</div>
+                <div class="pull-right text-right" style="margin-top: -26px;">
+                    <?php
+                    echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
+                    ?>
+                    <?php
+                    echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name" => "exportToexcel", "value" => 1));
+                    ?>
+                </div>
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <!--                    <h3 style="padding-left: 15px;">Search Transaction</h3>-->
@@ -34,6 +43,12 @@
                         <div class="form-group">
                             <label>Transaction Type</label>
                             <?php echo $this->Form->input("transaction_type", array('label' => false, "class" => "form-control", 'options' => array("Receipt" => "Receipt", "Payment" => "Payment"), 'empty' => '-- All --', 'default' => '')); ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label>Hidden Filter</label>
+                            <?php echo $this->Form->input("is_hidden", array('label' => false, "class" => "form-control", 'options' => array('woh' => "Without Hidden Transaction"), 'empty' => 'All Transaction', 'default' => '')); ?>
                         </div>
                     </div>
                     <!--            <div class="col-lg-4"><div class="form-group">&nbsp;</div></div>-->
@@ -87,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4" style="margin-top: 20px;">
+                    <div class="col-lg-2" style="margin-top: 20px;">
                         <?php
                         echo $this->Form->button("Search", array("type" => "submit", "class" => "btn btn-primary"));
                         ?>
@@ -96,12 +111,7 @@
                         //                    echo $this->Form->button("Reset", array("type" => "reset", "class" => "btn btn-default"));
                         echo $this->Html->link("Reset", $base_url, array("class" => "btn btn-primary"));
                         ?>
-                        <?php
-                        echo $this->Html->link("PDF", array('controller' => 'transactions', 'action' => 'transactionsPdf'), array("class" => "btn btn-primary"));
-                        ?>
-                        <?php
-                        echo $this->Form->button("Export to Excel", array("type" => "submit", "class" => "btn btn-primary", "name" => "exportToexcel", "value" => 1));
-                        ?>
+
                         <?php
                         echo $this->Form->end();
                         ?>
@@ -141,7 +151,7 @@
                                 }
                                 ?>
                                 <tr <?php echo $hidden_style; ?> >
-                                    <td width="10%" class="bdr-left" valign="top">
+                                    <td width="13%" class="bdr-left" valign="top">
                                         <div class="text-right">
                                             <?php echo $this->requestAction('App/moneyFormatIndia/' . h($transaction['Transaction']['amount'])); ?>
                                         </div>
@@ -199,7 +209,7 @@
                                 }
                                 ?>
                                 <tr <?php echo $hidden_style; ?> >
-                                    <td width="10%" class="bdr-left" valign="top">
+                                    <td width="13%" class="bdr-left" valign="top">
                                         <div class="text-right">
                                             <?php
                                             if (!empty($transaction['Transaction']['amount']))
@@ -248,7 +258,7 @@
 
                             <?php if (!empty($transactions)) { ?>
                                 <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
-                                    <th width="10%" class=" bdr-left text-right" valign="top">
+                                    <th width="13%" class=" bdr-left text-right" valign="top">
                                         <?php echo $this->requestAction('App/moneyFormatIndia/' . $receipt_total[0]["total"]); ?>
                                     </th>
                                     <th class="bdr-left cr-dr" valign="top"> Cr. Total Receipt</th>
@@ -274,7 +284,7 @@
                             <?php if (!empty($transactions)) { ?>
 
                                 <tr style="border-top:2px solid #333;border-bottom:5px double #333;">
-                                    <th width="10%" class="bdr-left text-right" valign="top">
+                                    <th width="13%" class="bdr-left text-right" valign="top">
                                         <?php
                                         if (!empty($payment_total[0]["total"]))
                                             echo $this->requestAction('App/moneyFormatIndia/' . $payment_total[0]["total"]);

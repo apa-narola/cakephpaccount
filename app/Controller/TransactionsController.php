@@ -42,6 +42,11 @@ class TransactionsController extends AppController {
             $typeStr = "All Transactions";
         }
 
+//        if (!empty($this->params["named"]["is_hidden"])) {
+//            if ($this->params['named']["is_hidden"] == "woh") {
+//                $conditions["Transaction.is_hidden"] = 0;
+//            }
+//        }        
         //Transform POST into GET
         if (($this->request->is('post') || $this->request->is('put')) && isset($this->data['Transaction'])) {
 
@@ -99,6 +104,8 @@ class TransactionsController extends AppController {
                     } else {
                         if ($param_name == "is_interest" && $value == 2)
                             $conditions['Transaction.' . $param_name] = 0;
+                        if ($param_name == "is_hidden" && $value == "woh")
+                            $conditions['Transaction.' . $param_name] = 0;
                         else
                             $conditions['Transaction.' . $param_name] = $value;
                     }
@@ -106,6 +113,9 @@ class TransactionsController extends AppController {
                 }
             }
         }
+//        pr($this->request);
+//        exit;
+
 
         if (!empty($this->params['named']["exportToexcel"])) {
             $searchedTransactions = $this->Transaction->find('all', array("conditions" => $conditions));
@@ -116,22 +126,13 @@ class TransactionsController extends AppController {
             }
         }
 
-
-        /*
-          $this->Transaction->recursive = 0;
-          $this->paginate = array(
-          'limit' => self::RECORD_PER_PAGE,
-          'conditions' => $conditions,
-          'order' => 'Transaction.modified desc'
-          );
-          $this->set('transactions', $this->paginate()); */
-//pr($conditions);exit;
         $transactions = $this->Transaction->find('all', array("conditions" => $conditions, 'order' => 'Transaction.transaction_date'));
         $this->Session->delete('transactions');
         $this->Session->write('transactions', $transactions);
 
         $receiptTransactionCount = $this->getTransactionCount($transactions, "Receipt");
         $paymentTransactionCount = $this->getTransactionCount($transactions, "Payment");
+
 
         $conditions['Transaction.transaction_type'] = "Payment";
         $conditions['Transaction.is_hidden'] = 0;
@@ -213,9 +214,12 @@ class TransactionsController extends AppController {
                             array('User.email LIKE' => '%' . $value . '%'),
                         );
                     } else {
-                        if ($param_name == "is_interest" && $value == 2)
+                        if ($param_name == "is_interest" && $value == 2) {
                             $value = 0;
-                        $conditions['Transaction.' . $param_name] = $value;
+                            $conditions['Transaction.' . $param_name] = $value;
+                        }
+                        if ($param_name == "is_hidden" && $value == "woh")
+                            $conditions['Transaction.' . $param_name] = 0;
                     }
                     $this->request->data['Transaction'][$param_name] = $value;
                 }
@@ -473,14 +477,16 @@ class TransactionsController extends AppController {
         return $this->Transaction->find('count', array('conditions' => array('Transaction.transaction_type' => 'Receipt', 'Transaction.is_interest' => 1)));
     }
 
-    public function transactionsPdf() {
+    public function transactionsPdf($isUser = 0) {
 //        pr($this->params);exit;
+
         $this->layout = 'pdf';
+        $is_user = $isUser;
         $transactions = $this->Session->read('transactions');
         $payment_total = $this->Session->read('payment_total');
         $receipt_total = $this->Session->read('receipt_total');
 //        pr($transactions);
-        $this->set(compact('transactions', 'pdf_filename', 'payment_total', 'receipt_total'));
+        $this->set(compact('transactions', 'pdf_filename', 'payment_total', 'receipt_total', 'is_user'));
     }
 
     public function exportToExcel($data = array(), $filename = null) {

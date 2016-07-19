@@ -48,6 +48,7 @@ Router::connect('/allGroups', array('plugin' => 'usermgmt', 'controller' => 'use
 Router::connect('/addGroup', array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'addGroup'));
 Router::connect('/editGroup/*', array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'editGroup'));
 Router::connect('/deleteGroup/*', array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'deleteGroup'));
+Router::connect('/deletePartyFromGroup/*', array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'deletePartyFromGroup'));
 Router::connect('/emailVerification', array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'emailVerification'));
 Router::connect('/groupUsers/*', array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'groupUsers'));
 Router::connect('/allSubGroups', array('plugin' => 'usermgmt', 'controller' => 'user_sub_groups', 'action' => 'index'));
@@ -55,6 +56,7 @@ Router::connect('/addSubGroup', array('plugin' => 'usermgmt', 'controller' => 'u
 Router::connect('/editSubGroup/*', array('plugin' => 'usermgmt', 'controller' => 'user_sub_groups', 'action' => 'editSubGroup'));
 Router::connect('/deleteSubGroup/*', array('plugin' => 'usermgmt', 'controller' => 'user_sub_groups', 'action' => 'deleteSubGroup'));
 Router::connect('/subGroupUsers/*', array('plugin' => 'usermgmt', 'controller' => 'user_sub_groups', 'action' => 'subGroupUsers'));
+Router::connect('/deletePartyFromSubgroup/*', array('plugin' => 'usermgmt', 'controller' => 'user_sub_groups', 'action' => 'deletePartyFromSubgroup'));
 Router::connect('/userReferences/*', array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'userReferences'));
 
 

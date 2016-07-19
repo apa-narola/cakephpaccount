@@ -22,6 +22,7 @@ App::uses('UserMgmtAppModel', 'Usermgmt.Model');
 App::uses('CakeEmail', 'Network/Email');
 
 class User extends UserMgmtAppModel {
+
     public $actsAs = array('Containable');
 
     /**
@@ -29,28 +30,27 @@ class User extends UserMgmtAppModel {
      *
      * @var array
      */
-    var $belongsTo = array('Usermgmt.UserGroup','Usermgmt.UserSubGroup','Reference'=>array(
-        'className'=>'Usermgmt.User',
-        'foreignKey'=>'reference_id'
+    var $belongsTo = array('Usermgmt.UserGroup', 'Usermgmt.UserSubGroup', 'Reference' => array(
+            'className' => 'Usermgmt.User',
+            'foreignKey' => 'reference_id'
     ));
-
 
     /**
      * This model has following models
      *
      * @var array
      */
-    var $hasMany = array('LoginToken' => array('className' => 'Usermgmt.LoginToken', 'limit' => 1), 
+    var $hasMany = array('LoginToken' => array('className' => 'Usermgmt.LoginToken', 'limit' => 1),
         "Transaction" => array('className' => 'Transaction'),
         "PaymentTransaction" => array(
             'className' => 'Transaction',
-            'conditions' => array('transaction_type'=>"Payment","is_interest"=>0)
-            ),
+            'conditions' => array('transaction_type' => "Payment", "is_interest" => 0)
+        ),
         "ReceiptTransaction" => array(
             'className' => 'Transaction',
-            'conditions' => array('transaction_type'=>"Receipt","is_interest"=>0)
-            ),
-        );
+            'conditions' => array('transaction_type' => "Receipt", "is_interest" => 0)
+        ),
+    );
 
     /**
      * model validation array
@@ -446,6 +446,14 @@ Thanks,\n" .
      */
     public function isUserAssociatedWithGroup($groupId) {
         $res = $this->find('count', array('conditions' => array('User.user_group_id' => $groupId)));
+        if (!empty($res)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isUserAssociatedWithSubGroup($subGroupId) {
+        $res = $this->find('count', array('conditions' => array('User.user_sub_group_id' => $subGroupId)));
         if (!empty($res)) {
             return true;
         }

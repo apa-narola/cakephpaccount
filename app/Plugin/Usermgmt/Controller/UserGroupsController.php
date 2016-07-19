@@ -1,26 +1,27 @@
 <?php
+
 /*
-	This file is part of UserMgmt.
+  This file is part of UserMgmt.
 
-	Author: Chetan Varshney (http://ektasoftwares.com)
+  Author: Chetan Varshney (http://ektasoftwares.com)
 
-	UserMgmt is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
+  UserMgmt is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-	UserMgmt is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+  UserMgmt is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-*/
+  You should have received a copy of the GNU General Public License
+  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
 App::uses('UserMgmtAppController', 'Usermgmt.Controller');
 
-class UserGroupsController extends UserMgmtAppController
-{
+class UserGroupsController extends UserMgmtAppController {
+
     public $uses = array('Usermgmt.UserGroup', 'Usermgmt.User');
 
     /**
@@ -29,11 +30,10 @@ class UserGroupsController extends UserMgmtAppController
      * @access public
      * @return array
      */
-    public function index()
-    {
-        /*$this->UserGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
-        $userGroups=$this->UserGroup->find('all', array('order'=>'UserGroup.id'));
-        $this->set('userGroups', $userGroups);*/
+    public function index() {
+        /* $this->UserGroup->unbindModel( array('hasMany' => array('UserGroupPermission')));
+          $userGroups=$this->UserGroup->find('all', array('order'=>'UserGroup.id'));
+          $this->set('userGroups', $userGroups); */
 
         $conditions = array();
         if (!empty($this->request->data["UserGroup"]["search_text"])) {
@@ -62,8 +62,7 @@ class UserGroupsController extends UserMgmtAppController
      * @access public
      * @return void
      */
-    public function addGroup()
-    {
+    public function addGroup() {
         if ($this->request->isPost()) {
 
             if (!$this->UserAuth->isAdmin()) {
@@ -87,8 +86,7 @@ class UserGroupsController extends UserMgmtAppController
      * @param integer $groupId group id
      * @return void
      */
-    public function editGroup($groupId = null)
-    {
+    public function editGroup($groupId = null) {
         if (!empty($groupId)) {
             if ($this->request->isPut()) {
                 $this->UserGroup->set($this->data);
@@ -112,8 +110,7 @@ class UserGroupsController extends UserMgmtAppController
      * @param integer $userId group id
      * @return void
      */
-    public function deleteGroup($groupId = null)
-    {
+    public function deleteGroup($groupId = null) {
         if (!empty($groupId)) {
             if ($this->request->isPost()) {
                 $users = $this->User->isUserAssociatedWithGroup($groupId);
@@ -131,30 +128,44 @@ class UserGroupsController extends UserMgmtAppController
         }
     }
 
-    public function groupUsers($groupId = null)
-    {
+    public function deletePartyFromGroup($userId = null) {
+        if (!empty($userId)) {
+            $user = $this->User->read(null, $userId);
+            if (!empty($user)) {
+                $userGroupId = $user['User']['user_group_id'];
+                $this->request->data['User']['user_group_id'] = 0;
+                $this->User->save($this->request->data, false);
+                $this->Session->setFlash(__('Party has been deleted successfully.'));
+            }
+        } else {
+            $this->Session->setFlash(__('Sorry something went wrong, party has been delete successfully.'));
+        }
+        $this->redirect('/groupUsers/' . $userGroupId);
+    }
+
+    public function groupUsers($groupId = null) {
         if (!empty($groupId)) {
 
-            $conditions = array("User.user_group_id"=>$groupId);
+            $conditions = array("User.user_group_id" => $groupId);
             $search_text = null;
-            if(!empty($this->request->data["UserGroup"]["search_text"])) {
+            if (!empty($this->request->data["UserGroup"]["search_text"])) {
                 $search_text = $this->request->data["UserGroup"]["search_text"];
                 $conditions[] = array(
                     "OR" => array(
                         "User.first_name LIKE '%" . $this->request->data["UserGroup"]["search_text"] . "%'",
                         "User.middle_name LIKE '%" . $this->request->data["UserGroup"]["search_text"] . "%'",
                         "User.last_name LIKE '%" . $this->request->data["UserGroup"]["search_text"] . "%'",
-                        //"UserGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
+                    //"UserGroup.name LIKE '%" . $this->request->data["User"]["search_text"] . "%'",
                     )
                 );
             }
 
-            if(!$this->UserAuth->isAdmin()) {
-               // $conditions[] = array("User.user_group_id NOT IN" => array(1, 4));
-            //    $conditions[] = array("User.user_group_id " => $groupId);
+            if (!$this->UserAuth->isAdmin()) {
+                // $conditions[] = array("User.user_group_id NOT IN" => array(1, 4));
+                //    $conditions[] = array("User.user_group_id " => $groupId);
             }
 //            echo $this->request->data["UserGroup"]["search_text"];exit;
-            $this->UserGroup->unbindModel(array('hasMany' => array('UserGroupPermission','User')));
+            $this->UserGroup->unbindModel(array('hasMany' => array('UserGroupPermission', 'User')));
             $group = $this->UserGroup->read(null, $groupId);
 //            pr($group);
             //$this->request->data = null;
@@ -163,15 +174,15 @@ class UserGroupsController extends UserMgmtAppController
             }
             $this->request->data["UserGroup"]["search_text"] = $search_text;
             //$this->UserGroup->unbindModel(array('hasMany' => array('UserGroupPermission')));
-
             //$group = $this->UserGroup->findById($groupId);
-            $users = $this->User->find("all",array("conditions" => $conditions,'order' => 'User.first_name asc'));
+            $users = $this->User->find("all", array("conditions" => $conditions, 'order' => 'User.first_name asc'));
             //pr($users,1);
 
-            $this->set(compact("group","groupId","users"));
+            $this->set(compact("group", "groupId", "users"));
             //$this->redirect('/allGroups');
         } else {
             $this->redirect('/allGroups');
         }
     }
+
 }

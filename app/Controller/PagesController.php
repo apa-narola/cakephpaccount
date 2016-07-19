@@ -69,7 +69,7 @@ class PagesController extends AppController {
     public function ledger() {
         $conditions = [];
         $conditions["User.user_group_id <>"] = 1;
-       // $conditions["User.id"] = 2;
+        // $conditions["User.id"] = 2;
         if (!empty($this->request->data["Transaction"]["transaction_from"]) ||
                 !empty($this->request->data["Transaction"]["transaction_to"])) {
             $conditionsFilter = [];
@@ -128,8 +128,11 @@ class PagesController extends AppController {
     private function getTotalAmountTransaction($transactions = array()) {
         $total = 0;
         if (!empty($transactions)) {
+
             foreach ($transactions as $key => $value) {
-                $total += $value["amount"];
+                if (empty($value['is_hidden'])) {
+                    $total += $value["amount"];
+                }
             }
         }
         return $total;

@@ -48,7 +48,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label><?php echo __('First Name'); ?><font color='red'>*</font></label>
-                <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+                        <?php echo $this->Form->input("first_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -56,7 +56,7 @@
                         <label><?php echo __('Middle Name'); ?>
                             <!--<font color='red'>*</font>-->
                         </label>
-                <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+                        <?php echo $this->Form->input("middle_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -64,7 +64,7 @@
                         <label><?php echo __('Last Name'); ?>
                             <!--<font color='red'>*</font>-->
                         </label>
-                <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
+                        <?php echo $this->Form->input("last_name", array('label' => false, 'div' => false, 'class' => "form-control")) ?>
                     </div>
                 </div>
             </div>
@@ -82,17 +82,24 @@
                         <!-- &nbsp;<a style="text-decoration: none" href="#"> <i class="fa fa-plus-circle fa-2x"
                                                                              data-toggle="modal"
                                                                              data-target="#addNewPartyModal"></i></a>-->
+                        <?php
+                        $referenceID = "";
+                        if (empty($users[$this->request->data["User"]["reference_id"]]))
+                            $referenceID = "No Reference";
+                        else
+                            $referenceID = $users[$this->request->data["User"]["reference_id"]];
+                        ?>
                         <input id="partyName" type="text" class="typeahead tt-query form-control" autocomplete="off"
                                spellcheck="false" placeholder="Type reference party name"
-                               value="<?php echo $users[$this->request->data["User"]["reference_id"]]; ?>">
-                <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
-                <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>                
+                               value="<?php echo $referenceID; ?>">
+                               <?php //echo $this->Form->input('user_id', array("label" => false, "class" => "form-control"));  ?>
+                               <?php echo $this->Form->input('reference_id', array("type" => "hidden", "label" => false)); ?>                
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label><?php echo __('Sub Group'); ?></label>
-                <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
+                        <?php echo $this->Form->input("user_sub_group_id", array('type' => 'select', 'label' => false, 'div' => false, 'class' => "form-control")) ?>
                     </div>
                 </div>
             </div>
